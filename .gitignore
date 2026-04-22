@@ -1,0 +1,6 @@
+#
+.env
+
+# IDE files
+.idea/
+.vscode/
