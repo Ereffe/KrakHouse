@@ -15,16 +15,19 @@ public class GridMap implements CityMap{
 
     @Override
     public void applyFilter(BoxValue value, CompareCondition condition) {
+//        TODO: 3 implement map methods
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public CityMap merge(CityMap map) {
+        //        TODO: 3 implement map methods
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public CityMap mergeAll(List<CityMap> map) {
+        //        TODO: 3 implement map methods
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }

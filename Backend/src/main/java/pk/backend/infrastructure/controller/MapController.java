@@ -16,16 +16,19 @@ public class MapController {
 
     @GetMapping("/filters")
     public ResponseEntity<List<String>> getFilters() {
+        //    TODO: 1 implement controller flow
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @GetMapping("/maps")
     public ResponseEntity<List<CityMap>> getMaps(@RequestParam List<String> mapType){
+        //    TODO: 1 implement controller flow
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @GetMapping("/filtered-maps")
     public ResponseEntity<CityMap> getFilteredMap(@RequestParam List<FilteredMapDto> filteredMaps){
+        //    TODO: 1 implement controller flow
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
