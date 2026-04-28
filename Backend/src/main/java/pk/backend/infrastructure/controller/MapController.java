@@ -2,9 +2,10 @@ package pk.backend.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pk.backend.domain.CityMap.CityMap;
-import pk.backend.domain.utils.Filter;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 
 import java.util.List;
@@ -14,12 +15,12 @@ import java.util.List;
 public class MapController {
 
     @GetMapping("/filters")
-    public ResponseEntity<List<Filter>> getFilters() {
+    public ResponseEntity<List<String>> getFilters() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @GetMapping("/maps")
-    public ResponseEntity<List<CityMap>> getMaps(@RequestParam List<Filter> mapType){
+    public ResponseEntity<List<CityMap>> getMaps(@RequestParam List<String> mapType){
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

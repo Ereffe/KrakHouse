@@ -1,15 +1,18 @@
-package pk.backend.domain.box;
+package pk.backend.domain.model.box;
 
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
-public class CrimeBox implements BoxValue{
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    private int value;
+@AllArgsConstructor
+public class PriceBox implements BoxValue {
+
+    private BigDecimal value;
 
     @Override
     public Object getValue() {
-        return value;
+        return value.setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override
