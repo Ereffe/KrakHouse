@@ -1,9 +1,9 @@
-package pk.backend.domain.box;
+package pk.backend.domain.model.box;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class NoiseBox implements BoxValue {
+public class CrimeBox implements BoxValue{
 
     private int value;
 

@@ -1,4 +1,4 @@
-package pk.backend.domain.box;
+package pk.backend.domain.model.box;
 
 public interface BoxValue {
 //    TODO: change return type
