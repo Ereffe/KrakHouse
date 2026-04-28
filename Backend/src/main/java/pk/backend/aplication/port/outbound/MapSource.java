@@ -1,4 +1,4 @@
-package pk.backend.aplication.port.inbound;
+package pk.backend.aplication.port.outbound;
 
 import pk.backend.domain.CityMap.CityMap;
 

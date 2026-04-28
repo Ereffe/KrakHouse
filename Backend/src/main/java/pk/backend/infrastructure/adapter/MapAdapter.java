@@ -1,6 +1,6 @@
 package pk.backend.infrastructure.adapter;
 
-import pk.backend.aplication.port.inbound.MapSource;
+import pk.backend.aplication.port.outbound.MapSource;
 import pk.backend.domain.CityMap.CityMap;
 
 public class MapAdapter implements MapSource {

@@ -22,4 +22,9 @@ public class GridMap implements CityMap{
     public CityMap merge(CityMap map) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
+
+    @Override
+    public CityMap mergeAll(List<CityMap> map) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
 }
