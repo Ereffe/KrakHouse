@@ -1,5 +1,6 @@
-package pk.backend.aplication.port.outbound;
+package pk.backend.aplication.port.inbound;
 
+import pk.backend.aplication.port.outbound.MapFilter;
 import pk.backend.domain.CityMap.CityMap;
 import pk.backend.domain.box.BoxValue;
 
