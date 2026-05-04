@@ -21,7 +21,7 @@ public class MapController {
     }
 
     @GetMapping("/maps")
-    public ResponseEntity<List<CityMap>> getMaps(@RequestParam List<String> mapType){
+    public ResponseEntity<List<CityMap>> getMergedMaps(@RequestParam List<FilteredMapDto> filteredMaps){
         //    TODO: 1 implement controller flow
         throw new UnsupportedOperationException("Not implemented yet");
     }
