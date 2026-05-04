@@ -179,7 +179,7 @@ GET /maps?filteredMaps={"type":"airQuality","lowerBound":100,"upperBound":500}&f
 
 **Get Filtered Map**
 
-* **URL:** `/filtered-maps`
+* **URL:** `/maps-list`
 * **Metoda HTTP:** `GET`
 * **Parametry:**
   * `filteredMaps` (wymagane) - Lista typów map jakie chcemy otrzymać wraz z zakresami wartości
@@ -189,7 +189,7 @@ GET /maps?filteredMaps={"type":"airQuality","lowerBound":100,"upperBound":500}&f
 
 * **Przykładowe Żądanie:**
 ```
-GET /filtered-maps?filteredMaps={"type":"airQuality","lowerBound":100,"upperBound":500}&filteredMaps={"type":"crime","lowerBound":20,"upperBound":60}
+GET /maps-list?filteredMaps={"type":"airQuality","lowerBound":100,"upperBound":500}&filteredMaps={"type":"crime","lowerBound":20,"upperBound":60}
 ```
 
 * **Odpowiedź Sukcesu:**
