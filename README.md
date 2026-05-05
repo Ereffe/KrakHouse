@@ -16,9 +16,9 @@ ___
 - **Architektura heksagonalna**
 - **Domain-Driven Design (DDD)**
 
-### Struktura projektu
+### 📁 Struktura projektu
 
-Struktura katalogów oparta jest o architekturę heksagonalną:
+Struktura katalogów opiera się na architekturze heksagonalnej:
 
 ```text
 Backend/src/main/java/pk/backend/
@@ -44,6 +44,45 @@ Backend/src/main/java/pk/backend/
 - **React Leaflet** 5.0.0 - wrapper React dla biblioteki Leaflet
 - **Leaflet** 1.9.4 - biblioteka do interaktywnych map
 
+### 📁 Struktura projektu
+
+```text
+Frontend/src/
+├── assets/            # Style, ikony, zasoby statyczne
+├── components/        # Komponenty UI
+│   ├── map/           # Mapa i warstwy
+│   ├── filters/       # Panel filtrów
+│   └── ui/            # Reużywalne elementy (przyciski, pola tekstowe)
+├── view/              # Widok aplikacji
+├── services/          # Komunikacja z backendem (API)
+├── store/             # Zarządzanie stanem (Zustand)
+├── types/             # Typy TypeScript
+├── utils/             # Funkcje pomocnicze
+└── App.tsx            # Główny komponent
+```
+
+### 🧠 Zarządzanie stanem (Zustand)
+
+Aplikacja wykorzystuje bibliotekę Zustand do zarządzania globalnym stanem.
+
+Stan globalny odpowiada za:
+- wybrane filtry użytkownika
+- zakresy wartości filtrów
+- dane mapy pobrane z backendu
+- stan ładowania (loading)
+- błędy
+
+### 🔄 Przepływ danych
+
+1. Użytkownik zmienia filtr w UI
+2. Komponent wywołuje `setFilters`
+3. Następnie wywoływane jest `fetchMaps`
+4. Store:
+    - pobiera aktualne filtry (`get()`)
+    - wysyła zapytanie do backendu
+    - zapisuje wynik w `mapData`
+5. Komponent mapy automatycznie się renderuje z nowymi danymi
+
 ___
 
 # ⚙️ Instalacja i uruchomienie aplikacji
@@ -61,7 +100,7 @@ cd KrakHouse
 
 ## Uruchomienie
 
-Po pobraniu projektu, uruchom poniższe polecenie w głównym katalogu projektu:
+Po pobraniu projektu uruchom poniższe polecenie w głównym katalogu projektu:
 
 ```bash
 docker compose up
@@ -116,7 +155,7 @@ ___
 
 * **Odpowiedź Błędu:**
     * **Kod:** 500
-      * **Zawartość:** `{ "message": "Serwis jet niedostępny" }`
+      * **Zawartość:** `{ "message": "Serwis jest niedostępny" }`
 
 ---
 
@@ -182,7 +221,7 @@ GET /maps?filteredMaps={"type":"airQuality","lowerBound":100,"upperBound":500}&f
 * **URL:** `/maps-list`
 * **Metoda HTTP:** `GET`
 * **Parametry:**
-  * `filteredMaps` (wymagane) - Lista typów map jakie chcemy otrzymać wraz z zakresami wartości
+  * `filteredMaps` (wymagane) - Lista typów map, jakie chcemy otrzymać wraz z zakresami wartości
     * `type` - Typ mapy do filtrowania (`airQuality`, `crime`, `noise`, `price`)
     * `lowerBound` (opcjonalne) - Dolna granica zakresu wartości
     * `upperBound` (opcjonalne) - Górna granica zakresu wartości
@@ -252,20 +291,20 @@ Rozpocznij od zdefiniowania, w jaki sposób wartości Twojego filtra są repreze
         int compareTo(BoxValue other);
     }
 
-`Object getValue()` - wykorzystywana jest jedynie do automatycznej serializacji danych wyjściowych do formatu JSON.
-`int compareTo(BoxValue other)` - służy do porównywania dwóch obiektów tego samego typu. Jest wymagana do poprawnego działania filtrowania mapy.
+`Object getValue()` - metoda ta wykorzystywana jest jedynie do automatycznej serializacji danych wyjściowych do formatu JSON.
+`int compareTo(BoxValue other)` - służy do porównywania dwóch obiektów tego samego typu. Jest ona wymagana do poprawnego działania filtrowania mapy.
 
 *Twój nowy filtr musi dostarczyć własną implementację tego interfejsu, definiując logikę porównywania i przechowywania unikalnego typu danych dla siatki.*
 
 ### 2. Utworzenie Portu Wyjściowego (Outbound Port)
 
-Dla zachowania czystości domeny, logika pobierania danych zewnętrznych musi odbywać się poprzez interface. Zdefiniuj port wyjściowy w warstwie aplikacji. Interfejs ten powinien deklarować metodę odpowiedzialną za pobieranie niezbędnych danych wejściowych potrzebnych do wygenerowania mapy.
+Dla zachowania czystości domeny logika pobierania danych zewnętrznych musi odbywać się poprzez interfejs. Zdefiniuj port wyjściowy w warstwie aplikacji. Interfejs ten powinien deklarować metodę odpowiedzialną za pobieranie niezbędnych danych wejściowych potrzebnych do wygenerowania mapy.
 
 **Lokalizacja Portu:** `java/pk/backend/aplication/port/outbound`
 
 ### 3. Implementacja Serwisu Domenowego (Domain Service)
 
-Utwórz nowy serwis domenowy dedykowany dla Twojego filtra. Będzie on odpowiedzialny za zwracanie mapy danego typu jak również zwracania informacji o istnieniu filtru danego typu.
+Utwórz nowy serwis domenowy dedykowany dla Twojego filtra. Będzie on odpowiedzialny za zwracanie mapy danego typu, jak również za zwracanie informacji o istnieniu filtra danego typu.
 
 * *UWAGA!!!* - Aby typ filtra został rozpoznany przez aplikację, serwis musi zostać oznaczony adnotacją `@Service` oraz musi implementować interfejs `MapService`.
 
@@ -278,7 +317,7 @@ Utwórz nowy serwis domenowy dedykowany dla Twojego filtra. Będzie on odpowiedz
 
 *Twoja nowa klasa serwisu (`np. NoiseMapService`) powinna:*
 *   *Posiadać wstrzykniętą zależność do portu wyjściowego utworzonego w Kroku 2.*
-*   *Implementować logikę tworzenia mapy wykorzystując wstrzyknięty port*
+*   *Implementować logikę tworzenia mapy, wykorzystując wstrzyknięty port*
 *   *Zwracać unikalny identyfikator w metodzie `getType()`.*
 
 ### 4. Implementacja Adaptera Infrastruktury (Infrastructure Adapter)
