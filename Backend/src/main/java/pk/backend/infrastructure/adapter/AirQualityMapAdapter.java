@@ -6,13 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.util.UriBuilder;
 import pk.backend.aplication.port.outbound.AirQualityMapFactory;
 import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.infrastructure.dto.SingleSensorReadDto;
 import pk.backend.infrastructure.dto.StationsRecordDto;
-import pk.backend.infrastructure.dto.StationsResponseDto;
 import pk.backend.infrastructure.model.AirQualityData;
+import pk.backend.infrastructure.service.AirQualityService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +23,8 @@ import java.util.Map;
 @Slf4j
 public class AirQualityMapAdapter implements AirQualityMapFactory {
 
+    private final AirQualityService airQualityService;
+
     private final RestClient airQualityRestClient;
 //    private final UriBuilder uriComponentBuilder;
 
@@ -31,31 +32,18 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
     public CityMap createMap() {
         Map<Long, AirQualityData> airQualityData = new HashMap<>();
 
-        StationsResponseDto response = airQualityRestClient.get()
-                .uri("/v1/rest/station/findAll?size=500")
-                .retrieve()
-                .body(StationsResponseDto.class);
+        var airQualityStations = airQualityService.getStations();
 
-        log.info("request: /v1/rest/station/findAll?size=500");
-        log.info(response.stations().toString());
-
-        List<StationsRecordDto> records = response.stations().stream()
-                .filter(rec -> rec.cityName().equals("Kraków"))
-                .toList();
-
-        log.info(records.toString());
-
-
-        for (StationsRecordDto record : records) {
+        for (StationsRecordDto station : airQualityStations) {
             var temp = new AirQualityData();
-            temp.setId(record.id());
-            temp.setLatitude(record.latitude());
-            temp.setLongitude(record.longitude());
+            temp.setId(station.id());
+            temp.setLatitude(station.latitude());
+            temp.setLongitude(station.longitude());
 
-            airQualityData.put(record.id(), temp);
+            airQualityData.put(station.id(), temp);
         }
 
-        records.forEach(rec -> {
+        airQualityStations.forEach(rec -> {
             var temp = airQualityRestClient.get()
                     .uri("/v1/rest/station/sensors/" + rec.id())
                     .retrieve()
@@ -76,6 +64,7 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
             });
             log.info("CurrentSensors count: " + airQualityData.size());
         });
+//        TODO: implement flow for retrieving data that is input manually after 4-8 weeks
 
 
 //        URI pm10Uri = uriComponentBuilder.path(GET_PM10_DATA)
