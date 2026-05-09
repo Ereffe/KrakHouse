@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-public class AirQualityRestClient {
+public class AirQualityRestClientv2 {
 
     @Value("${air-quality.api.base-url}")
     private String baseUrl;

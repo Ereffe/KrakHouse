@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Pm10ResponseDto(
+public record StationsResponseDto(
 
-        @JsonProperty("Lista danych zagregowanych")
-        List<Pm10RecordDto> pm10RecordDtoList
+        @JsonProperty("Lista stacji pomiarowych")
+        List<StationsRecordDto> stations
 
-        ) {
+) {
 }
