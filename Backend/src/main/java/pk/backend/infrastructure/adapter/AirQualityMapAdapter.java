@@ -32,9 +32,9 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
     public CityMap createMap() {
         Map<Long, AirQualityData> airQualityData = new HashMap<>();
 
-        var airQualityStations = airQualityService.getStations();
+        List<StationsRecordDto> airQualityStations = airQualityService.getStations();
 
-        for (StationsRecordDto station : airQualityStations) {
+        for (var station : airQualityStations) {
             var temp = new AirQualityData();
             temp.setId(station.id());
             temp.setLatitude(station.latitude());
@@ -43,25 +43,14 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
             airQualityData.put(station.id(), temp);
         }
 
-        airQualityStations.forEach(rec -> {
-            var temp = airQualityRestClient.get()
-                    .uri("/v1/rest/station/sensors/" + rec.id())
+        airQualityStations.forEach(station -> {
+            var sensorsList = airQualityRestClient.get()
+                    .uri("/v1/rest/station/sensors/" + station.id())
                     .retrieve()
                     .body(SensorResponseDto.class);
-            log.info("request: /v1/rest/station/sensors/"  + rec.id());
+            log.info("request: /v1/rest/station/readSequence/"  + station.id());
 
-            temp.sensors.forEach(sensorDto -> {
-                SensorDataResponseDto sensorValue = airQualityRestClient.get()
-                        .uri("/v1/rest/data/getData/" + sensorDto.sensorId + "?size=500")
-                        .retrieve()
-                        .body(SensorDataResponseDto.class);
-                log.info("request: /v1/rest/data/getData/" + sensorDto.sensorId + "?size=500");
-                log.info(sensorValue.sensors().toString());
-
-//                log.info("End of sensors list for " +  sensorDto.sensorId);
-                var stationsMap = airQualityData.get(rec.id());
-                stationsMap.addSensor(sensorDto.Indicator(), sensorValue.sensors);
-            });
+            addSensorsForStation(airQualityData.get(station.id()), sensorsList);
             log.info("CurrentSensors count: " + airQualityData.size());
         });
 //        TODO: implement flow for retrieving data that is input manually after 4-8 weeks
@@ -77,6 +66,20 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
 //        TODO: 4 implement air quality adapter
 //        TODO: 4 API required to show data source explicitly
         throw new UnsupportedOperationException("implementation not finished yet");
+    }
+
+    private void addSensorsForStation(AirQualityData station, SensorResponseDto sensorList) {
+        sensorList.sensors.forEach(sensorDto -> {
+            SensorDataResponseDto sensorDataSequence = airQualityRestClient.get()
+                    .uri("/v1/rest/data/getData/" + sensorDto.sensorId + "?size=500")
+                    .retrieve()
+                    .body(SensorDataResponseDto.class);
+
+            log.info("request: /v1/rest/data/getData/" + sensorDto.sensorId + "?size=500");
+            log.info(sensorDataSequence.readSequence().toString());
+
+            station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence);
+        });
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -99,7 +102,7 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
     @JsonIgnoreProperties(ignoreUnknown = true)
     record SensorDataResponseDto(
             @JsonProperty("Lista danych pomiarowych")
-            List<SingleSensorReadDto> sensors
+            List<SingleSensorReadDto> readSequence
     ) {
     }
 
