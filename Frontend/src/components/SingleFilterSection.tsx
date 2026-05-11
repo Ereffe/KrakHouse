@@ -1,12 +1,10 @@
+import { RangeSlider } from "./RangeSlider";
 import { filters, type FilterKey } from "./mapFilters";
+import { useTheme } from "./ThemeContext";
 
 interface SingleFilterSectionProps {
     readonly selectedFilter: FilterKey;
     readonly selectedFilterConfig: { min: number; max: number };
-    readonly minValue: number;
-    readonly maxValue: number;
-    readonly panelTextColor: string;
-    readonly baseFontSize: string;
     readonly formattedMinValue: string;
     readonly formattedMaxValue: string;
     readonly setSelectedFilter: (value: FilterKey) => void;
@@ -17,40 +15,45 @@ interface SingleFilterSectionProps {
 export function SingleFilterSection({
     selectedFilter,
     selectedFilterConfig,
-    minValue,
-    maxValue,
-    panelTextColor,
-    baseFontSize,
     formattedMinValue,
     formattedMaxValue,
     setSelectedFilter,
     setMinValue,
     setMaxValue,
 }: SingleFilterSectionProps) {
+    const { panelTextColor } = useTheme();
+
     return (
         <>
             <div style={{ marginBottom: "25px" }}>
-                <label
+                <div
                     style={{
                         display: "block",
-                        marginBottom: "15px",
-                        fontWeight: "500",
+                        marginBottom: "18px",
+                        fontWeight: "600",
                         color: panelTextColor,
-                        fontSize: baseFontSize,
+                        fontSize: "15px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
+                        opacity: 0.8,
                     }}
                 >
-                    Wybierz filtr:
-                </label>
+                    Wybierz filtr
+                </div>
                 {filters.map((filter) => (
-                    <div key={filter.key} style={{ marginBottom: "10px" }}>
+                    <div key={filter.key} style={{ marginBottom: "12px" }}>
                         <label
                             style={{
                                 display: "flex",
                                 alignItems: "center",
                                 cursor: "pointer",
                                 fontSize: "14px",
-                                color: selectedFilter === filter.key ? "#28a745" : panelTextColor,
-                                fontWeight: selectedFilter === filter.key ? "700" : "500",
+                                color: selectedFilter === filter.key ? "#0d9488" : panelTextColor,
+                                fontWeight: selectedFilter === filter.key ? "600" : "500",
+                                padding: "8px 12px",
+                                borderRadius: "8px",
+                                transition: "all 0.2s ease",
+                                backgroundColor: selectedFilter === filter.key ? "rgba(13, 148, 136, 0.1)" : "transparent",
                             }}
                         >
                             <input
@@ -61,6 +64,8 @@ export function SingleFilterSection({
                                 onChange={(e) => setSelectedFilter(e.target.value as FilterKey)}
                                 style={{
                                     marginRight: "10px",
+                                    accentColor: "#0d9488",
+                                    cursor: "pointer",
                                 }}
                             />
                             {filter.label}
@@ -68,70 +73,31 @@ export function SingleFilterSection({
                     </div>
                 ))}
             </div>
-            <div>
-                <label
-                    style={{
-                        display: "block",
-                        marginBottom: "8px",
-                        fontWeight: "500",
-                        color: panelTextColor,
-                        fontSize: baseFontSize,
-                    }}
-                >
-                    Min:{" "}
-                    <span style={{ color: "#dc3545", fontWeight: "bold" }}>{formattedMinValue}</span>
-                </label>
-                <input
-                    type="range"
-                    min={selectedFilterConfig.min}
-                    max={selectedFilterConfig.max}
-                    step={selectedFilter === "lifeScore" ? 1 : 0.1}
-                    value={minValue}
-                    onChange={(e) => setMinValue(Number(e.target.value))}
-                    style={{
-                        width: "100%",
-                        height: "8px",
-                        borderRadius: "10px",
-                        background: "linear-gradient(to right, #dc3545, #ffc107, #28a745)",
-                        outline: "none",
-                        cursor: "pointer",
-                        appearance: "none",
-                        WebkitAppearance: "none",
-                    }}
-                />
-            </div>
-            <div style={{ marginTop: "15px" }}>
-                <label
-                    style={{
-                        display: "block",
-                        marginBottom: "8px",
-                        fontWeight: "500",
-                        color: panelTextColor,
-                        fontSize: baseFontSize,
-                    }}
-                >
-                    Max:{" "}
-                    <span style={{ color: "#28a745", fontWeight: "bold" }}>{formattedMaxValue}</span>
-                </label>
-                <input
-                    type="range"
-                    min={selectedFilterConfig.min}
-                    max={selectedFilterConfig.max}
-                    step={selectedFilter === "lifeScore" ? 1 : 0.1}
-                    value={maxValue}
-                    onChange={(e) => setMaxValue(Number(e.target.value))}
-                    style={{
-                        width: "100%",
-                        height: "8px",
-                        borderRadius: "10px",
-                        background: "linear-gradient(to right, #dc3545, #ffc107, #28a745)",
-                        outline: "none",
-                        cursor: "pointer",
-                        appearance: "none",
-                        WebkitAppearance: "none",
-                    }}
-                />
-            </div>
+            <RangeSlider
+                label="Minimum"
+                value={selectedFilter === "lifeScore" ? Number(formattedMinValue.replace("%", "")) : Number(formattedMinValue.replace(" PLN", ""))}
+                displayValue={formattedMinValue}
+                min={selectedFilterConfig.min}
+                max={selectedFilterConfig.max}
+                step={selectedFilter === "lifeScore" ? 1 : 0.1}
+                onChange={setMinValue}
+                labelColor={panelTextColor}
+                valueColor="#ef4444"
+                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+            />
+            <RangeSlider
+                label="Maximum"
+                value={selectedFilter === "lifeScore" ? Number(formattedMaxValue.replace("%", "")) : Number(formattedMaxValue.replace(" PLN", ""))}
+                displayValue={formattedMaxValue}
+                min={selectedFilterConfig.min}
+                max={selectedFilterConfig.max}
+                step={selectedFilter === "lifeScore" ? 1 : 0.1}
+                onChange={setMaxValue}
+                labelColor={panelTextColor}
+                valueColor="#0d9488"
+                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+                containerStyle={{ marginTop: "18px" }}
+            />
         </>
     );
 }

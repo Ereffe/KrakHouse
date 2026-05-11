@@ -1,10 +1,9 @@
+import { RangeSlider } from "./RangeSlider";
+import { useTheme } from "./ThemeContext";
+
 interface SettingsSectionProps {
     readonly language: "pl" | "en";
-    readonly darkMode: boolean;
     readonly gridSize: number;
-    readonly panelTextColor: string;
-    readonly panelMutedColor: string;
-    readonly subTitleFontSize: string;
     readonly setLanguage: (value: "pl" | "en") => void;
     readonly setDarkMode: (value: boolean) => void;
     readonly setGridSize: (value: number) => void;
@@ -12,81 +11,67 @@ interface SettingsSectionProps {
 
 export function SettingsSection({
     language,
-    darkMode,
     gridSize,
-    panelTextColor,
-    panelMutedColor,
-    subTitleFontSize,
     setLanguage,
     setDarkMode,
     setGridSize,
 }: SettingsSectionProps) {
+    const { darkMode, panelTextColor, panelMutedColor } = useTheme();
+
     return (
         <div>
             <h4
                 style={{
                     margin: 0,
-                    marginBottom: "16px",
-                    fontSize: subTitleFontSize,
-                    fontWeight: "600",
-                    color: darkMode ? "#f8f9fa" : "#495057",
+                    marginBottom: "18px",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    color: darkMode ? "#cbd5e0" : "#4b5563",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.8px",
                 }}
             >
-                Ustawienia
+                ⚙ Ustawienia
             </h4>
-            <div style={{ marginBottom: "16px" }}>
-                <label
+            <RangeSlider
+                label="Rozmiar siatki"
+                value={gridSize}
+                displayValue={`${gridSize}×${gridSize}`}
+                min={5}
+                max={20}
+                step={1}
+                onChange={setGridSize}
+                labelColor={panelTextColor}
+                valueColor="#8b5cf6"
+                trackGradient="linear-gradient(to right, #8b5cf6, #d946ef)"
+                containerStyle={{ marginBottom: "18px" }}
+            />
+            <div style={{ marginBottom: "18px" }}>
+                <div
                     style={{
                         display: "block",
-                        marginBottom: "8px",
+                        marginBottom: "10px",
                         fontWeight: "500",
                         color: panelTextColor,
+                        fontSize: "14px",
                     }}
                 >
-                    Rozmiar siatki: {gridSize} x {gridSize}
-                </label>
-                <input
-                    type="range"
-                    min={5}
-                    max={20}
-                    step={1}
-                    value={gridSize}
-                    onChange={(e) => setGridSize(Number(e.target.value))}
-                    style={{
-                        width: "100%",
-                        height: "8px",
-                        borderRadius: "10px",
-                        background: "linear-gradient(to right, #6f42c1, #6610f2)",
-                        outline: "none",
-                        cursor: "pointer",
-                        appearance: "none",
-                        WebkitAppearance: "none",
-                    }}
-                />
-            </div>
-            <div style={{ marginBottom: "16px" }}>
-                <label
-                    style={{
-                        display: "block",
-                        marginBottom: "8px",
-                        fontWeight: "500",
-                        color: panelTextColor,
-                    }}
-                >
-                    Język strony
-                </label>
+                    🌐 Język strony
+                </div>
                 <select
                     value={language}
                     onChange={(e) => setLanguage(e.target.value as "pl" | "en")}
                     style={{
                         width: "100%",
-                        padding: "10px 14px",
-                        borderRadius: "10px",
-                        border: "1px solid #ced4da",
-                        backgroundColor: darkMode ? "#343a40" : "#ffffff",
-                        color: darkMode ? "#f8f9fa" : "#495057",
+                        padding: "10px 12px",
+                        borderRadius: "8px",
+                        border: "1.5px solid transparent",
+                        backgroundColor: darkMode ? "#2d3748" : "#f7f9fc",
+                        color: darkMode ? "#e2e8f0" : "#2d3748",
                         cursor: "pointer",
                         fontSize: "14px",
+                        fontWeight: "500",
+                        transition: "all 0.2s ease",
                     }}
                 >
                     <option value="pl">Polski</option>
@@ -101,10 +86,11 @@ export function SettingsSection({
                         justifyContent: "space-between",
                         fontWeight: "500",
                         color: panelTextColor,
-                        marginBottom: "10px",
+                        marginBottom: "8px",
+                        fontSize: "14px",
                     }}
                 >
-                    Tryb ciemny
+                    <span>🌙 Tryb ciemny</span>
                     <input
                         type="checkbox"
                         checked={darkMode}
@@ -112,7 +98,7 @@ export function SettingsSection({
                         style={{
                             width: "18px",
                             height: "18px",
-                            accentColor: "#28a745",
+                            accentColor: "#0d9488",
                             cursor: "pointer",
                         }}
                     />
@@ -120,11 +106,13 @@ export function SettingsSection({
                 <p
                     style={{
                         margin: 0,
-                        fontSize: "13px",
+                        marginTop: "6px",
+                        fontSize: "12px",
                         color: panelMutedColor,
+                        opacity: 0.7,
                     }}
                 >
-                    Przykładowe ustawienia interfejsu.
+                    Włącz dla wygody oka w nocy
                 </p>
             </div>
         </div>
