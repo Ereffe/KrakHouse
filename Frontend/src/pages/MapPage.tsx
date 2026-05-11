@@ -1,8 +1,8 @@
 import { MapContainer, Marker, Polygon, Popup, TileLayer } from "react-leaflet";
-import { MapGridLayer } from "./MapGridLayer";
-import { MapSidebar } from "./MapSidebar";
-import { KRAKOW, KRAKOW_BORDER, useMapController } from "./mapController";
-import { filters, type FilterKey } from "./mapFilters";
+import { MapGridLayer } from "../components/MapGridLayer";
+import { MapSidebar } from "../components/MapSidebar";
+import { KRAKOW, KRAKOW_BORDER, useMapController } from "../components/mapController";
+import { filters, type FilterKey } from "../components/mapFilters";
 
 export default function MapPage() {
     const controller = useMapController();
