@@ -65,6 +65,7 @@ export function MapSidebar({
         panelTitleColor,
         panelTextColor,
         panelBorderColor,
+        rightSidebarColor,
         sidebarBackground,
         titleFontSize,
         baseFontSize,
@@ -84,6 +85,7 @@ export function MapSidebar({
                 transition: "width 0.3s ease, padding 0.3s ease",
                 display: "flex",
                 flexDirection: "column",
+                borderRight: isCollapsed ? `3px solid ${rightSidebarColor}` : "none",
             }}
         >
             <button

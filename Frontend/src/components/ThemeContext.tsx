@@ -11,6 +11,7 @@ interface ThemeContextValue {
     readonly titleFontSize: string;
     readonly baseFontSize: string;
     readonly visuallyImpairedFontSize: string;
+    readonly rightSidebarColor: string;
 }
 
 interface ThemeProviderProps {
@@ -34,6 +35,7 @@ export function ThemeProvider({ darkMode, visuallyImpaired, children }: ThemePro
             panelTextColor,
             panelMutedColor,
             panelBorderColor: darkMode ? "#495057" : "#ced4da",
+            rightSidebarColor: darkMode ? "#f8f9fa" : "#2c2f33",
             sidebarBackground: darkMode
                 ? "linear-gradient(135deg, #2c2f33 0%, #23272a 100%)"
                 : "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
