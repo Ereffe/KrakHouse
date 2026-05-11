@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import "./App.css";
-import Map from "./pages/Map";
+import MapPage from "./pages/MapPage.tsx";
 
 export default function App() {
-  return <Map />;
+  return <MapPage />;
 }
