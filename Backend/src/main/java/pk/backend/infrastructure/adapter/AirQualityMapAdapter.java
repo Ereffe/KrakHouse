@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriComponentsBuilder;
 import pk.backend.aplication.port.outbound.AirQualityMapFactory;
 import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.infrastructure.dto.SingleSensorReadDto;
@@ -13,6 +15,9 @@ import pk.backend.infrastructure.dto.StationsRecordDto;
 import pk.backend.infrastructure.model.AirQualityData;
 import pk.backend.infrastructure.service.AirQualityService;
 
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +31,6 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
     private final AirQualityService airQualityService;
 
     private final RestClient airQualityRestClient;
-//    private final UriBuilder uriComponentBuilder;
 
     @Override
     public CityMap createMap() {
@@ -48,35 +52,33 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
                     .uri("/v1/rest/station/sensors/" + station.id())
                     .retrieve()
                     .body(SensorResponseDto.class);
-            log.info("request: /v1/rest/station/readSequence/"  + station.id());
+            log.info("request: /v1/rest/station/sensors/" + station.id());
 
-            addSensorsForStation(airQualityData.get(station.id()), sensorsList);
-            log.info("CurrentSensors count: " + airQualityData.size());
+            try {
+                addSensorsForStation(airQualityData.get(station.id()), sensorsList, 0);
+                log.info("Automatic station data" + airQualityData.get(station.id()).getSensors().entrySet());
+            } catch (HttpClientErrorException e) { //TODO: catch more specific exception
+                try {
+                    log.info(e.getMessage());
+                    addSensorsForStation(airQualityData.get(station.id()), sensorsList, 8);
+                    log.info("Manual station data" + airQualityData.get(station.id()).getSensors().entrySet());
+                } catch (Exception ex) {
+                    log.info("Unable to fetch station data" + ex.getMessage());
+                }
+            }
         });
 //        TODO: implement flow for retrieving data that is input manually after 4-8 weeks
 
-
-//        URI pm10Uri = uriComponentBuilder.path(GET_PM10_DATA)
-//                .queryParam("size", 500)
-//                .queryParam("filter[powiat]", "Kraków")
-//                .queryParam("filter[wojewodztwo]", "MAŁOPOLSKIE")
-//                .build();
-
-
 //        TODO: 4 implement air quality adapter
-//        TODO: 4 API required to show data source explicitly
+//        TODO: 4 API license requires to show data source explicitly
         throw new UnsupportedOperationException("implementation not finished yet");
     }
 
-    private void addSensorsForStation(AirQualityData station, SensorResponseDto sensorList) {
-        sensorList.sensors.forEach(sensorDto -> {
-            SensorDataResponseDto sensorDataSequence = airQualityRestClient.get()
-                    .uri("/v1/rest/data/getData/" + sensorDto.sensorId + "?size=500")
-                    .retrieve()
-                    .body(SensorDataResponseDto.class);
+    private void addSensorsForStation(AirQualityData station, SensorResponseDto sensorList, int delayWeeks) {
 
-            log.info("request: /v1/rest/data/getData/" + sensorDto.sensorId + "?size=500");
-            log.info(sensorDataSequence.readSequence().toString());
+        sensorList.sensors.forEach(sensorDto -> {
+
+            var sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), delayWeeks);
 
             station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence);
         });
@@ -100,8 +102,8 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record SensorDataResponseDto(
-            @JsonProperty("Lista danych pomiarowych")
+    public record SensorDataResponseDto(
+            @JsonProperty("Lista archiwalnych wyników pomiarów")
             List<SingleSensorReadDto> readSequence
     ) {
     }
