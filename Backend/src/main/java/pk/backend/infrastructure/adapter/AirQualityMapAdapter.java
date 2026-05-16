@@ -1,23 +1,15 @@
 package pk.backend.infrastructure.adapter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.util.UriComponentsBuilder;
 import pk.backend.aplication.port.outbound.AirQualityMapFactory;
 import pk.backend.domain.model.CityMap.CityMap;
-import pk.backend.infrastructure.dto.SingleSensorReadDto;
+import pk.backend.infrastructure.dto.SensorResponseDto;
 import pk.backend.infrastructure.dto.StationsRecordDto;
 import pk.backend.infrastructure.model.AirQualityData;
 import pk.backend.infrastructure.service.AirQualityService;
 
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +21,6 @@ import java.util.Map;
 public class AirQualityMapAdapter implements AirQualityMapFactory {
 
     private final AirQualityService airQualityService;
-
-    private final RestClient airQualityRestClient;
 
     @Override
     public CityMap createMap() {
@@ -48,65 +38,36 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
         }
 
         airQualityStations.forEach(station -> {
-            var sensorsList = airQualityRestClient.get()
-                    .uri("/v1/rest/station/sensors/" + station.id())
-                    .retrieve()
-                    .body(SensorResponseDto.class);
-            log.info("request: /v1/rest/station/sensors/" + station.id());
+            var sensorsList = airQualityService.getSensorsForStation(station);
 
-            try {
-                addSensorsForStation(airQualityData.get(station.id()), sensorsList, 0);
+                addSensorsForStation(airQualityData.get(station.id()), sensorsList);
                 log.info("Automatic station data" + airQualityData.get(station.id()).getSensors().entrySet());
-            } catch (HttpClientErrorException e) { //TODO: catch more specific exception
-                try {
-                    log.info(e.getMessage());
-                    addSensorsForStation(airQualityData.get(station.id()), sensorsList, 8);
-                    log.info("Manual station data" + airQualityData.get(station.id()).getSensors().entrySet());
-                } catch (Exception ex) {
-                    log.info("Unable to fetch station data" + ex.getMessage());
-                }
-            }
         });
-//        TODO: implement flow for retrieving data that is input manually after 4-8 weeks
-
+//        TODO: 4 add cache for optimization, because of API limits and response time
 //        TODO: 4 implement air quality adapter
 //        TODO: 4 API license requires to show data source explicitly
         throw new UnsupportedOperationException("implementation not finished yet");
     }
 
-    private void addSensorsForStation(AirQualityData station, SensorResponseDto sensorList, int delayWeeks) {
+    private void addSensorsForStation(AirQualityData station, SensorResponseDto sensorList) {
 
-        sensorList.sensors.forEach(sensorDto -> {
+        sensorList.sensors().forEach(sensorDto -> {
+            log.info("try request sensor with id: " + sensorDto.sensorId());
+            var sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), 0);
 
-            var sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), delayWeeks);
+            if (sensorDataSequence.readSequence().isEmpty()){
+                log.info("try fallback request sensor with id: " + sensorDto.sensorId());
+                sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), 8);
+            }
 
-            station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence);
+            if (sensorDataSequence.readSequence().isEmpty())
+                return;
+
+            station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence());
         });
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    record SensorResponseDto(
-            @JsonProperty("Lista stanowisk pomiarowych dla podanej stacji")
-            List<SensorDto> sensors
-    ) {
-    }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    record SensorDto(
-            @JsonProperty("Identyfikator stanowiska")
-            Long sensorId,
-
-            @JsonProperty("Wskaźnik - wzór")
-            String Indicator
-    ) {
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record SensorDataResponseDto(
-            @JsonProperty("Lista archiwalnych wyników pomiarów")
-            List<SingleSensorReadDto> readSequence
-    ) {
-    }
 
 
 }

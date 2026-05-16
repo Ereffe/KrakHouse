@@ -2,10 +2,13 @@ package pk.backend.infrastructure.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import pk.backend.infrastructure.adapter.AirQualityMapAdapter;
+import pk.backend.infrastructure.dto.SensorDataResponseDto;
+import pk.backend.infrastructure.dto.SensorResponseDto;
 import pk.backend.infrastructure.dto.StationsRecordDto;
 import pk.backend.infrastructure.dto.StationsResponseDto;
 
@@ -34,7 +37,17 @@ public class AirQualityService {
                 .toList();
     }
 
-    public AirQualityMapAdapter.SensorDataResponseDto requestSensorData(long sensorId, int delayWeeks) {
+    public SensorResponseDto getSensorsForStation(StationsRecordDto station) {
+        var sensorsList = airQualityRestClient.get()
+                .uri("/v1/rest/station/sensors/" + station.id())
+                .retrieve()
+                .body(SensorResponseDto.class);
+        log.info("request: /v1/rest/station/sensors/" + station.id());
+        return sensorsList;
+    }
+
+
+    public SensorDataResponseDto requestSensorData(long sensorId, int delayWeeks) {
         UriComponentsBuilder uriComponentBuilder = UriComponentsBuilder.newInstance();
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -52,7 +65,7 @@ public class AirQualityService {
         var temp = airQualityRestClient.get()
                 .uri(uri)
                 .retrieve()
-                .body(AirQualityMapAdapter.SensorDataResponseDto.class);
+                .body(SensorDataResponseDto.class);
 
         log.info(temp.toString());
 
