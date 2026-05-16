@@ -1,6 +1,7 @@
 package pk.backend.infrastructure.controller;
 
 // lombok constructor removed to ensure explicit constructor for static analysis
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import pk.backend.aplication.port.inbound.ControllerPort;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,10 @@ import pk.backend.infrastructure.dto.FilteredMapDto;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class MapController {
 
     private final ControllerPort controllerPort;
-    
-    public MapController(ControllerPort controllerPort) {
-        this.controllerPort = controllerPort;
-    }
 
     @GetMapping("/filters")
     public ResponseEntity<List<String>> getFilters() {

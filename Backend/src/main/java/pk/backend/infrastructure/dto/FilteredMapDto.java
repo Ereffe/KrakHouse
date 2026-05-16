@@ -1,7 +1,8 @@
 package pk.backend.infrastructure.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import pk.backend.domain.model.utils.CompareCondition;
 
 public record FilteredMapDto(

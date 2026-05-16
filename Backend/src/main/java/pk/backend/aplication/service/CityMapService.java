@@ -1,4 +1,5 @@
 package pk.backend.aplication.service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pk.backend.aplication.port.inbound.ControllerPort;
 import pk.backend.domain.model.CityMap.CityMap;
@@ -18,13 +19,10 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class CityMapService implements ControllerPort {
 
     private final List<MapService> services;
-
-    public CityMapService(List<MapService> services) {
-        this.services = services;
-    }
 
     @Override
     public List<String> getFilters() {
