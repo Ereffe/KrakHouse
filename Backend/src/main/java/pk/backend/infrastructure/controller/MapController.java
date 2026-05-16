@@ -1,6 +1,7 @@
 package pk.backend.infrastructure.controller;
 
 // lombok constructor removed to ensure explicit constructor for static analysis
+import org.springframework.web.bind.annotation.RequestBody;
 import pk.backend.aplication.port.inbound.ControllerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +27,13 @@ public class MapController {
     }
 
     @GetMapping("/maps")
-    public ResponseEntity<CityMap> getMergedMaps(@RequestParam List<FilteredMapDto> filteredMaps){
+    public ResponseEntity<CityMap> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
         var map = controllerPort.getMergedMaps(filteredMaps);
         return ResponseEntity.ok(map);
     }
 
     @GetMapping("/maps-list")
-    public ResponseEntity<List<CityMap>> getFilteredMap(@RequestParam List<FilteredMapDto> filteredMaps){
+    public ResponseEntity<List<CityMap>> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
         var maps = controllerPort.getFilteredMap(filteredMaps);
         return ResponseEntity.ok(maps);
     }
