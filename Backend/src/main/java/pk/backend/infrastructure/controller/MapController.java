@@ -1,6 +1,9 @@
 package pk.backend.infrastructure.controller;
 
+// lombok constructor removed to ensure explicit constructor for static analysis
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
+import pk.backend.aplication.port.inbound.ControllerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,26 +13,27 @@ import pk.backend.infrastructure.dto.FilteredMapDto;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class MapController {
+
+    private final ControllerPort controllerPort;
 
     @GetMapping("/filters")
     public ResponseEntity<List<String>> getFilters() {
-        //    TODO: 1 implement controller flow
-        throw new UnsupportedOperationException("Not implemented yet");
+        return ResponseEntity.ok(controllerPort.getFilters());
     }
 
     @GetMapping("/maps")
-    public ResponseEntity<CityMap> getMergedMaps(@RequestParam List<FilteredMapDto> filteredMaps){
-        //    TODO: 1 implement controller flow
-        throw new UnsupportedOperationException("Not implemented yet");
+    public ResponseEntity<CityMap> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
+        var map = controllerPort.getMergedMaps(filteredMaps);
+        return ResponseEntity.ok(map);
     }
 
     @GetMapping("/maps-list")
-    public ResponseEntity<List<CityMap>> getFilteredMap(@RequestParam List<FilteredMapDto> filteredMaps){
-        //    TODO: 1 implement controller flow
-        throw new UnsupportedOperationException("Not implemented yet");
+    public ResponseEntity<List<CityMap>> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
+        var maps = controllerPort.getFilteredMap(filteredMaps);
+        return ResponseEntity.ok(maps);
     }
 
 }
