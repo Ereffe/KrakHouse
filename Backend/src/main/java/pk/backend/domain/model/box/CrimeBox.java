@@ -1,19 +1,23 @@
 package pk.backend.domain.model.box;
 
-import lombok.AllArgsConstructor;
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
+import pk.backend.domain.model.box.ValueObjects.CrimeBoxObject;
 
-@AllArgsConstructor
-public class CrimeBox implements BoxValue{
+public class CrimeBox implements BoxValue {
 
-    private int value;
+    private CrimeBoxObject value;
+
+    public CrimeBox(float value){
+        this.value = new CrimeBoxObject(value);
+    }
 
     @Override
-    public Object getValue() {
+    public CrimeBoxObject getValue() {
         return value;
     }
 
     @Override
     public int compareTo(BoxValue other) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return value.compareTo(other.getValue());
     }
 }

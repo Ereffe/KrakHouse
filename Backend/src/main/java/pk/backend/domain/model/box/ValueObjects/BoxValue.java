@@ -1,7 +1,7 @@
-package pk.backend.domain.model.box;
+package pk.backend.domain.model.box.ValueObjects;
 
 public interface BoxValue {
 //    TODO: 2 create value-object for Value
-    Object getValue();
+    BoxObject getValue();
     int compareTo(BoxValue other);
 }

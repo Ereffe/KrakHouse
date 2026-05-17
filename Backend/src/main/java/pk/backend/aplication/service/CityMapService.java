@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import pk.backend.aplication.port.inbound.ControllerPort;
 import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.domain.model.box.AirQualityBox;
-import pk.backend.domain.model.box.BoxValue;
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
 import pk.backend.domain.model.box.CrimeBox;
 import pk.backend.domain.model.box.NoiseBox;
 import pk.backend.domain.model.box.PriceBox;

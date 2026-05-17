@@ -1,22 +1,26 @@
 package pk.backend.domain.model.box;
 
-import lombok.AllArgsConstructor;
+
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
+import pk.backend.domain.model.box.ValueObjects.PriceBoxObject;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-@AllArgsConstructor
 public class PriceBox implements BoxValue {
 
-    private BigDecimal value;
+    private PriceBoxObject value;
+
+    public PriceBox(BigDecimal value){
+        this.value = new PriceBoxObject(value);
+    }
 
     @Override
-    public Object getValue() {
-        return value.setScale(2, RoundingMode.HALF_UP);
+    public PriceBoxObject getValue() {
+        return value;
     }
 
     @Override
     public int compareTo(BoxValue other) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return value.compareTo(((PriceBox)other).value);
     }
 }
