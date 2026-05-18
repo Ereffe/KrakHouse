@@ -1,19 +1,23 @@
 package pk.backend.domain.model.box;
 
-import lombok.AllArgsConstructor;
+import pk.backend.domain.model.box.ValueObjects.AirQualityBoxObject;
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
 
-@AllArgsConstructor
-public class AirQualityBox implements BoxValue{
+public class AirQualityBox implements BoxValue {
 
-    private int value;
+    private AirQualityBoxObject value;
+
+    public AirQualityBox(int value) {
+        this.value = new AirQualityBoxObject(value);
+    }
 
     @Override
-    public Object getValue() {
+    public AirQualityBoxObject getValue() {
         return value;
     }
 
     @Override
     public int compareTo(BoxValue other) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return value.compareTo(other.getValue());
     }
 }

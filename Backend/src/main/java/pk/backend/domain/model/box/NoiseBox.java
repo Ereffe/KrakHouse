@@ -1,19 +1,24 @@
 package pk.backend.domain.model.box;
 
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
+import pk.backend.domain.model.box.ValueObjects.NoiseBoxObject;
+
 public class NoiseBox implements BoxValue {
 
-    private int value;
+    private NoiseBoxObject value;
+
+    public NoiseBox(int value){
+        this.value = new NoiseBoxObject(value);
+    }
 
     @Override
-    public Object getValue() {
+    public NoiseBoxObject getValue() {
         return value;
     }
 
     @Override
     public int compareTo(BoxValue other) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return value.compareTo(other.getValue());
     }
 }

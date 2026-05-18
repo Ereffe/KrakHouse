@@ -1,6 +1,6 @@
 package pk.backend.domain.model.CityMap;
 
-import pk.backend.domain.model.box.BoxValue;
+import pk.backend.domain.model.box.ValueObjects.BoxValue;
 import pk.backend.domain.model.utils.CompareCondition;
 
 import java.util.List;
