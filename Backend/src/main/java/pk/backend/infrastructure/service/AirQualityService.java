@@ -2,18 +2,20 @@ package pk.backend.infrastructure.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import pk.backend.infrastructure.adapter.AirQualityMapAdapter;
 import pk.backend.infrastructure.dto.SensorDataResponseDto;
 import pk.backend.infrastructure.dto.SensorResponseDto;
 import pk.backend.infrastructure.dto.StationsRecordDto;
 import pk.backend.infrastructure.dto.StationsResponseDto;
+import pk.backend.infrastructure.model.AirPollutionSensorsData;
+import pk.backend.infrastructure.model.AirQualityData;
+import pk.backend.infrastructure.utility.AirQualityMapper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +24,32 @@ import java.util.List;
 public class AirQualityService {
 
     private final RestClient airQualityRestClient;
+
+    public List<AirQualityData> getAirQualityData() {
+        List<AirPollutionSensorsData> airPollutionDataList = new ArrayList<>();
+        List<StationsRecordDto> airQualityStations = getStations();
+
+        for (var station : airQualityStations) {
+            var temp = new AirPollutionSensorsData();
+            temp.setId(station.id());
+            temp.setLatitude(station.latitude());
+            temp.setLongitude(station.longitude());
+
+            airPollutionDataList.add(temp);
+        }
+
+        for (int i = 0; i < airQualityStations.size(); i++) {
+            var station = airQualityStations.get(i);
+            var sensorsList = getSensorsForStation(station);
+            var stationData = airPollutionDataList.get(i);
+
+            addSensorsForStation(stationData, sensorsList);
+            log.info("Automatic station data: " + stationData.getSensors().entrySet());
+        }
+
+        return AirQualityMapper.mapToAQIList(airPollutionDataList);
+    }
+
 
     public List<StationsRecordDto> getStations() {
         StationsResponseDto response = airQualityRestClient.get()
@@ -33,7 +61,7 @@ public class AirQualityService {
         log.info(response.stations().toString());
 
         return response.stations().stream()
-                .filter(rec -> rec.cityName().equals("Kraków"))
+                .filter(rec -> rec.cityName().equalsIgnoreCase("Krakow") || rec.cityName().contains("Krak"))
                 .toList();
     }
 
@@ -70,5 +98,22 @@ public class AirQualityService {
         log.info(temp.toString());
 
         return temp;
+    }
+
+    private void addSensorsForStation(AirPollutionSensorsData station, SensorResponseDto sensorList) {
+        sensorList.sensors().forEach(sensorDto -> {
+            log.info("try request sensor with id: " + sensorDto.sensorId());
+            var sensorDataSequence = requestSensorData(sensorDto.sensorId(), 0);
+
+            if (sensorDataSequence.readSequence().isEmpty()){
+                log.info("try fallback request sensor with id: " + sensorDto.sensorId());
+                sensorDataSequence = requestSensorData(sensorDto.sensorId(), 8);
+            }
+
+            if (sensorDataSequence.readSequence().isEmpty())
+                return;
+
+            station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence());
+        });
     }
 }

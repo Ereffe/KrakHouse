@@ -8,12 +8,8 @@ import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.domain.model.CityMap.GridMap;
 import pk.backend.domain.model.box.AirQualityBox;
 import pk.backend.domain.model.box.ValueObjects.BoxValue;
-import pk.backend.infrastructure.dto.SensorResponseDto;
-import pk.backend.infrastructure.dto.StationsRecordDto;
-import pk.backend.infrastructure.model.AirPollutionSensorsData;
 import pk.backend.infrastructure.model.AirQualityData;
 import pk.backend.infrastructure.service.AirQualityService;
-import pk.backend.infrastructure.utility.AirQualityMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +27,7 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
 
     @Override
     public CityMap createMap() {
-        List<AirPollutionSensorsData> airPollutionDataList = new ArrayList<>();
-
-        List<StationsRecordDto> airQualityStations = airQualityService.getStations();
-
-        for (var station : airQualityStations) {
-            var temp = new AirPollutionSensorsData();
-            temp.setId(station.id());
-            temp.setLatitude(station.latitude());
-            temp.setLongitude(station.longitude());
-
-            airPollutionDataList.add(temp);
-        }
-
-        for (int i = 0; i < airQualityStations.size(); i++) {
-            var station = airQualityStations.get(i);
-            var sensorsList = airQualityService.getSensorsForStation(station);
-            var stationData = airPollutionDataList.get(i);
-
-            addSensorsForStation(stationData, sensorsList);
-            log.info("Automatic station data: " + stationData.getSensors().entrySet());
-        }
-
-        List<AirQualityData> aqiList = AirQualityMapper.mapToAQIList(airPollutionDataList);
+        List<AirQualityData> aqiList = airQualityService.getAirQualityData();
 
         List<List<BoxValue>> boxMatrix = new ArrayList<>();
 
@@ -83,23 +57,4 @@ public class AirQualityMapAdapter implements AirQualityMapFactory {
         }
         return nearest;
     }
-
-    private void addSensorsForStation(AirPollutionSensorsData station, SensorResponseDto sensorList) {
-
-        sensorList.sensors().forEach(sensorDto -> {
-            log.info("try request sensor with id: " + sensorDto.sensorId());
-            var sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), 0);
-
-            if (sensorDataSequence.readSequence().isEmpty()){
-                log.info("try fallback request sensor with id: " + sensorDto.sensorId());
-                sensorDataSequence = airQualityService.requestSensorData(sensorDto.sensorId(), 8);
-            }
-
-            if (sensorDataSequence.readSequence().isEmpty())
-                return;
-
-            station.addSensor(sensorDto.Indicator(), sensorDataSequence.readSequence());
-        });
-    }
-
 }
