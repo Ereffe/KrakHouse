@@ -42,8 +42,9 @@ public class CityMapService implements ControllerPort {
             if (svc == null) continue;
             CityMap map = svc.createMap(dto.mapFilter());
 
-            BoxValue value = createBoxValue(dto.mapFilter(), dto.value());
-            map.applyFilter(value, dto.condition());
+            BoxValue min = createBoxValue(dto.mapFilter(), dto.minValue());
+            BoxValue max = createBoxValue(dto.mapFilter(), dto.maxValue());
+            map.applyFilter(min, max);
             maps.add(map);
         }
 
@@ -64,8 +65,10 @@ public class CityMapService implements ControllerPort {
             var svc = findServiceForType(dto.mapFilter());
             if (svc == null) continue;
             CityMap map = svc.createMap(dto.mapFilter());
-            BoxValue value = createBoxValue(dto.mapFilter(), dto.value());
-            map.applyFilter(value, dto.condition());
+            
+            BoxValue min = createBoxValue(dto.mapFilter(), dto.minValue());
+            BoxValue max = createBoxValue(dto.mapFilter(), dto.maxValue());
+            map.applyFilter(min, max);
             result.add(map);
         }
 

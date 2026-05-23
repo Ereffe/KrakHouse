@@ -42,15 +42,40 @@ public class GridMap implements CityMap {
     }
 
     @Override
-    public CityMap merge(CityMap map) {
-        //        TODO: 3 implement map methods
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void applyFilter(BoxValue min, BoxValue max) {
+        for (List<BoxValue> row : boxMatrix) {
+            for (int j = 0; j < row.size(); j++) {
+                BoxValue current = row.get(j);
+                if (current == null) continue;
+
+                if (current.compareTo(min) < 0 || current.compareTo(max) > 0) {
+                    row.set(j, null);
+                }
+            }
+        }
     }
 
     @Override
-    public CityMap mergeAll(List<CityMap> map) {
-        //        TODO: 3 implement map methods
-        throw new UnsupportedOperationException("Not implemented yet");
+    public CityMap merge(CityMap map) {
+        List<List<BoxValue>> otherMatrix = map.getBoxMatrix();
+        for (int i = 0; i < boxMatrix.size(); i++) {
+            List<BoxValue> row = boxMatrix.get(i);
+            List<BoxValue> otherRow = otherMatrix.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                if (row.get(j) == null || otherRow.get(j) == null) {
+                    row.set(j, null);
+                }
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public CityMap mergeAll(List<CityMap> maps) {
+        for (CityMap map : maps) {
+            merge(map);
+        }
+        return this;
     }
 
     @Override

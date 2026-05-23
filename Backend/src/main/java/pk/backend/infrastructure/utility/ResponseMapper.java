@@ -17,19 +17,7 @@ public class ResponseMapper {
 
     public static MergedMapResponseDto mapToMergedDto(CityMap map, List<FilteredMapDto> filters) {
         List<MergedMapResponseDto.FilterInfo> filterInfos = filters.stream()
-                .map(f -> {
-                    Float lower = null;
-                    Float upper = null;
-                    if (f.condition() == CompareCondition.GREATER || f.condition() == CompareCondition.GREATER_EQUAL) {
-                        lower = f.value();
-                    } else if (f.condition() == CompareCondition.LESS || f.condition() == CompareCondition.LESS_EQUAL) {
-                        upper = f.value();
-                    } else if (f.condition() == CompareCondition.EQUAL) {
-                        lower = f.value();
-                        upper = f.value();
-                    }
-                    return new MergedMapResponseDto.FilterInfo(f.mapFilter(), lower, upper);
-                })
+                .map(f -> new MergedMapResponseDto.FilterInfo(f.mapFilter(), f.minValue(), f.maxValue()))
                 .toList();
 
         if (map == null) {
@@ -37,7 +25,9 @@ public class ResponseMapper {
         }
 
         List<List<Boolean>> data = map.getBoxMatrix().stream()
-                .map(row -> row.stream().map(Objects::nonNull).toList())
+                .map(row -> row.stream()
+                        .map(Objects::nonNull)
+                        .toList())
                 .toList();
 
         return new MergedMapResponseDto(filterInfos, data);

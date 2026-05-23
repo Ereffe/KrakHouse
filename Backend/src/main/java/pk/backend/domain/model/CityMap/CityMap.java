@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CityMap {
     void applyFilter(BoxValue value, CompareCondition condition);
+    void applyFilter(BoxValue min, BoxValue max);
     CityMap merge(CityMap map);
     CityMap mergeAll(List<CityMap> map);
 
