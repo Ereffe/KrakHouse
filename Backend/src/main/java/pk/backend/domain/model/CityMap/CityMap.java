@@ -9,4 +9,9 @@ public interface CityMap {
     void applyFilter(BoxValue value, CompareCondition condition);
     CityMap merge(CityMap map);
     CityMap mergeAll(List<CityMap> map);
+
+    double getLatitudeLeftBorder();
+    double getLatitudeRightBorder();
+    double getLongitudeTopBorder();
+    double getLongitudeBottomBorder();
 }
