@@ -1,15 +1,15 @@
 package pk.backend.infrastructure.controller;
 
-// lombok constructor removed to ensure explicit constructor for static analysis
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
-import pk.backend.aplication.port.inbound.ControllerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pk.backend.domain.model.CityMap.CityMap;
+import pk.backend.aplication.port.inbound.ControllerPort;
 import pk.backend.infrastructure.dto.FilteredMapDto;
+import pk.backend.infrastructure.dto.FilteredMapListResponseDto;
+import pk.backend.infrastructure.dto.MergedMapResponseDto;
+import pk.backend.infrastructure.utility.ResponseMapper;
 
 import java.util.List;
 
@@ -25,15 +25,14 @@ public class MapController {
     }
 
     @GetMapping("/maps")
-    public ResponseEntity<CityMap> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
+    public ResponseEntity<MergedMapResponseDto> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
         var map = controllerPort.getMergedMaps(filteredMaps);
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(ResponseMapper.mapToMergedDto(map, filteredMaps));
     }
 
     @GetMapping("/maps-list")
-    public ResponseEntity<List<CityMap>> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
+    public ResponseEntity<FilteredMapListResponseDto> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
         var maps = controllerPort.getFilteredMap(filteredMaps);
-        return ResponseEntity.ok(maps);
+        return ResponseEntity.ok(ResponseMapper.mapToFilteredListDto(maps, filteredMaps));
     }
-
 }

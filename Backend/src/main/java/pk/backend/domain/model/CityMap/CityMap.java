@@ -14,4 +14,6 @@ public interface CityMap {
     double getLatitudeRightBorder();
     double getLongitudeTopBorder();
     double getLongitudeBottomBorder();
+    
+    List<List<BoxValue>> getBoxMatrix();
 }

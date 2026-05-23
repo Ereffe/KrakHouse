@@ -21,8 +21,24 @@ public class GridMap implements CityMap {
 
     @Override
     public void applyFilter(BoxValue value, CompareCondition condition) {
-//        TODO: 3 implement map methods
-        throw new UnsupportedOperationException("Not implemented yet");
+        for (List<BoxValue> row : boxMatrix) {
+            for (int j = 0; j < row.size(); j++) {
+                BoxValue current = row.get(j);
+                if (current == null) continue;
+
+                boolean matches = switch (condition) {
+                    case LESS -> current.compareTo(value) < 0;
+                    case LESS_EQUAL -> current.compareTo(value) <= 0;
+                    case EQUAL -> current.compareTo(value) == 0;
+                    case GREATER_EQUAL -> current.compareTo(value) >= 0;
+                    case GREATER -> current.compareTo(value) > 0;
+                };
+
+                if (!matches) {
+                    row.set(j, null);
+                }
+            }
+        }
     }
 
     @Override
@@ -55,5 +71,10 @@ public class GridMap implements CityMap {
     @Override
     public double getLongitudeBottomBorder() {
         return LONGITUDE_BOTTOM_BORDER;
+    }
+
+    @Override
+    public List<List<BoxValue>> getBoxMatrix() {
+        return boxMatrix;
     }
 }
