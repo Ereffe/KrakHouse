@@ -1,1 +1,20 @@
-#TODO: add docker compose
+services:
+  backend:
+    container_name: krakhouse-backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+#  frontend:
+#    container_name: krakhouse-frontend
+#    build:
+#      context: ./Frontend
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5173:5173"
+#    depends_on:
+#      - backend
+#    networks:
+#      - krakhouse-network
