@@ -19,7 +19,8 @@ public class CrimeBoxService implements MapService {
 
     @Override
     public BoxValue createBoxValue(Number value) {
-        return new CrimeBox(value.intValue());
+        if (value == null) return new CrimeBox(0f);
+        return new CrimeBox(value.floatValue() / 100f);
     }
 
     @Override
@@ -42,3 +43,4 @@ public class CrimeBoxService implements MapService {
         return MAX_VALUE;
     }
 }
+

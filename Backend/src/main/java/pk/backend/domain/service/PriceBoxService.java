@@ -21,7 +21,8 @@ public class PriceBoxService implements MapService {
 
     @Override
     public BoxValue createBoxValue(Number value) {
-        return new PriceBox((BigDecimal) value);
+        if (value == null) return new PriceBox(BigDecimal.ZERO);
+        return new PriceBox(BigDecimal.valueOf(value.doubleValue()));
     }
 
     @Override
@@ -44,3 +45,4 @@ public class PriceBoxService implements MapService {
         return MAX_VALUE;
     }
 }
+
