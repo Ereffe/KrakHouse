@@ -21,6 +21,7 @@ public abstract class AbstractAdapter<T extends Number & Comparable<T>>{
 
     public abstract List<DiscreteData<T>> fetchData();
     public abstract BoxValue createBox(T value);
+    public abstract String assignDataProvider();
 
     public CityMap createMap() {
         List<DiscreteData<T>> aqiList = fetchData();
@@ -36,7 +37,7 @@ public abstract class AbstractAdapter<T extends Number & Comparable<T>>{
             boxMatrix.add(row);
         }
 
-        return new GridMap(boxMatrix);
+        return new GridMap(boxMatrix, assignDataProvider());
     }
 
     private DiscreteData<T> findNearestSensor(double lat, double lon, List<DiscreteData<T>> aqiList) {

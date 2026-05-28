@@ -29,4 +29,9 @@ public class AirQualityMapAdapter extends AbstractAdapter<Integer> implements Ai
         return new  AirQualityBox(value);
     }
 
+    @Override
+    public String assignDataProvider() {
+        return airQualityService.getDataProvider();
+    }
+
 }

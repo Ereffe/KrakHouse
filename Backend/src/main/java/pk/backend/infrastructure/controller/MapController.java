@@ -27,8 +27,9 @@ public class MapController {
 
     @GetMapping("/maps")
     public ResponseEntity<MergedMapResponseDto> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
-        var map = controllerPort.getMergedMaps(filteredMaps);
-        return ResponseEntity.ok(ResponseMapper.mapToMergedDto(map, filteredMaps));
+        var sourceMaps = controllerPort.getFilteredMap(filteredMaps);
+        var mergedMap = controllerPort.getMergedMaps(filteredMaps);
+        return ResponseEntity.ok(ResponseMapper.mapToMergedDto(mergedMap, sourceMaps, filteredMaps));
     }
 
     @GetMapping("/maps-list")
@@ -37,3 +38,4 @@ public class MapController {
         return ResponseEntity.ok(ResponseMapper.mapToFilteredListDto(maps, filteredMaps));
     }
 }
+

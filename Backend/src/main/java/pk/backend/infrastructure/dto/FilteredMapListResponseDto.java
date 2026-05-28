@@ -8,6 +8,7 @@ public record FilteredMapListResponseDto(
     public record SingleMapResponseDto(
             String type,
             String valueType,
+            String dataProvider,
             List<List<Number>> data
     ) {}
 }

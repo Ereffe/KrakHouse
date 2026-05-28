@@ -8,6 +8,7 @@ public record MergedMapResponseDto(
 ) {
     public record FilterInfo(
             String type,
+            String dataProvider,
             Float lowerBound,
             Float upperBound
     ) {}

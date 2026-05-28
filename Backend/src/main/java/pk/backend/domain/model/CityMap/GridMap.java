@@ -14,8 +14,16 @@ public class GridMap implements CityMap {
 
     private List<List<BoxValue>> boxMatrix;
 
+    private String dataProvider;
+
+    public GridMap(List<List<BoxValue>> boxMatrix, String dataProvider) {
+        this.boxMatrix = boxMatrix;
+        this.dataProvider = dataProvider;
+    }
+
     public GridMap(List<List<BoxValue>> boxMatrix) {
         this.boxMatrix = boxMatrix;
+        this.dataProvider = "";
     }
 
     @Override
@@ -78,5 +86,10 @@ public class GridMap implements CityMap {
     @Override
     public List<List<BoxValue>> getBoxMatrix() {
         return boxMatrix;
+    }
+
+    @Override
+    public String getDataProvider() {
+        return dataProvider;
     }
 }

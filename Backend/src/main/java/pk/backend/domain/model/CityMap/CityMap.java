@@ -15,4 +15,6 @@ public interface CityMap {
     double getLongitudeBottomBorder();
     
     List<List<BoxValue>> getBoxMatrix();
+
+    String getDataProvider();
 }

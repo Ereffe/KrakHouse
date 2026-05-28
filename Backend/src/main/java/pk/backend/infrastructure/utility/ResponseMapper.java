@@ -14,16 +14,20 @@ import java.util.Objects;
 @UtilityClass
 public class ResponseMapper {
 
-    public static MergedMapResponseDto mapToMergedDto(CityMap map, List<FilteredMapDto> filters) {
-        List<MergedMapResponseDto.FilterInfo> filterInfos = filters.stream()
-                .map(f -> new MergedMapResponseDto.FilterInfo(f.mapFilter(), f.minValue(), f.maxValue()))
-                .toList();
+    public static MergedMapResponseDto mapToMergedDto(CityMap mergedMap, List<CityMap> sourceMaps, List<FilteredMapDto> filters) {
+        List<MergedMapResponseDto.FilterInfo> filterInfos = new ArrayList<>();
+        
+        for (int i = 0; i < filters.size(); i++) {
+            FilteredMapDto f = filters.get(i);
+            String provider = (sourceMaps != null && i < sourceMaps.size()) ? sourceMaps.get(i).getDataProvider() : null;
+            filterInfos.add(new MergedMapResponseDto.FilterInfo(f.mapFilter(), provider, f.minValue(), f.maxValue()));
+        }
 
-        if (map == null) {
+        if (mergedMap == null) {
             return new MergedMapResponseDto(filterInfos, Collections.emptyList());
         }
 
-        List<List<Boolean>> data = map.getBoxMatrix().stream()
+        List<List<Boolean>> data = mergedMap.getBoxMatrix().stream()
                 .map(row -> row.stream()
                         .map(Objects::nonNull)
                         .toList())
@@ -38,7 +42,7 @@ public class ResponseMapper {
             for (int i = 0; i < maps.size(); i++) {
                 CityMap map = maps.get(i);
                 if (map == null) continue;
-                
+
                 String type = filters.get(i).mapFilter();
 
                 List<List<Number>> data = map.getBoxMatrix().stream()
@@ -50,6 +54,7 @@ public class ResponseMapper {
                 singleMaps.add(new FilteredMapListResponseDto.SingleMapResponseDto(
                         type,
                         getValueType(type),
+                        map.getDataProvider(),
                         data
                 ));
             }

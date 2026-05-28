@@ -1,7 +1,9 @@
 package pk.backend.infrastructure.service;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,6 +26,10 @@ import java.util.List;
 public class AirQualityService {
 
     private final RestClient airQualityRestClient;
+
+    @Getter
+    @Value("${air-quality.api-provider}")
+    private String dataProvider;
 
     public List<DiscreteData<Integer>> getAirQualityData() {
         List<AirPollutionSensorsData> airPollutionDataList = new ArrayList<>();
