@@ -12,6 +12,8 @@ public class CrimeBoxService implements MapService {
     private final CrimeMapFactory crimeMapFactory;
 
     public static final String TYPE = "CRIME";
+    private static final int MIN_VALUE = 0;
+    private static final int MAX_VALUE = 100;
 
     @Override
     public CityMap createMap(String mapType) {
@@ -21,5 +23,15 @@ public class CrimeBoxService implements MapService {
     @Override
     public String getType() {
         return TYPE;
+    }
+
+    @Override
+    public int getMinValue() {
+        return MIN_VALUE;
+    }
+
+    @Override
+    public int getMaxValue() {
+        return MAX_VALUE;
     }
 }

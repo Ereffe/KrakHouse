@@ -5,4 +5,6 @@ import pk.backend.domain.model.CityMap.CityMap;
 public interface MapService {
     CityMap createMap(String mapType);
     String getType();
+    int getMinValue();
+    int getMaxValue();
 }

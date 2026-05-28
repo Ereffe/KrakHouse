@@ -10,6 +10,7 @@ import pk.backend.domain.model.box.NoiseBox;
 import pk.backend.domain.model.box.PriceBox;
 import pk.backend.domain.service.MapService;
 
+import pk.backend.infrastructure.dto.FilterResponseDto;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 
 import java.math.BigDecimal;
@@ -25,10 +26,10 @@ public class CityMapService implements ControllerPort {
     private final List<MapService> services;
 
     @Override
-    public List<String> getFilters() {
-        List<String> result = new ArrayList<>();
+    public List<FilterResponseDto> getFilters() {
+        List<FilterResponseDto> result = new ArrayList<>();
         for (var s : services) {
-            result.add(s.getType());
+            result.add(new FilterResponseDto(s.getType(), s.getMinValue(), s.getMaxValue()));
         }
         return result;
     }

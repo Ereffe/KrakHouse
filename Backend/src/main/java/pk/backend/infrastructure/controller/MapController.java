@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pk.backend.aplication.port.inbound.ControllerPort;
+import pk.backend.infrastructure.dto.FilterResponseDto;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 import pk.backend.infrastructure.dto.FilteredMapListResponseDto;
 import pk.backend.infrastructure.dto.MergedMapResponseDto;
@@ -20,7 +21,7 @@ public class MapController {
     private final ControllerPort controllerPort;
 
     @GetMapping("/filters")
-    public ResponseEntity<List<String>> getFilters() {
+    public ResponseEntity<List<FilterResponseDto>> getFilters() {
         return ResponseEntity.ok(controllerPort.getFilters());
     }
 
