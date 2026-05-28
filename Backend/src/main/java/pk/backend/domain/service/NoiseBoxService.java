@@ -16,7 +16,7 @@ public class NoiseBoxService implements MapService {
     private static final int MAX_VALUE = 90;
 
     @Override
-    public CityMap createMap(String mapType) {
+    public CityMap createMap() {
         return noiseMapFactory.createMap();
     }
 

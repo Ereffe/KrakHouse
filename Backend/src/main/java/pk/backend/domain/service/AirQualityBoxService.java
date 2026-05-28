@@ -16,7 +16,7 @@ public class AirQualityBoxService implements MapService {
     private static final int MAX_VALUE = 500;
 
     @Override
-    public CityMap createMap(String mapType) {
+    public CityMap createMap() {
         return airQualityMapFactory.createMap();
     }
 

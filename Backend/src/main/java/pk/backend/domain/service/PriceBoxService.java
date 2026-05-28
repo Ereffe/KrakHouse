@@ -16,7 +16,7 @@ public class PriceBoxService implements MapService {
     private static final int MAX_VALUE = 100_000;
 
     @Override
-    public CityMap createMap(String mapType) {
+    public CityMap createMap() {
         return priceMapFactory.createMap();
     }
 

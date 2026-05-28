@@ -16,7 +16,7 @@ public class CrimeBoxService implements MapService {
     private static final int MAX_VALUE = 100;
 
     @Override
-    public CityMap createMap(String mapType) {
+    public CityMap createMap() {
         return crimeMapFactory.createMap();
     }
 
