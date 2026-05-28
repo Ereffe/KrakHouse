@@ -10,7 +10,7 @@ import pk.backend.infrastructure.dto.SensorResponseDto;
 import pk.backend.infrastructure.dto.StationsRecordDto;
 import pk.backend.infrastructure.dto.StationsResponseDto;
 import pk.backend.infrastructure.model.AirPollutionSensorsData;
-import pk.backend.infrastructure.model.AirQualityData;
+import pk.backend.infrastructure.model.DiscreteData;
 import pk.backend.infrastructure.utility.AirQualityMapper;
 
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class AirQualityService {
 
     private final RestClient airQualityRestClient;
 
-    public List<AirQualityData> getAirQualityData() {
+    public List<DiscreteData<Integer>> getAirQualityData() {
         List<AirPollutionSensorsData> airPollutionDataList = new ArrayList<>();
         List<StationsRecordDto> airQualityStations = getStations();
 
@@ -51,7 +51,7 @@ public class AirQualityService {
     }
 
 
-    public List<StationsRecordDto> getStations() {
+    private List<StationsRecordDto> getStations() {
         StationsResponseDto response = airQualityRestClient.get()
                 .uri("/v1/rest/station/findAll?size=500")
                 .retrieve()
@@ -65,7 +65,7 @@ public class AirQualityService {
                 .toList();
     }
 
-    public SensorResponseDto getSensorsForStation(StationsRecordDto station) {
+    private SensorResponseDto getSensorsForStation(StationsRecordDto station) {
         var sensorsList = airQualityRestClient.get()
                 .uri("/v1/rest/station/sensors/" + station.id())
                 .retrieve()
@@ -75,7 +75,7 @@ public class AirQualityService {
     }
 
 
-    public SensorDataResponseDto requestSensorData(long sensorId, int delayWeeks) {
+    private SensorDataResponseDto requestSensorData(long sensorId, int delayWeeks) {
         UriComponentsBuilder uriComponentBuilder = UriComponentsBuilder.newInstance();
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

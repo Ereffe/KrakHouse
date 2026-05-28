@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AirQualityData {
+public class DiscreteData<T extends Number & Comparable<T>> {
 
     private Double longitude;
     private Double latitude;
-    private int aqi;
+    private T value;
 }
