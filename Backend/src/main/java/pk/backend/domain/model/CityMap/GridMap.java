@@ -1,7 +1,6 @@
 package pk.backend.domain.model.CityMap;
 
 import pk.backend.domain.model.box.ValueObjects.BoxValue;
-import pk.backend.domain.model.utils.CompareCondition;
 
 import java.util.List;
 
@@ -17,28 +16,6 @@ public class GridMap implements CityMap {
 
     public GridMap(List<List<BoxValue>> boxMatrix) {
         this.boxMatrix = boxMatrix;
-    }
-
-    @Override
-    public void applyFilter(BoxValue value, CompareCondition condition) {
-        for (List<BoxValue> row : boxMatrix) {
-            for (int j = 0; j < row.size(); j++) {
-                BoxValue current = row.get(j);
-                if (current == null) continue;
-
-                boolean matches = switch (condition) {
-                    case LESS -> current.compareTo(value) < 0;
-                    case LESS_EQUAL -> current.compareTo(value) <= 0;
-                    case EQUAL -> current.compareTo(value) == 0;
-                    case GREATER_EQUAL -> current.compareTo(value) >= 0;
-                    case GREATER -> current.compareTo(value) > 0;
-                };
-
-                if (!matches) {
-                    row.set(j, null);
-                }
-            }
-        }
     }
 
     @Override

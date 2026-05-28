@@ -5,7 +5,6 @@ import pk.backend.domain.model.CityMap.CityMap;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 import pk.backend.infrastructure.dto.FilteredMapListResponseDto;
 import pk.backend.infrastructure.dto.MergedMapResponseDto;
-import pk.backend.domain.model.utils.CompareCondition;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -21,7 +21,7 @@ class AirQualityMapperTest {
         // PM2.5: 15.0 ug/m3 -> AQI 57
         pollutionData.addSensor("PM2.5", List.of(new SingleSensorReadDto(null, 15.0)));
 
-        DiscreteData result = AirQualityMapper.mapToAQI(pollutionData);
+        DiscreteData<Integer> result = AirQualityMapper.mapToAQI(pollutionData);
 
         assertEquals(50.0, result.getLatitude());
         assertEquals(20.0, result.getLongitude());
@@ -41,10 +41,11 @@ class AirQualityMapperTest {
         p2.setLongitude(21.0);
         p2.addSensor("PM10", List.of(new SingleSensorReadDto(null, 50.0))); // AQI 46
 
-        List<DiscreteData> resultList = AirQualityMapper.mapToAQIList(List.of(p1, p2));
+        List<DiscreteData<Integer>> resultList = AirQualityMapper.mapToAQIList(List.of(p1, p2));
 
         assertEquals(2, resultList.size());
         assertEquals(57, resultList.get(0).getValue());
         assertEquals(46, resultList.get(1).getValue());
     }
 }
+
