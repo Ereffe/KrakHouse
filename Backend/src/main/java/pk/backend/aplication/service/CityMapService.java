@@ -1,18 +1,14 @@
 package pk.backend.aplication.service;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pk.backend.aplication.port.inbound.ControllerPort;
 import pk.backend.domain.model.CityMap.CityMap;
-import pk.backend.domain.model.box.AirQualityBox;
 import pk.backend.domain.model.box.ValueObjects.BoxValue;
-import pk.backend.domain.model.box.CrimeBox;
-import pk.backend.domain.model.box.NoiseBox;
-import pk.backend.domain.model.box.PriceBox;
 import pk.backend.domain.service.MapService;
-
+import pk.backend.infrastructure.dto.FilterResponseDto;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +21,10 @@ public class CityMapService implements ControllerPort {
     private final List<MapService> services;
 
     @Override
-    public List<String> getFilters() {
-        List<String> result = new ArrayList<>();
+    public List<FilterResponseDto> getFilters() {
+        List<FilterResponseDto> result = new ArrayList<>();
         for (var s : services) {
-            result.add(s.getType());
+            result.add(new FilterResponseDto(s.getType(), s.getMinValue(), s.getMaxValue()));
         }
         return result;
     }
@@ -40,10 +36,11 @@ public class CityMapService implements ControllerPort {
         for (var dto : filteredMaps) {
             var svc = findServiceForType(dto.mapFilter());
             if (svc == null) continue;
-            CityMap map = svc.createMap(dto.mapFilter());
+            CityMap map = svc.createMap();
 
-            BoxValue value = createBoxValue(dto.mapFilter(), dto.value());
-            map.applyFilter(value, dto.condition());
+            BoxValue min = svc.createBoxValue(dto.minValue());
+            BoxValue max = svc.createBoxValue(dto.maxValue());
+            map.applyFilter(min, max);
             maps.add(map);
         }
 
@@ -63,9 +60,11 @@ public class CityMapService implements ControllerPort {
         for (var dto : filteredMaps) {
             var svc = findServiceForType(dto.mapFilter());
             if (svc == null) continue;
-            CityMap map = svc.createMap(dto.mapFilter());
-            BoxValue value = createBoxValue(dto.mapFilter(), dto.value());
-            map.applyFilter(value, dto.condition());
+            CityMap map = svc.createMap();
+            
+            BoxValue min = svc.createBoxValue(dto.minValue());
+            BoxValue max = svc.createBoxValue(dto.maxValue());
+            map.applyFilter(min, max);
             result.add(map);
         }
 
@@ -77,23 +76,6 @@ public class CityMapService implements ControllerPort {
             if (s.getType().equalsIgnoreCase(type)) return s;
         }
         return null;
-    }
-
-    private BoxValue createBoxValue(String mapFilter, float value) {
-        if (mapFilter == null) return null;
-        switch (mapFilter.toUpperCase()) {
-            case "PRICE":
-                return new PriceBox(BigDecimal.valueOf(value));
-            case "NOISE":
-                return new NoiseBox(Math.round(value));
-            case "CRIME":
-                return new CrimeBox(Math.round(value));
-            case "AIR_QUALITY":
-                return new AirQualityBox(Math.round(value));
-            default:
-                // fallback to price
-                return new PriceBox(BigDecimal.valueOf(value));
-        }
     }
 
 }
