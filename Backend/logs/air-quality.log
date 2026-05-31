@@ -111,3 +111,13 @@ Caused by: java.net.UnknownHostException: mysql: Try again
 2026-05-31T13:26:39.974Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
 2026-05-31T13:26:40.924Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
 2026-05-31T13:26:41.778Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 6.243 seconds (process running for 7.234)
+2026-05-31T14:29:11.967Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 1 (/app.jar started by root in /)
+2026-05-31T14:29:11.975Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : No active profile set, falling back to 1 default profile: "default"
+2026-05-31T14:29:16.824Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-31T14:29:17.732Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
+2026-05-31T14:29:18.694Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 7.642 seconds (process running for 9.286)
+2026-05-31T14:29:27.291Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 1 (/app.jar started by root in /)
+2026-05-31T14:29:27.301Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : No active profile set, falling back to 1 default profile: "default"
+2026-05-31T14:29:30.679Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-31T14:29:35.442Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
+2026-05-31T14:29:36.688Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 10.06 seconds (process running for 10.673)
