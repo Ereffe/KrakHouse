@@ -7,11 +7,14 @@ import pk.backend.domain.model.rcn.RcnBuilding;
 import pk.backend.infrastructure.dto.rcn.RcnBuildingDto;
 import pk.backend.infrastructure.repository.RcnBuildingRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BuildingUpsertService {
 
     private final RcnBuildingRepository repository;
+    private final RcnReferenceCandidateService referenceCandidateService;
 
     @Transactional
     public RcnBuilding upsert(RcnBuildingDto dto) {
@@ -23,7 +26,14 @@ public class BuildingUpsertService {
         building.setAddressRef(dto.addressRef());
         building.setGeometryText(dto.geometryText());
 
-        return repository.save(building);
+        RcnBuilding saved = repository.save(building);
+        referenceCandidateService.replaceReferences(
+                "RCN_Budynek",
+                saved.getGmlId(),
+                List.of(new RcnReferenceCandidateService.ReferenceCandidate("adresBudynku", dto.addressRef()))
+        );
+
+        return saved;
     }
 
     private String requiredGmlId(String gmlId) {

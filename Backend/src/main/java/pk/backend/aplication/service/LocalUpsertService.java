@@ -7,11 +7,14 @@ import pk.backend.domain.model.rcn.RcnLocal;
 import pk.backend.infrastructure.dto.rcn.RcnLocalDto;
 import pk.backend.infrastructure.repository.RcnLocalRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LocalUpsertService {
 
     private final RcnLocalRepository repository;
+    private final RcnReferenceCandidateService referenceCandidateService;
 
     @Transactional
     public RcnLocal upsert(RcnLocalDto dto) {
@@ -22,7 +25,14 @@ public class LocalUpsertService {
         local.setUsableArea(dto.usableArea());
         local.setAddressRef(dto.addressRef());
 
-        return repository.save(local);
+        RcnLocal saved = repository.save(local);
+        referenceCandidateService.replaceReferences(
+                "RCN_Lokal",
+                saved.getGmlId(),
+                List.of(new RcnReferenceCandidateService.ReferenceCandidate("adresBudynkuZLokalem", dto.addressRef()))
+        );
+
+        return saved;
     }
 
     private String requiredGmlId(String gmlId) {

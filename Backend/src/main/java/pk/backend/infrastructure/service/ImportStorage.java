@@ -22,6 +22,7 @@ public class ImportStorage {
     void init() {
         createDirectory(properties.downloadDirPath());
         createDirectory(properties.tempDirPath());
+        createDirectory(extractDirPath());
         log.info("Import storage ready: downloadDir={}, tempDir={}",
                 properties.downloadDirPath(), properties.tempDirPath());
     }
@@ -32,6 +33,26 @@ public class ImportStorage {
 
     public Path resolveTempPart(String fileName) {
         return properties.tempDirPath().resolve(fileName + ".part");
+    }
+
+    public Path resolveExtractionDir(String archiveFileName) {
+        String safeName = sanitizeFileName(archiveFileName);
+        int extensionIndex = safeName.lastIndexOf('.');
+        String baseName = extensionIndex > 0 ? safeName.substring(0, extensionIndex) : safeName;
+        Path extractionDir = extractDirPath().resolve(baseName);
+        createDirectory(extractionDir);
+        return extractionDir;
+    }
+
+    private Path extractDirPath() {
+        return properties.tempDirPath().resolve("extracted");
+    }
+
+    private String sanitizeFileName(String fileName) {
+        return Path.of(fileName).getFileName().toString()
+                .replace("\\", "_")
+                .replace("/", "_")
+                .replace("..", "_");
     }
 
     private void createDirectory(Path dir) {

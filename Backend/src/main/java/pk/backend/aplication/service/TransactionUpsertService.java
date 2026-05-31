@@ -7,11 +7,14 @@ import pk.backend.domain.model.rcn.RcnTransaction;
 import pk.backend.infrastructure.dto.rcn.RcnTransactionDto;
 import pk.backend.infrastructure.repository.RcnTransactionRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TransactionUpsertService {
 
     private final RcnTransactionRepository repository;
+    private final RcnReferenceCandidateService referenceCandidateService;
 
     @Transactional
     public RcnTransaction upsert(RcnTransactionDto dto) {
@@ -22,7 +25,14 @@ public class TransactionUpsertService {
         transaction.setPrice(dto.grossPrice());
         transaction.setPropertyRef(dto.propertyRef());
 
-        return repository.save(transaction);
+        RcnTransaction saved = repository.save(transaction);
+        referenceCandidateService.replaceReferences(
+                "RCN_Transakcja",
+                saved.getGmlId(),
+                List.of(new RcnReferenceCandidateService.ReferenceCandidate("nieruchomosc", dto.propertyRef()))
+        );
+
+        return saved;
     }
 
     private String requiredGmlId(String gmlId) {
