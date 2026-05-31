@@ -3,6 +3,7 @@ package pk.backend.infrastructure.service.parser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import pk.backend.aplication.service.RcnObjectUpsertService;
 import pk.backend.infrastructure.dto.rcn.RcnObjectDto;
 
 import javax.xml.stream.XMLStreamException;
@@ -15,6 +16,7 @@ import java.util.List;
 public class RcnFeatureDispatchingHandler implements GmlFeatureHandler {
 
     private final List<RcnObjectParser<? extends RcnObjectDto>> parsers;
+    private final RcnObjectUpsertService upsertService;
 
     @Override
     public boolean supports(String localName) {
@@ -26,6 +28,7 @@ public class RcnFeatureDispatchingHandler implements GmlFeatureHandler {
         for (RcnObjectParser<? extends RcnObjectDto> parser : parsers) {
             if (parser.supports(localName)) {
                 RcnObjectDto dto = parser.parse(reader);
+                upsertService.upsert(dto);
                 log.debug("Parsed RCN object: type={}, gmlId={}", localName, dto.gmlId());
                 return;
             }
