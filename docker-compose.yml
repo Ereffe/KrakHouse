@@ -1,12 +1,7 @@
-services:
-  backend:
-    container_name: krakhouse-backend
-    build:
-      context: ./Backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+include:
+  - ./Backend/docker-compose.yml
 
+services:
   frontend:
     container_name: krakhouse-frontend
     build:
