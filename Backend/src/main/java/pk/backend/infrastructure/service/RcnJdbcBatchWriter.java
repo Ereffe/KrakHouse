@@ -56,23 +56,29 @@ public class RcnJdbcBatchWriter {
             """;
 
     private static final String PARCEL_SQL = """
-            INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text, center_x, center_y, srid)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 parcel_id = VALUES(parcel_id),
                 precinct = VALUES(precinct),
                 address_ref = VALUES(address_ref),
-                geometry_text = VALUES(geometry_text)
+                geometry_text = VALUES(geometry_text),
+                center_x = VALUES(center_x),
+                center_y = VALUES(center_y),
+                srid = VALUES(srid)
             """;
 
     private static final String BUILDING_SQL = """
-            INSERT INTO rcn_buildings (gml_id, building_id, building_type, address_ref, geometry_text)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO rcn_buildings (gml_id, building_id, building_type, address_ref, geometry_text, center_x, center_y, srid)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 building_id = VALUES(building_id),
                 building_type = VALUES(building_type),
                 address_ref = VALUES(address_ref),
-                geometry_text = VALUES(geometry_text)
+                geometry_text = VALUES(geometry_text),
+                center_x = VALUES(center_x),
+                center_y = VALUES(center_y),
+                srid = VALUES(srid)
             """;
 
     private static final String ADDRESS_SQL = """
@@ -93,6 +99,7 @@ public class RcnJdbcBatchWriter {
     private final JdbcTemplate jdbcTemplate;
     private final TransactionTemplate transactionTemplate;
     private final ImportProperties properties;
+    private final RcnImportSchemaService schemaService;
 
     private final List<RcnTransactionDto> transactions = new ArrayList<>();
     private final List<RcnPropertyDto> propertiesBuffer = new ArrayList<>();
@@ -103,6 +110,7 @@ public class RcnJdbcBatchWriter {
     private final Set<ReferenceCandidate> references = new LinkedHashSet<>();
 
     public void prepareImport() {
+        schemaService.ensurePricePointSchema();
         flush();
         jdbcTemplate.update("DELETE FROM rcn_unresolved_references");
         log.info("Cleared unresolved RCN reference candidates before import");
@@ -267,6 +275,9 @@ public class RcnJdbcBatchWriter {
         statement.setString(3, dto.zoning());
         statement.setString(4, firstRef(dto.addressRefs()));
         statement.setString(5, dto.geometryText());
+        setDouble(statement, 6, dto.centerX());
+        setDouble(statement, 7, dto.centerY());
+        setInteger(statement, 8, dto.srid());
     }
 
     private void bindBuilding(PreparedStatement statement, RcnBuildingDto dto) throws SQLException {
@@ -275,6 +286,9 @@ public class RcnJdbcBatchWriter {
         statement.setString(3, dto.buildingType());
         statement.setString(4, dto.addressRef());
         statement.setString(5, dto.geometryText());
+        setDouble(statement, 6, dto.centerX());
+        setDouble(statement, 7, dto.centerY());
+        setInteger(statement, 8, dto.srid());
     }
 
     private void bindAddress(PreparedStatement statement, RcnAddressDto dto) throws SQLException {
@@ -325,6 +339,22 @@ public class RcnJdbcBatchWriter {
 
     private boolean isBlank(String value) {
         return value == null || value.isBlank();
+    }
+
+    private void setDouble(PreparedStatement statement, int parameterIndex, Double value) throws SQLException {
+        if (value == null) {
+            statement.setObject(parameterIndex, null);
+        } else {
+            statement.setDouble(parameterIndex, value);
+        }
+    }
+
+    private void setInteger(PreparedStatement statement, int parameterIndex, Integer value) throws SQLException {
+        if (value == null) {
+            statement.setObject(parameterIndex, null);
+        } else {
+            statement.setInt(parameterIndex, value);
+        }
     }
 
     private int batchSize() {

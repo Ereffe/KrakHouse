@@ -30,6 +30,9 @@ public class ImportProperties {
     @Min(1)
     private int batchSize = 2000;
 
+    @Min(1)
+    private int linkLogInterval = 10_000;
+
     private String cron = "";
 
     public Path downloadDirPath() {

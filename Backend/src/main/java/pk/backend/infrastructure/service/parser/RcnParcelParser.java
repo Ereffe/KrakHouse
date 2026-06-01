@@ -18,6 +18,8 @@ public class RcnParcelParser implements RcnObjectParser<RcnParcelDto> {
     public RcnParcelDto parse(XMLStreamReader reader) throws XMLStreamException {
         String gmlId = RcnStaxUtils.gmlId(reader);
         RcnStaxUtils.ParsedObject parsed = RcnStaxUtils.readObject(reader);
+        RcnGeometryUtils.GeometryCenter center = RcnGeometryUtils.centerFromGeometry(parsed.geometryText())
+                .orElse(null);
 
         return new RcnParcelDto(
                 gmlId,
@@ -26,7 +28,10 @@ public class RcnParcelParser implements RcnObjectParser<RcnParcelDto> {
                 RcnStaxUtils.decimal(RcnStaxUtils.value(parsed.values(), "polePowierzchniEwidencyjnej")),
                 RcnStaxUtils.value(parsed.values(), "sposobUzytkowania"),
                 RcnStaxUtils.refs(parsed.refs(), "adresDzialki"),
-                parsed.geometryText()
+                parsed.geometryText(),
+                center == null ? null : center.centerX(),
+                center == null ? null : center.centerY(),
+                center == null ? null : center.srid()
         );
     }
 }

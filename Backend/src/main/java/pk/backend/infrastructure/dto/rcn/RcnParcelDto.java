@@ -10,6 +10,9 @@ public record RcnParcelDto(
         BigDecimal registryAreaHa,
         String usageType,
         List<String> addressRefs,
-        String geometryText
+        String geometryText,
+        Double centerX,
+        Double centerY,
+        Integer srid
 ) implements RcnObjectDto {
 }

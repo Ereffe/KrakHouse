@@ -9,6 +9,6 @@ public record RcnImportResult(
         long featureMemberCount,
         long handledObjectCount,
         long skippedObjectCount,
-        RelationLinkResult relationLinkResult
+        PricePointBuildResult pricePointBuildResult
 ) {
 }

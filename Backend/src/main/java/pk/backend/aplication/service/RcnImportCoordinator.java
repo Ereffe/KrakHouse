@@ -29,7 +29,7 @@ public class RcnImportCoordinator {
     private final GmlArchiveExtractorService archiveExtractorService;
     private final GmlStreamParser gmlStreamParser;
     private final RcnJdbcBatchWriter batchWriter;
-    private final RelationLinkerService relationLinkerService;
+    private final PricePointBuilderService pricePointBuilderService;
 
     public RcnImportResult importLatest() {
         ImportJob job = importJobRepository.save(new ImportJob(properties.getSourceUrl()));
@@ -53,7 +53,7 @@ public class RcnImportCoordinator {
             GmlParseResult parseResult = gmlStreamParser.parse(gmlFile);
 
             mark(job, ImportJobStatus.LINKING);
-            RelationLinkResult relationLinkResult = relationLinkerService.linkAll();
+            PricePointBuildResult pricePointBuildResult = pricePointBuilderService.rebuildPricePoints();
 
             mark(job, ImportJobStatus.DONE);
             log.info("Finished RCN import job: jobId={}", job.getId());
@@ -65,7 +65,7 @@ public class RcnImportCoordinator {
                     parseResult.featureMemberCount(),
                     parseResult.handledObjectCount(),
                     parseResult.skippedObjectCount(),
-                    relationLinkResult
+                    pricePointBuildResult
             );
         } catch (RuntimeException e) {
             job.markFailed(truncateError(e));

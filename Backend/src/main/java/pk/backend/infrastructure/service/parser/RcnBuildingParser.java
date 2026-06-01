@@ -18,13 +18,18 @@ public class RcnBuildingParser implements RcnObjectParser<RcnBuildingDto> {
     public RcnBuildingDto parse(XMLStreamReader reader) throws XMLStreamException {
         String gmlId = RcnStaxUtils.gmlId(reader);
         RcnStaxUtils.ParsedObject parsed = RcnStaxUtils.readObject(reader);
+        RcnGeometryUtils.GeometryCenter center = RcnGeometryUtils.centerFromGeometry(parsed.geometryText())
+                .orElse(null);
 
         return new RcnBuildingDto(
                 gmlId,
                 RcnStaxUtils.value(parsed.values(), "idBudynku"),
                 RcnStaxUtils.value(parsed.values(), "rodzajBudynku"),
                 RcnStaxUtils.ref(parsed.refs(), "adresBudynku"),
-                parsed.geometryText()
+                parsed.geometryText(),
+                center == null ? null : center.centerX(),
+                center == null ? null : center.centerY(),
+                center == null ? null : center.srid()
         );
     }
 }

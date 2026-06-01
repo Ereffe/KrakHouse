@@ -28,6 +28,14 @@ public class RcnBuilding {
     @Column(columnDefinition = "LONGTEXT")
     private String geometryText;
 
+    @Column(name = "center_x")
+    private Double centerX;
+
+    @Column(name = "center_y")
+    private Double centerY;
+
+    private Integer srid;
+
     @Column(length = 255)
     private String parcelRef;
 

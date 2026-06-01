@@ -63,3 +63,623 @@
 2026-06-01T10:10:46.018Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1300000 gml:featureMember elements from /data/rcn/tmp/extracted/1780260383514-1261_RCN/RCN_4120101.gml
 2026-06-01T10:14:02.069Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1310000 gml:featureMember elements from /data/rcn/tmp/extracted/1780260383514-1261_RCN/RCN_4120101.gml
 2026-06-01T10:17:28.005Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1320000 gml:featureMember elements from /data/rcn/tmp/extracted/1780260383514-1261_RCN/RCN_4120101.gml
+2026-06-01T10:21:52.678Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 1 (/app.jar started by root in /)
+2026-06-01T10:21:52.686Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : The following 1 profile is active: "import-smoke"
+2026-06-01T10:21:56.244Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T10:22:01.785Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
+2026-06-01T10:22:02.486Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 10.483 seconds (process running for 11.582)
+2026-06-01T10:22:02.719Z  INFO 1 --- [Backend] [main] p.b.a.service.RcnImportCoordinator       : Starting RCN import job: jobId=1, sourceUrl=https://rzeczoznawca.eco.um.krakow.pl/RCN/1261_RCN.zip
+2026-06-01T10:22:02.793Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlDownloadService         : Downloading GML from https://rzeczoznawca.eco.um.krakow.pl/RCN/1261_RCN.zip to /data/rcn/tmp/1780309322790-1261_RCN.zip.part
+2026-06-01T10:22:25.327Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlDownloadService         : Downloaded GML file: path=/data/rcn/downloads/1780309322790-1261_RCN.zip, sizeBytes=138723280
+2026-06-01T10:24:33.407Z  INFO 1 --- [Backend] [main] p.b.i.s.GmlArchiveExtractorService       : Extracted GML from archive: archive=/data/rcn/downloads/1780309322790-1261_RCN.zip, entry=RCN_4120101.gml, file=/data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:33.420Z  INFO 1 --- [Backend] [main] p.b.i.service.RcnJdbcBatchWriter         : Cleared unresolved RCN reference candidates before import
+2026-06-01T10:24:35.779Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 10000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:37.077Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 20000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:38.651Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 30000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:40.312Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 40000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:41.890Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 50000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:43.312Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 60000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:44.820Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 70000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:46.513Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 80000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:47.888Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 90000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:49.345Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:50.603Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:52.065Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:53.518Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:55.243Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:56.779Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 150000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:24:58.467Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 160000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:00.424Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 170000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:02.050Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 180000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:03.319Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 190000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:05.180Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 200000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:06.752Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 210000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:08.551Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 220000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:09.894Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 230000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:10.936Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 240000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:12.280Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 250000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:13.774Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 260000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:14.870Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 270000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:16.054Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 280000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:17.233Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 290000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:19.270Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 300000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:20.776Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 310000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:22.686Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 320000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:23.989Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 330000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:25.156Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 340000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:26.527Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 350000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:27.937Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 360000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:29.465Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 370000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:30.836Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 380000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:32.219Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 390000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:33.822Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 400000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:35.086Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 410000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:36.392Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 420000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:37.750Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 430000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:39.180Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 440000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:40.797Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 450000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:42.204Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 460000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:43.712Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 470000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:44.783Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 480000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:46.423Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 490000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:47.837Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 500000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:49.541Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 510000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:50.927Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 520000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:52.464Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 530000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:53.805Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 540000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:55.497Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 550000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:57.273Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 560000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:58.733Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 570000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:25:59.994Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 580000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:01.480Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 590000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:02.830Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 600000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:04.534Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 610000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:05.909Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 620000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:07.199Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 630000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:08.754Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 640000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:10.705Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 650000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:12.304Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 660000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:13.767Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 670000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:15.014Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 680000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:16.472Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 690000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:18.235Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 700000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:19.639Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 710000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:21.170Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 720000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:22.623Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 730000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:24.105Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 740000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:25.248Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 750000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:26.775Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 760000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:28.164Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 770000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:29.582Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 780000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:31.023Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 790000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:32.986Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 800000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:34.467Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 810000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:35.718Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 820000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:37.158Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 830000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:38.783Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 840000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:40.132Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 850000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:41.480Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 860000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:42.969Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 870000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:44.484Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 880000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:45.734Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 890000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:47.037Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 900000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:48.487Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 910000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:49.747Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 920000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:51.271Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 930000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:52.742Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 940000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:54.107Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 950000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:55.790Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 960000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:57.052Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 970000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:58.270Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 980000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:26:59.728Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 990000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:01.614Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1000000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:03.070Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1010000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:04.707Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1020000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:06.206Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1030000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:07.685Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1040000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:09.188Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1050000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:10.627Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1060000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:12.144Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1070000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:13.794Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1080000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:15.297Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1090000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:17.085Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:18.373Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:19.816Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:21.006Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:22.604Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:24.860Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1150000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:26.644Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1160000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:28.002Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1170000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:29.565Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1180000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:30.877Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1190000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:32.560Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1200000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:34.023Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1210000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:35.551Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1220000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:37.089Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1230000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:38.564Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1240000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:40.237Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1250000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:41.815Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1260000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:42.927Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1270000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:44.714Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1280000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:45.978Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1290000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:47.544Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1300000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:48.778Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1310000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:50.148Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1320000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:51.937Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1330000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:53.578Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1340000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:55.317Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1350000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:56.686Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1360000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:58.120Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1370000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:27:59.554Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1380000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:00.976Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1390000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:02.595Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1400000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:04.292Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1410000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:05.781Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1420000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:07.153Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1430000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:08.898Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1440000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:10.165Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1450000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:11.363Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1460000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:12.877Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1470000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:14.455Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1480000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:15.808Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1490000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:17.084Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1500000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:18.148Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1510000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:19.543Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1520000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:20.850Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1530000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:22.276Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1540000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:23.676Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1550000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:25.140Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1560000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:26.462Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1570000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:27.767Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1580000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:29.143Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1590000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:30.356Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1600000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:31.732Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1610000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:33.027Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1620000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:34.543Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1630000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:36.030Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1640000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:37.486Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1650000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:38.763Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1660000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:40.108Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1670000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:41.808Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1680000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:43.123Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1690000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:44.760Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1700000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:46.156Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1710000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:47.562Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1720000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:48.761Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1730000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:49.801Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1740000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:50.935Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1750000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:52.316Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1760000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:53.503Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1770000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:54.758Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1780000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:55.874Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1790000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:57.091Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1800000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:58.384Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1810000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:28:59.532Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1820000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:00.524Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1830000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:01.627Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1840000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:02.889Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1850000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:03.993Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1860000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:05.159Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1870000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:06.122Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1880000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:07.158Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1890000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:08.416Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1900000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:09.417Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1910000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:10.654Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1920000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:11.952Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1930000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:13.060Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1940000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:14.266Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1950000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:15.991Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1960000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:17.245Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1970000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:18.641Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1980000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:19.868Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1990000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:20.949Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2000000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:22.286Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2010000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:23.713Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2020000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:25.207Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2030000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:26.687Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2040000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:28.329Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2050000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:29.667Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2060000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:31.117Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2070000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:32.567Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2080000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:33.764Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2090000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:35.114Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:36.224Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:37.633Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:39.106Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:40.955Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:42.543Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2150000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:43.871Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2160000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:45.167Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2170000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:46.355Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2180000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:47.714Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2190000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:49.094Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2200000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:50.928Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2210000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:52.667Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2220000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:54.193Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2230000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:55.912Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2240000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:57.248Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2250000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:29:58.705Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2260000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:00.127Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2270000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:01.308Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2280000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:03.333Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2290000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:04.999Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2300000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:06.566Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2310000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:08.143Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2320000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:09.884Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2330000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:11.234Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2340000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:13.116Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2350000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:15.005Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2360000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:16.846Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2370000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:18.563Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2380000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:20.148Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2390000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:21.396Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2400000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:23.287Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2410000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:24.994Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2420000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:26.721Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2430000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:28.585Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2440000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:30.070Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2450000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:31.943Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2460000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:33.677Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2470000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:35.557Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2480000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:38.065Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2490000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:40.626Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2500000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:42.963Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2510000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:45.220Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2520000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:47.603Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2530000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:50.139Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2540000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:52.678Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2550000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:55.063Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2560000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:30:57.672Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2570000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:00.001Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2580000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:02.664Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2590000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:05.234Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2600000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:07.139Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2610000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:09.081Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2620000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:11.686Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2630000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:14.015Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2640000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:16.096Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2650000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:18.356Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2660000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:20.226Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2670000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:23.062Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2680000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:25.352Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2690000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:27.731Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2700000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:30.703Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2710000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:33.226Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2720000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:35.798Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2730000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:38.311Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2740000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:40.716Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2750000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:42.749Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2760000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:45.705Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2770000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:48.148Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2780000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:50.222Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2790000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:53.107Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2800000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:56.274Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2810000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:31:58.529Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2820000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:00.714Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2830000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:03.153Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2840000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:05.766Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2850000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:08.197Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2860000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:11.174Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2870000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:13.678Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2880000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:15.768Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2890000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:18.702Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2900000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:20.373Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2910000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:20.930Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2920000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:21.575Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2930000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:22.195Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2940000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:22.669Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2950000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:23.292Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2960000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:23.892Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2970000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:24.536Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2980000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:25.228Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 2990000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:25.735Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3000000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:26.261Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3010000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:26.834Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3020000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:27.413Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3030000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:27.988Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3040000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:28.560Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3050000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:29.037Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3060000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:29.539Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3070000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:30.098Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3080000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:30.644Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3090000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:31.448Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:32.040Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:32.430Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:32.935Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:33.499Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:34.155Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3150000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:34.688Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3160000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:35.263Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 3170000 gml:featureMember elements from /data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml
+2026-06-01T10:32:35.555Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Finished parsing GML file: file=/data/rcn/tmp/extracted/1780309322790-1261_RCN/RCN_4120101.gml, featureMembers=3173664, handled=2826062, skipped=347602
+2026-06-01T15:16:29.626Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 1 (/app.jar started by root in /)
+2026-06-01T15:16:29.635Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : The following 1 profile is active: "link-smoke"
+2026-06-01T15:16:33.790Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T15:16:36.134Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
+2026-06-01T15:16:37.045Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 8.155 seconds (process running for 9.122)
+2026-06-01T15:16:53.045Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : Starting RCN relation link: relation=transaction->property, candidates=387496, missingSources=0, missingTargets=0
+2026-06-01T15:18:40.771Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=10000, candidates=387496, elapsedSeconds=123.6, rowsPerSecond=80.9
+2026-06-01T15:20:24.902Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=20000, candidates=387496, elapsedSeconds=227.7, rowsPerSecond=87.8
+2026-06-01T15:22:07.423Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=30000, candidates=387496, elapsedSeconds=330.2, rowsPerSecond=90.8
+2026-06-01T15:23:57.476Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=40000, candidates=387496, elapsedSeconds=440.3, rowsPerSecond=90.8
+2026-06-01T15:25:43.922Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=50000, candidates=387496, elapsedSeconds=546.7, rowsPerSecond=91.5
+2026-06-01T15:27:26.437Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=60000, candidates=387496, elapsedSeconds=649.3, rowsPerSecond=92.4
+2026-06-01T15:29:20.564Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=70000, candidates=387496, elapsedSeconds=763.4, rowsPerSecond=91.7
+2026-06-01T15:32:08.722Z  INFO 1 --- [Backend] [main] p.b.a.service.RelationLinkerService      : RCN relation link progress: relation=transaction->property, linked=80000, candidates=387496, elapsedSeconds=931.5, rowsPerSecond=85.9
+2026-06-01T15:37:28.182Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 1 (/app.jar started by root in /)
+2026-06-01T15:37:28.189Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : The following 1 profile is active: "import-smoke"
+2026-06-01T15:37:32.767Z  WARN 1 --- [Backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T15:37:39.293Z  INFO 1 --- [Backend] [main] p.b.i.service.ImportStorage              : Import storage ready: downloadDir=/data/rcn/downloads, tempDir=/data/rcn/tmp
+2026-06-01T15:37:40.185Z  INFO 1 --- [Backend] [main] pk.backend.BackendApplication            : Started BackendApplication in 12.719 seconds (process running for 13.815)
+2026-06-01T15:37:40.414Z  INFO 1 --- [Backend] [main] p.b.a.service.RcnImportCoordinator       : Starting RCN import job: jobId=1, sourceUrl=https://rzeczoznawca.eco.um.krakow.pl/RCN/1261_RCN.zip
+2026-06-01T15:37:40.516Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlDownloadService         : Downloading GML from https://rzeczoznawca.eco.um.krakow.pl/RCN/1261_RCN.zip to /data/rcn/tmp/1780328260513-1261_RCN.zip.part
+2026-06-01T15:38:03.746Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlDownloadService         : Downloaded GML file: path=/data/rcn/downloads/1780328260513-1261_RCN.zip, sizeBytes=138723280
+2026-06-01T15:41:22.690Z  INFO 1 --- [Backend] [main] p.b.i.s.GmlArchiveExtractorService       : Extracted GML from archive: archive=/data/rcn/downloads/1780328260513-1261_RCN.zip, entry=RCN_4120101.gml, file=/data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:22.709Z  INFO 1 --- [Backend] [main] p.b.i.service.RcnJdbcBatchWriter         : Cleared unresolved RCN reference candidates before import
+2026-06-01T15:41:25.414Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 10000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:27.191Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 20000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:28.738Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 30000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:30.512Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 40000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:32.164Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 50000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:33.730Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 60000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:35.396Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 70000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:37.219Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 80000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:38.785Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 90000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:40.481Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:42.155Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:43.754Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:45.473Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:47.148Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:48.748Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 150000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:50.250Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 160000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:51.677Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 170000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:53.118Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 180000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:54.712Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 190000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:56.510Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 200000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:58.094Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 210000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:41:59.868Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 220000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:01.387Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 230000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:02.918Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 240000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:04.302Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 250000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:05.613Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 260000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:07.329Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 270000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:08.717Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 280000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:10.331Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 290000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:12.078Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 300000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:13.624Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 310000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:15.171Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 320000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:16.776Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 330000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:18.393Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 340000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:19.922Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 350000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:21.347Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 360000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:22.875Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 370000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:24.635Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 380000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:26.578Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 390000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:28.548Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 400000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:30.094Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 410000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:31.569Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 420000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:33.010Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 430000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:34.402Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 440000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:35.904Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 450000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:37.380Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 460000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:39.227Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 470000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:40.723Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 480000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:42.324Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 490000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:43.737Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 500000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:45.325Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 510000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:46.967Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 520000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:48.299Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 530000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:49.726Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 540000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:51.144Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 550000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:52.685Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 560000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:54.533Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 570000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:56.317Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 580000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:58.113Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 590000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:42:59.651Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 600000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:01.232Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 610000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:02.793Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 620000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:04.457Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 630000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:06.204Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 640000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:07.886Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 650000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:09.439Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 660000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:10.563Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 670000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:11.969Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 680000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:13.402Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 690000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:14.941Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 700000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:16.646Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 710000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:18.237Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 720000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:19.707Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 730000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:21.453Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 740000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:22.981Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 750000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:24.520Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 760000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:25.914Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 770000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:27.763Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 780000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:29.510Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 790000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:31.471Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 800000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:33.093Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 810000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:34.480Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 820000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:36.112Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 830000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:37.972Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 840000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:39.520Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 850000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:41.082Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 860000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:42.491Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 870000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:43.934Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 880000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:45.482Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 890000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:47.085Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 900000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:49.095Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 910000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:50.791Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 920000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:52.367Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 930000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:54.331Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 940000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:55.739Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 950000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:57.289Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 960000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:43:58.921Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 970000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:00.905Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 980000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:02.250Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 990000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:03.749Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1000000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:05.411Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1010000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:07.016Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1020000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:08.846Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1030000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:10.541Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1040000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:12.117Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1050000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:13.699Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1060000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:15.159Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1070000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:16.853Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1080000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:18.750Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1090000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:20.395Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1100000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:22.082Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1110000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:23.946Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1120000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:25.478Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1130000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:27.282Z  INFO 1 --- [Backend] [main] p.b.i.service.GmlStreamParser            : Parsed 1140000 gml:featureMember elements from /data/rcn/tmp/extracted/1780328260513-1261_RCN/RCN_4120101.gml
+2026-06-01T15:44:27.548Z ERROR 1 --- [Backend] [main] p.b.a.service.RcnImportCoordinator       : RCN import job failed: jobId=1
+
+org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text, center_x, center_y, srid)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+ON DUPLICATE KEY UPDATE
+    parcel_id = VALUES(parcel_id),
+    precinct = VALUES(precinct),
+    address_ref = VALUES(address_ref),
+    geometry_text = VALUES(geometry_text),
+    center_x = VALUES(center_x),
+    center_y = VALUES(center_y),
+    srid = VALUES(srid)
+]
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:134) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:102) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:111) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:711) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.batchUpdate(JdbcTemplate.java:1097) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flushParcels(RcnJdbcBatchWriter.java:214) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.lambda$flush$0(RcnJdbcBatchWriter.java:159) ~[!/:0.0.1-SNAPSHOT]
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flush(RcnJdbcBatchWriter.java:155) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flushReferencesIfNeeded(RcnJdbcBatchWriter.java:174) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.accept(RcnJdbcBatchWriter.java:151) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.parser.RcnFeatureDispatchingHandler.handle(RcnFeatureDispatchingHandler.java:31) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.GmlStreamParser.parseFeatureMember(GmlStreamParser.java:102) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.GmlStreamParser.parse(GmlStreamParser.java:53) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.aplication.service.RcnImportCoordinator.importLatest(RcnImportCoordinator.java:53) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.config.RcnImportSmokeRunner.run(RcnImportSmokeRunner.java:18) ~[!/:0.0.1-SNAPSHOT]
+	at org.springframework.boot.SpringApplication.lambda$callRunner$1(SpringApplication.java:792) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:82) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:86) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:800) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$0(SpringApplication.java:776) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(Unknown Source) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:776) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:328) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at pk.backend.BackendApplication.main(BackendApplication.java:10) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106) ~[app.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[app.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[app.jar:0.0.1-SNAPSHOT]
+Caused by: org.springframework.jdbc.core.AggregatedBatchUpdateException: Unknown column 'center_x' in 'field list'
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$batchUpdate$0(JdbcTemplate.java:1118) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	... 40 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'center_x' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchWithMultiValuesClause(ClientPreparedStatement.java:743) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchInternal(ClientPreparedStatement.java:456) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:860) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.executeBatch(ProxyStatement.java:128) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeBatch(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar!/:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$batchUpdate$0(JdbcTemplate.java:1114) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	... 41 common frames omitted
+
+2026-06-01T15:44:27.657Z ERROR 1 --- [Backend] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text, center_x, center_y, srid)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+ON DUPLICATE KEY UPDATE
+    parcel_id = VALUES(parcel_id),
+    precinct = VALUES(precinct),
+    address_ref = VALUES(address_ref),
+    geometry_text = VALUES(geometry_text),
+    center_x = VALUES(center_x),
+    center_y = VALUES(center_y),
+    srid = VALUES(srid)
+]
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:134) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:102) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:111) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:711) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.batchUpdate(JdbcTemplate.java:1097) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flushParcels(RcnJdbcBatchWriter.java:214) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.lambda$flush$0(RcnJdbcBatchWriter.java:159) ~[!/:0.0.1-SNAPSHOT]
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67) ~[spring-tx-7.0.6.jar!/:7.0.6]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flush(RcnJdbcBatchWriter.java:155) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.flushReferencesIfNeeded(RcnJdbcBatchWriter.java:174) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.RcnJdbcBatchWriter.accept(RcnJdbcBatchWriter.java:151) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.parser.RcnFeatureDispatchingHandler.handle(RcnFeatureDispatchingHandler.java:31) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.GmlStreamParser.parseFeatureMember(GmlStreamParser.java:102) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.service.GmlStreamParser.parse(GmlStreamParser.java:53) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.aplication.service.RcnImportCoordinator.importLatest(RcnImportCoordinator.java:53) ~[!/:0.0.1-SNAPSHOT]
+	at pk.backend.infrastructure.config.RcnImportSmokeRunner.run(RcnImportSmokeRunner.java:18) ~[!/:0.0.1-SNAPSHOT]
+	at org.springframework.boot.SpringApplication.lambda$callRunner$1(SpringApplication.java:792) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:82) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:86) ~[spring-core-7.0.6.jar!/:7.0.6]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:800) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$0(SpringApplication.java:776) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(Unknown Source) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:776) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:328) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.4.jar!/:4.0.4]
+	at pk.backend.BackendApplication.main(BackendApplication.java:10) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106) ~[app.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[app.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[app.jar:0.0.1-SNAPSHOT]
+Caused by: org.springframework.jdbc.core.AggregatedBatchUpdateException: Unknown column 'center_x' in 'field list'
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$batchUpdate$0(JdbcTemplate.java:1118) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	... 40 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'center_x' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchWithMultiValuesClause(ClientPreparedStatement.java:743) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchInternal(ClientPreparedStatement.java:456) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:860) ~[mysql-connector-j-9.6.0.jar!/:9.6.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.executeBatch(ProxyStatement.java:128) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeBatch(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar!/:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$batchUpdate$0(JdbcTemplate.java:1114) ~[spring-jdbc-7.0.6.jar!/:7.0.6]
+	... 41 common frames omitted
+

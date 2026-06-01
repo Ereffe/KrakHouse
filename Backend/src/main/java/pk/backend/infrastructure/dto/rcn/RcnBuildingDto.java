@@ -5,6 +5,9 @@ public record RcnBuildingDto(
         String buildingId,
         String buildingType,
         String addressRef,
-        String geometryText
+        String geometryText,
+        Double centerX,
+        Double centerY,
+        Integer srid
 ) implements RcnObjectDto {
 }
