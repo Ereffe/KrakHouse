@@ -17,7 +17,7 @@ public class NoiseMapAdapter extends AbstractAdapter<Integer> implements NoiseMa
     public List<DiscreteData<Integer>> fetchData() {
         //        TODO: 6 implement noise adapter
         List<DiscreteData<Integer>> mockData = new ArrayList<>();
-        Random random = new Random();
+        Random random = new Random(767676);
         for (int i = 0; i < 10; i++) {
             mockData.add(DiscreteData.<Integer>builder()
                     .latitude(50.118 + (50.124 - 50.118) * random.nextDouble())

@@ -17,7 +17,7 @@ public class CrimeMapAdapter extends AbstractAdapter<Float> implements CrimeMapF
     public List<DiscreteData<Float>> fetchData() {
         //        TODO: 5 implement crime adapter
         List<DiscreteData<Float>> mockData = new ArrayList<>();
-        Random random = new Random();
+        Random random = new Random(676767);
         
         // Mocking some points around Krakow
         for (int i = 0; i < 10; i++) {
