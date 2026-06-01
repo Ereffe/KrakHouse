@@ -18,6 +18,8 @@ public class RcnLocalParser implements RcnObjectParser<RcnLocalDto> {
     public RcnLocalDto parse(XMLStreamReader reader) throws XMLStreamException {
         String gmlId = RcnStaxUtils.gmlId(reader);
         RcnStaxUtils.ParsedObject parsed = RcnStaxUtils.readObject(reader);
+        RcnGeometryUtils.GeometryCenter center = RcnGeometryUtils.centerFromGeometry(parsed.geometryText())
+                .orElse(null);
 
         return new RcnLocalDto(
                 gmlId,
@@ -27,7 +29,11 @@ public class RcnLocalParser implements RcnObjectParser<RcnLocalDto> {
                 RcnStaxUtils.integer(RcnStaxUtils.value(parsed.values(), "nrKondygnacji")),
                 RcnStaxUtils.decimal(RcnStaxUtils.value(parsed.values(), "powUzytkowaLokalu")),
                 RcnStaxUtils.decimal(RcnStaxUtils.value(parsed.values(), "cenaLokaluBrutto")),
-                RcnStaxUtils.ref(parsed.refs(), "adresBudynkuZLokalem")
+                RcnStaxUtils.ref(parsed.refs(), "adresBudynkuZLokalem"),
+                parsed.geometryText(),
+                center == null ? null : center.centerX(),
+                center == null ? null : center.centerY(),
+                center == null ? null : center.srid()
         );
     }
 }

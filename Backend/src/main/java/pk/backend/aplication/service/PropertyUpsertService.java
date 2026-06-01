@@ -23,6 +23,7 @@ public class PropertyUpsertService {
                 .orElseGet(() -> new RcnProperty(dto.gmlId()));
 
         property.setPropertyType(dto.propertyType());
+        property.setGrossPrice(dto.grossPrice());
         property.setParcelRef(firstRef(dto.parcelRefs()));
         property.setBuildingRef(firstRef(dto.buildingRefs()));
         property.setLocalRef(firstRef(dto.localRefs()));

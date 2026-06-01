@@ -7,6 +7,7 @@ import pk.backend.domain.model.rcn.RcnParcel;
 import pk.backend.infrastructure.dto.rcn.RcnParcelDto;
 import pk.backend.infrastructure.repository.RcnParcelRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class ParcelUpsertService {
         parcel.setPrecinct(dto.zoning());
         parcel.setAddressRef(firstRef(dto.addressRefs()));
         parcel.setGeometryText(dto.geometryText());
+        parcel.setRegistryAreaM2(areaHaToM2(dto.registryAreaHa()));
+        parcel.setCenterX(dto.centerX());
+        parcel.setCenterY(dto.centerY());
+        parcel.setSrid(dto.srid());
 
         RcnParcel saved = repository.save(parcel);
         referenceCandidateService.replaceReferences(
@@ -46,6 +51,14 @@ public class ParcelUpsertService {
 
     private String firstRef(List<String> refs) {
         return refs == null || refs.isEmpty() ? null : refs.getFirst();
+    }
+
+    private BigDecimal areaHaToM2(BigDecimal areaHa) {
+        if (areaHa == null) {
+            return null;
+        }
+
+        return areaHa.multiply(BigDecimal.valueOf(10_000));
     }
 
     private List<RcnReferenceCandidateService.ReferenceCandidate> references(List<String> addressRefs) {

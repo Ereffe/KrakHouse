@@ -10,6 +10,10 @@ public record RcnLocalDto(
         Integer floorNumber,
         BigDecimal usableArea,
         BigDecimal grossPrice,
-        String addressRef
+        String addressRef,
+        String geometryText,
+        Double centerX,
+        Double centerY,
+        Integer srid
 ) implements RcnObjectDto {
 }

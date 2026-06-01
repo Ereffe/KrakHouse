@@ -44,6 +44,9 @@ public class RcnPricePoint {
     @Column(precision = 15, scale = 2)
     private BigDecimal price;
 
+    @Column(name = "price_per_m2", nullable = false, precision = 18, scale = 4)
+    private BigDecimal pricePerM2;
+
     @Column(name = "object_type", nullable = false, length = 32)
     private String objectType;
 

@@ -23,7 +23,12 @@ public class LocalUpsertService {
 
         local.setLocalNumber(dto.localId());
         local.setUsableArea(dto.usableArea());
+        local.setGrossPrice(dto.grossPrice());
         local.setAddressRef(dto.addressRef());
+        local.setGeometryText(dto.geometryText());
+        local.setCenterX(dto.centerX());
+        local.setCenterY(dto.centerY());
+        local.setSrid(dto.srid());
 
         RcnLocal saved = repository.save(local);
         referenceCandidateService.replaceReferences(

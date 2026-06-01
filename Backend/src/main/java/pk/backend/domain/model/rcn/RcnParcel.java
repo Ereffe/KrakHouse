@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Entity
@@ -27,6 +29,9 @@ public class RcnParcel {
 
     @Column(columnDefinition = "LONGTEXT")
     private String geometryText;
+
+    @Column(name = "registry_area_m2", precision = 18, scale = 4)
+    private BigDecimal registryAreaM2;
 
     @Column(name = "center_x")
     private Double centerX;

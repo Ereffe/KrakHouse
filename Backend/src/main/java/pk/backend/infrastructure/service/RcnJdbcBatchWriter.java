@@ -14,6 +14,7 @@ import pk.backend.infrastructure.dto.rcn.RcnParcelDto;
 import pk.backend.infrastructure.dto.rcn.RcnPropertyDto;
 import pk.backend.infrastructure.dto.rcn.RcnTransactionDto;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,32 +38,39 @@ public class RcnJdbcBatchWriter {
             """;
 
     private static final String PROPERTY_SQL = """
-            INSERT INTO rcn_properties (gml_id, property_type, parcel_ref, building_ref, local_ref)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO rcn_properties (gml_id, property_type, gross_price, parcel_ref, building_ref, local_ref)
+            VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 property_type = VALUES(property_type),
+                gross_price = VALUES(gross_price),
                 parcel_ref = VALUES(parcel_ref),
                 building_ref = VALUES(building_ref),
                 local_ref = VALUES(local_ref)
             """;
 
     private static final String LOCAL_SQL = """
-            INSERT INTO rcn_locals (gml_id, local_number, usable_area, address_ref)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO rcn_locals (gml_id, local_number, usable_area, gross_price, address_ref, geometry_text, center_x, center_y, srid)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 local_number = VALUES(local_number),
                 usable_area = VALUES(usable_area),
-                address_ref = VALUES(address_ref)
+                gross_price = VALUES(gross_price),
+                address_ref = VALUES(address_ref),
+                geometry_text = VALUES(geometry_text),
+                center_x = VALUES(center_x),
+                center_y = VALUES(center_y),
+                srid = VALUES(srid)
             """;
 
     private static final String PARCEL_SQL = """
-            INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text, center_x, center_y, srid)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO rcn_parcels (gml_id, parcel_id, precinct, address_ref, geometry_text, registry_area_m2, center_x, center_y, srid)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 parcel_id = VALUES(parcel_id),
                 precinct = VALUES(precinct),
                 address_ref = VALUES(address_ref),
                 geometry_text = VALUES(geometry_text),
+                registry_area_m2 = VALUES(registry_area_m2),
                 center_x = VALUES(center_x),
                 center_y = VALUES(center_y),
                 srid = VALUES(srid)
@@ -257,16 +265,22 @@ public class RcnJdbcBatchWriter {
     private void bindProperty(PreparedStatement statement, RcnPropertyDto dto) throws SQLException {
         statement.setString(1, dto.gmlId());
         statement.setString(2, dto.propertyType());
-        statement.setString(3, firstRef(dto.parcelRefs()));
-        statement.setString(4, firstRef(dto.buildingRefs()));
-        statement.setString(5, firstRef(dto.localRefs()));
+        statement.setBigDecimal(3, dto.grossPrice());
+        statement.setString(4, firstRef(dto.parcelRefs()));
+        statement.setString(5, firstRef(dto.buildingRefs()));
+        statement.setString(6, firstRef(dto.localRefs()));
     }
 
     private void bindLocal(PreparedStatement statement, RcnLocalDto dto) throws SQLException {
         statement.setString(1, dto.gmlId());
         statement.setString(2, dto.localId());
         statement.setBigDecimal(3, dto.usableArea());
-        statement.setString(4, dto.addressRef());
+        statement.setBigDecimal(4, dto.grossPrice());
+        statement.setString(5, dto.addressRef());
+        statement.setString(6, dto.geometryText());
+        setDouble(statement, 7, dto.centerX());
+        setDouble(statement, 8, dto.centerY());
+        setInteger(statement, 9, dto.srid());
     }
 
     private void bindParcel(PreparedStatement statement, RcnParcelDto dto) throws SQLException {
@@ -275,9 +289,10 @@ public class RcnJdbcBatchWriter {
         statement.setString(3, dto.zoning());
         statement.setString(4, firstRef(dto.addressRefs()));
         statement.setString(5, dto.geometryText());
-        setDouble(statement, 6, dto.centerX());
-        setDouble(statement, 7, dto.centerY());
-        setInteger(statement, 8, dto.srid());
+        statement.setBigDecimal(6, areaHaToM2(dto.registryAreaHa()));
+        setDouble(statement, 7, dto.centerX());
+        setDouble(statement, 8, dto.centerY());
+        setInteger(statement, 9, dto.srid());
     }
 
     private void bindBuilding(PreparedStatement statement, RcnBuildingDto dto) throws SQLException {
@@ -355,6 +370,14 @@ public class RcnJdbcBatchWriter {
         } else {
             statement.setInt(parameterIndex, value);
         }
+    }
+
+    private BigDecimal areaHaToM2(BigDecimal areaHa) {
+        if (areaHa == null) {
+            return null;
+        }
+
+        return areaHa.multiply(BigDecimal.valueOf(10_000));
     }
 
     private int batchSize() {

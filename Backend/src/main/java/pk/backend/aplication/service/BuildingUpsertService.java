@@ -25,6 +25,9 @@ public class BuildingUpsertService {
         building.setBuildingType(dto.buildingType());
         building.setAddressRef(dto.addressRef());
         building.setGeometryText(dto.geometryText());
+        building.setCenterX(dto.centerX());
+        building.setCenterY(dto.centerY());
+        building.setSrid(dto.srid());
 
         RcnBuilding saved = repository.save(building);
         referenceCandidateService.replaceReferences(

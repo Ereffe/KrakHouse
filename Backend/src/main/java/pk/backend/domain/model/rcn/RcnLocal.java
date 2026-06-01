@@ -27,6 +27,20 @@ public class RcnLocal {
     @Column(precision = 12, scale = 2)
     private BigDecimal usableArea;
 
+    @Column(name = "gross_price", precision = 15, scale = 2)
+    private BigDecimal grossPrice;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String geometryText;
+
+    @Column(name = "center_x")
+    private Double centerX;
+
+    @Column(name = "center_y")
+    private Double centerY;
+
+    private Integer srid;
+
     @Column(length = 255)
     private String buildingRef;
 
