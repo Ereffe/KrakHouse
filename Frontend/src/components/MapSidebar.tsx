@@ -122,7 +122,7 @@ export function MapSidebar({
                     marginLeft: isCollapsed ? "0.35rem" : "0",
                     flexShrink: 0,
                 }}
-                title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                    title={isCollapsed ? t(language, "expandSidebar") : t(language, "collapseSidebar")}
             >
                 {isCollapsed ? ">" : "<"}
             </button>

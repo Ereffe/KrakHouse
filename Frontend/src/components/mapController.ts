@@ -230,6 +230,22 @@ function clamp(value: number, min: number, max: number) {
     return Math.min(Math.max(value, min), max);
 }
 
+function resolveErrorMessage(
+    fetchError: unknown,
+    language: Language,
+    fallbackKey: "failedToLoadFilters" | "failedToLoadMapData",
+) {
+    if (fetchError instanceof Error) {
+        if (fetchError.message.startsWith("Request failed with status")) {
+            return t(language, fallbackKey);
+        }
+
+        return fetchError.message;
+    }
+
+    return t(language, fallbackKey);
+}
+
 export function useMapController() {
     const [filters, setFilters] = useState<FilterDefinition[]>([]);
     const [selectedFilter, setSelectedFilter] = useState<FilterKey>("AIR_QUALITY");
@@ -306,7 +322,7 @@ export function useMapController() {
             })
             .catch((fetchError: unknown) => {
                 if (cancelled) return;
-                setError(fetchError instanceof Error ? fetchError.message : "Failed to load filters");
+                setError(resolveErrorMessage(fetchError, language, "failedToLoadFilters"));
                 setIsLoading(false);
             });
 
@@ -383,7 +399,7 @@ export function useMapController() {
                 if (cancelled) return;
                 setListResponse(null);
                 setMergedResponse(null);
-                setError(fetchError instanceof Error ? fetchError.message : "Failed to load map data");
+                setError(resolveErrorMessage(fetchError, language, "failedToLoadMapData"));
                 setIsLoading(false);
             });
 

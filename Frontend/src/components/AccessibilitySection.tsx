@@ -1,6 +1,8 @@
 import { useTheme } from "./ThemeContext";
+import { t, type Language } from "./i18n";
 
 interface AccessibilitySectionProps {
+    readonly language: Language;
     readonly highContrast: boolean;
     readonly colorblind: boolean;
     readonly setHighContrast: (value: boolean) => void;
@@ -9,6 +11,7 @@ interface AccessibilitySectionProps {
 }
 
 export function AccessibilitySection({
+    language,
     highContrast,
     colorblind,
     setHighContrast,
@@ -31,7 +34,7 @@ export function AccessibilitySection({
                     opacity: 0.8,
                 }}
             >
-                ♿ Dostępność
+                ♿ {t(language, "accessibility")}
             </h5>
             <div style={{ marginBottom: "14px", padding: "10px 12px", borderRadius: "8px", backgroundColor: highContrast ? "rgba(251, 146, 60, 0.1)" : "transparent", transition: "all 0.2s ease" }}>
                 <label
@@ -45,7 +48,7 @@ export function AccessibilitySection({
                         cursor: "pointer",
                     }}
                 >
-                    <span>☀ Wysoki kontrast</span>
+                    <span>☀ {t(language, "highContrast")}</span>
                     <input
                         type="checkbox"
                         checked={highContrast}
@@ -71,7 +74,7 @@ export function AccessibilitySection({
                         cursor: "pointer",
                     }}
                 >
-                    <span>👁 Dla słabo widzących</span>
+                    <span>👁 {t(language, "visuallyImpaired")}</span>
                     <input
                         type="checkbox"
                         checked={visuallyImpaired}
@@ -97,7 +100,7 @@ export function AccessibilitySection({
                         cursor: "pointer",
                     }}
                 >
-                    <span>🎨 Dla daltonistów</span>
+                    <span>🎨 {t(language, "colorblind")}</span>
                     <input
                         type="checkbox"
                         checked={colorblind}

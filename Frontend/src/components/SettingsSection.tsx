@@ -1,5 +1,6 @@
 import { RangeSlider } from "./RangeSlider";
 import { useTheme } from "./ThemeContext";
+import { t } from "./i18n";
 
 interface SettingsSectionProps {
     readonly language: "pl" | "en";
@@ -31,10 +32,10 @@ export function SettingsSection({
                     letterSpacing: "0.8px",
                 }}
             >
-                ⚙ Ustawienia
+                ⚙ {t(language, "settings")}
             </h4>
             <RangeSlider
-                label="Poziom przybliżenia"
+                label={t(language, "zoomLevel")}
                 value={gridSize}
                 displayValue={`${gridSize}`}
                 min={5}
@@ -56,7 +57,7 @@ export function SettingsSection({
                         fontSize: "14px",
                     }}
                 >
-                    🌐 Język strony
+                    🌐 {t(language, "language")}
                 </div>
                 <select
                     value={language}
@@ -74,8 +75,8 @@ export function SettingsSection({
                         transition: "all 0.2s ease",
                     }}
                 >
-                    <option value="pl">Polski</option>
-                    <option value="en">English</option>
+                    <option value="pl">{t(language, "polish")}</option>
+                    <option value="en">{t(language, "english")}</option>
                 </select>
             </div>
             <div>
@@ -90,7 +91,7 @@ export function SettingsSection({
                         fontSize: "14px",
                     }}
                 >
-                    <span>🌙 Tryb ciemny</span>
+                    <span>🌙 {t(language, "darkMode")}</span>
                     <input
                         type="checkbox"
                         checked={darkMode}
@@ -112,7 +113,7 @@ export function SettingsSection({
                         opacity: 0.7,
                     }}
                 >
-                    Włącz dla wygody oka w nocy
+                    {t(language, "darkModeHint")}
                 </p>
             </div>
         </div>

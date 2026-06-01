@@ -5,6 +5,7 @@ import { MapSidebar } from "../components/MapSidebar";
 import { ThemeProvider } from "../components/ThemeContext";
 import { useMapController } from "../components/mapController";
 import { getFilterLabel } from "../components/mapFilters";
+import { t } from "../components/i18n";
 
 function MapResizeObserver() {
     const map = useMap();
@@ -92,7 +93,8 @@ export default function MapPage() {
                             combinedMode={controller.combinedMode}
                             selectedFilters={controller.selectedFilters}
                             selectedFilter={controller.selectedFilter}
-                            getFilterLabel={getFilterLabel}
+                            language={controller.language}
+                            getFilterLabel={(key) => getFilterLabel(key, controller.language)}
                             getCellStyle={controller.getCellStyle}
                             getCellPopupValue={controller.getCellPopupValue}
                         />
@@ -117,7 +119,7 @@ export default function MapPage() {
                                 backdropFilter: "blur(10px)",
                             }}
                         >
-                            {controller.error ?? (controller.isLoading ? "Pobieranie danych z backendu..." : "Brak danych do wyświetlenia.")}
+                            {controller.error ?? (controller.isLoading ? t(controller.language, "loadingMap") : t(controller.language, "noMapData"))}
                         </div>
                     )}
                 </div>

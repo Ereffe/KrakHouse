@@ -1,12 +1,14 @@
 import { Polygon, Popup } from "react-leaflet";
 import type { GridCell } from "./mapController";
 import type { FilterKey } from "./mapFilters";
+import { t, type Language } from "./i18n";
 
 interface MapGridLayerProps {
     gridCells: GridCell[];
     combinedMode: boolean;
     selectedFilters: FilterKey[];
     selectedFilter: FilterKey;
+    language: Language;
     getFilterLabel: (key: FilterKey) => string;
     getCellStyle: (cell: GridCell) => { color: string; fillOpacity: number } | null;
     getCellPopupValue: (cell: GridCell, filterKey: FilterKey) => string;
@@ -17,6 +19,7 @@ export function MapGridLayer({
     combinedMode,
     selectedFilters,
     selectedFilter,
+    language,
     getFilterLabel,
     getCellStyle,
     getCellPopupValue,
@@ -38,7 +41,7 @@ export function MapGridLayer({
                         }}
                     >
                         <Popup>
-                            Cell {cell.id}
+                            {t(language, "cell")} {cell.id}
                             <br />
                             {combinedMode ? (
                                 selectedFilters.map((filterKey) => (
