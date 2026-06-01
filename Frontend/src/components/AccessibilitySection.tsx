@@ -40,7 +40,7 @@ export function AccessibilitySection({
           opacity: 0.8,
         }}
       >
-        ♿ {t(language, "accessibility")}
+        {t(language, "accessibility")}
       </h5>
       <div
         style={{

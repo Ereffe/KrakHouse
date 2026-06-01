@@ -66,6 +66,31 @@ body {
   margin: 0;
 }
 
+/* Nice scrollbars to match the glass/modern UI */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+
 h1,
 h2 {
   font-family: var(--heading);
