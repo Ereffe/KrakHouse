@@ -12,4 +12,6 @@ public interface RcnUnresolvedReferenceRepository extends JpaRepository<RcnUnres
     List<RcnUnresolvedReference> findBySourceTypeAndSourceGmlId(String sourceType, String sourceGmlId);
 
     List<RcnUnresolvedReference> findByRelationName(String relationName);
+
+    List<RcnUnresolvedReference> findBySourceTypeAndRelationNameOrderByIdAsc(String sourceType, String relationName);
 }
