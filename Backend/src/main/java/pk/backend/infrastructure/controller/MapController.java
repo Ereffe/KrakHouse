@@ -1,6 +1,7 @@
 package pk.backend.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ public class MapController {
     }
 
     @PostMapping("/maps")
+    @Cacheable(value = "zewnetrzneDane", key = "#filteredMaps")
     public ResponseEntity<MergedMapResponseDto> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
         var sourceMaps = controllerPort.getFilteredMap(filteredMaps);
         var mergedMap = controllerPort.getMergedMaps(filteredMaps);
@@ -34,6 +36,7 @@ public class MapController {
     }
 
     @PostMapping("/maps-list")
+    @Cacheable(value = "zewnetrzneDane", key = "#filteredMaps")
     public ResponseEntity<FilteredMapListResponseDto> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
         var maps = controllerPort.getFilteredMap(filteredMaps);
         return ResponseEntity.ok(ResponseMapper.mapToFilteredListDto(maps, filteredMaps));
