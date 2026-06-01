@@ -67,7 +67,7 @@ final class RcnStaxUtils {
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT) {
                 if (insideGeometry) {
-                    geometry.append("</").append(reader.getLocalName()).append(">");
+                    appendEndElement(geometry, reader);
                 }
 
                 if ("geometria".equals(reader.getLocalName()) || "georeferencja".equals(reader.getLocalName())) {
@@ -117,17 +117,56 @@ final class RcnStaxUtils {
     }
 
     private static void appendStartElement(StringBuilder target, XMLStreamReader reader) {
-        target.append("<").append(reader.getLocalName());
+        target.append("<").append(qualifiedName(reader.getPrefix(), reader.getLocalName()));
+
+        for (int i = 0; i < reader.getNamespaceCount(); i++) {
+            String prefix = reader.getNamespacePrefix(i);
+            String namespaceUri = reader.getNamespaceURI(i);
+
+            target.append(" ");
+            if (prefix == null || prefix.isBlank()) {
+                target.append("xmlns");
+            } else {
+                target.append("xmlns:").append(prefix);
+            }
+            target.append("=\"").append(escapeXml(namespaceUri)).append("\"");
+        }
 
         for (int i = 0; i < reader.getAttributeCount(); i++) {
             target.append(" ")
-                    .append(reader.getAttributeLocalName(i))
+                    .append(qualifiedName(reader.getAttributePrefix(i), reader.getAttributeLocalName(i)))
                     .append("=\"")
-                    .append(reader.getAttributeValue(i))
+                    .append(escapeXml(reader.getAttributeValue(i)))
                     .append("\"");
         }
 
         target.append(">");
+    }
+
+    private static void appendEndElement(StringBuilder target, XMLStreamReader reader) {
+        target.append("</")
+                .append(qualifiedName(reader.getPrefix(), reader.getLocalName()))
+                .append(">");
+    }
+
+    private static String qualifiedName(String prefix, String localName) {
+        if (prefix == null || prefix.isBlank()) {
+            return localName;
+        }
+
+        return prefix + ":" + localName;
+    }
+
+    private static String escapeXml(String value) {
+        if (value == null) {
+            return "";
+        }
+
+        return value
+                .replace("&", "&amp;")
+                .replace("\"", "&quot;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
     }
 
     record ParsedObject(
