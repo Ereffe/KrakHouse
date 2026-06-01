@@ -8,4 +8,7 @@ public interface GmlFeatureHandler {
     boolean supports(String localName);
 
     void handle(String localName, XMLStreamReader reader) throws XMLStreamException;
+
+    default void flush() {
+    }
 }

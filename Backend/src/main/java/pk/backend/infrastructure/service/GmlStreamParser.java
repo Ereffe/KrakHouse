@@ -63,6 +63,7 @@ public class GmlStreamParser {
                         }
                     }
                 }
+                flushHandlers();
             } finally {
                 reader.close();
             }
@@ -118,6 +119,12 @@ public class GmlStreamParser {
         }
 
         return null;
+    }
+
+    private void flushHandlers() {
+        for (GmlFeatureHandler handler : handlers) {
+            handler.flush();
+        }
     }
 
     private boolean isFeatureMember(XMLStreamReader reader) {

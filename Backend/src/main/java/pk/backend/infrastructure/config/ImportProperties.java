@@ -27,6 +27,9 @@ public class ImportProperties {
     @Min(0)
     private int retryCount = 3;
 
+    @Min(1)
+    private int batchSize = 2000;
+
     private String cron = "";
 
     public Path downloadDirPath() {

@@ -10,6 +10,7 @@ import pk.backend.infrastructure.model.rcn.ImportJob;
 import pk.backend.infrastructure.model.rcn.ImportJobStatus;
 import pk.backend.infrastructure.repository.ImportJobRepository;
 import pk.backend.infrastructure.service.GmlArchiveExtractorService;
+import pk.backend.infrastructure.service.RcnJdbcBatchWriter;
 import pk.backend.infrastructure.service.GmlStreamParser;
 import pk.backend.infrastructure.service.parser.GmlParseResult;
 
@@ -27,6 +28,7 @@ public class RcnImportCoordinator {
     private final GmlSourcePort gmlSourcePort;
     private final GmlArchiveExtractorService archiveExtractorService;
     private final GmlStreamParser gmlStreamParser;
+    private final RcnJdbcBatchWriter batchWriter;
     private final RelationLinkerService relationLinkerService;
 
     public RcnImportResult importLatest() {
@@ -47,6 +49,7 @@ public class RcnImportCoordinator {
 
             mark(job, ImportJobStatus.PARSING);
             Path gmlFile = archiveExtractorService.extractSingleGml(downloadedFile.path());
+            batchWriter.prepareImport();
             GmlParseResult parseResult = gmlStreamParser.parse(gmlFile);
 
             mark(job, ImportJobStatus.LINKING);
