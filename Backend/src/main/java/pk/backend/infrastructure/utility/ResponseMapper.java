@@ -2,6 +2,7 @@ package pk.backend.infrastructure.utility;
 
 import lombok.experimental.UtilityClass;
 import pk.backend.domain.model.CityMap.CityMap;
+import pk.backend.domain.model.CityMap.GridMap;
 import pk.backend.infrastructure.dto.FilteredMapDto;
 import pk.backend.infrastructure.dto.FilteredMapListResponseDto;
 import pk.backend.infrastructure.dto.MergedMapResponseDto;
@@ -24,7 +25,7 @@ public class ResponseMapper {
         }
 
         if (mergedMap == null) {
-            return new MergedMapResponseDto(filterInfos, Collections.emptyList());
+            return new MergedMapResponseDto(filterInfos, Collections.emptyList(), GridMap.LATITUDE_LEFT_BORDER, GridMap.LATITUDE_RIGHT_BORDER, GridMap.LONGITUDE_TOP_BORDER, GridMap.LONGITUDE_BOTTOM_BORDER);
         }
 
         List<List<Boolean>> data = mergedMap.getBoxMatrix().stream()
@@ -33,7 +34,7 @@ public class ResponseMapper {
                         .toList())
                 .toList();
 
-        return new MergedMapResponseDto(filterInfos, data);
+        return new MergedMapResponseDto(filterInfos, data, GridMap.LATITUDE_LEFT_BORDER, GridMap.LATITUDE_RIGHT_BORDER, GridMap.LONGITUDE_TOP_BORDER, GridMap.LONGITUDE_BOTTOM_BORDER);
     }
 
     public static FilteredMapListResponseDto mapToFilteredListDto(List<CityMap> maps, List<FilteredMapDto> filters) {
@@ -59,7 +60,7 @@ public class ResponseMapper {
                 ));
             }
         }
-        return new FilteredMapListResponseDto(singleMaps);
+        return new FilteredMapListResponseDto(singleMaps, GridMap.LATITUDE_LEFT_BORDER, GridMap.LATITUDE_RIGHT_BORDER, GridMap.LONGITUDE_TOP_BORDER, GridMap.LONGITUDE_BOTTOM_BORDER);
     }
 
     private static String getValueType(String type) {

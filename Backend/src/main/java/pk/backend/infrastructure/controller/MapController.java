@@ -2,6 +2,7 @@ package pk.backend.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class MapController {
 
     private final ControllerPort controllerPort;
 
-    @PostMapping("/filters")
+    @GetMapping("/filters")
     public ResponseEntity<List<FilterResponseDto>> getFilters() {
         return ResponseEntity.ok(controllerPort.getFilters());
     }
