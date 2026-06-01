@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { filters, type FilterKey } from "./mapFilters";
+import type { FilterDefinition, FilterKey } from "./mapFilters";
 import { CombinedFilterSection } from "./CombinedFilterSection";
 import { SingleFilterSection } from "./SingleFilterSection";
 import { SettingsSection } from "./SettingsSection";
@@ -7,6 +7,7 @@ import { AccessibilitySection } from "./AccessibilitySection";
 import { useTheme } from "./ThemeContext";
 
 interface MapSidebarProps {
+    filters: FilterDefinition[];
     selectedFilter: FilterKey;
     setSelectedFilter: (value: FilterKey) => void;
     setMinValue: (value: number) => void;
@@ -27,15 +28,20 @@ interface MapSidebarProps {
     setColorblind: (value: boolean) => void;
     formattedMinValue: string;
     formattedMaxValue: string;
+    minValue: number;
+    maxValue: number;
     toggleCombinedFilter: (filterKey: FilterKey, checked: boolean) => void;
     updateCombinedFilterRange: (
         filterKey: FilterKey,
         rangeType: "min" | "max",
         value: number,
     ) => void;
+    isLoading: boolean;
+    error: string | null;
 }
 
 export function MapSidebar({
+    filters,
     selectedFilter,
     setSelectedFilter,
     setMinValue,
@@ -56,8 +62,12 @@ export function MapSidebar({
     setColorblind,
     formattedMinValue,
     formattedMaxValue,
+    minValue,
+    maxValue,
     toggleCombinedFilter,
     updateCombinedFilterRange,
+    isLoading,
+    error,
 }: Readonly<MapSidebarProps>) {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const {
@@ -129,6 +139,21 @@ export function MapSidebar({
                     >
                         Filtry
                     </h3>
+                    {(isLoading || error) && (
+                        <div
+                            style={{
+                                marginBottom: "16px",
+                                padding: "10px 12px",
+                                borderRadius: "10px",
+                                backgroundColor: error ? "rgba(220, 53, 69, 0.12)" : "rgba(13, 148, 136, 0.12)",
+                                color: error ? "#dc3545" : panelTextColor,
+                                fontSize: "13px",
+                                lineHeight: 1.5,
+                            }}
+                        >
+                            {error ?? "Ładowanie danych mapy..."}
+                        </div>
+                    )}
                     <div style={{ marginBottom: "20px" }}>
                         <label
                             style={{
@@ -159,6 +184,7 @@ export function MapSidebar({
                     {combinedMode ? (
                         <>
                             <CombinedFilterSection
+                                filters={filters}
                                 selectedFilters={selectedFilters}
                                 minMaxPerFilter={minMaxPerFilter}
                                 toggleCombinedFilter={toggleCombinedFilter}
@@ -192,8 +218,11 @@ export function MapSidebar({
                         </>
                     ) : (
                         <SingleFilterSection
+                            filters={filters}
                             selectedFilter={selectedFilter}
                             selectedFilterConfig={selectedFilterConfig}
+                            minValue={minValue}
+                            maxValue={maxValue}
                             formattedMinValue={formattedMinValue}
                             formattedMaxValue={formattedMaxValue}
                             setSelectedFilter={setSelectedFilter}
