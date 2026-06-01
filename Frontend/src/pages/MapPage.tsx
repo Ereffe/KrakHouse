@@ -8,122 +8,141 @@ import { getFilterLabel } from "../components/mapFilters";
 import { t } from "../components/i18n";
 
 function MapResizeObserver() {
-    const map = useMap();
+  const map = useMap();
 
-    useEffect(() => {
-        const container = map.getContainer();
-        const observer = new ResizeObserver(() => {
-            map.invalidateSize();
-        });
+  useEffect(() => {
+    const container = map.getContainer();
+    const observer = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
 
-        observer.observe(container);
+    observer.observe(container);
 
-        return () => observer.disconnect();
-    }, [map]);
+    return () => observer.disconnect();
+  }, [map]);
 
-    return null;
+  return null;
 }
 
 export default function MapPage() {
-    const controller = useMapController();
+  const controller = useMapController();
 
-    return (
-        <ThemeProvider darkMode={controller.darkMode} visuallyImpaired={controller.visuallyImpaired}>
+  return (
+    <ThemeProvider
+      darkMode={controller.darkMode}
+      visuallyImpaired={controller.visuallyImpaired}
+    >
+      <div
+        style={{
+          display: "flex",
+          height: "100vh",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        }}
+      >
+        <MapSidebar
+          filters={controller.filters}
+          selectedFilter={controller.selectedFilter}
+          setSelectedFilter={controller.setSelectedFilter}
+          setMinValue={controller.setMinValue}
+          setMaxValue={controller.setMaxValue}
+          minValue={controller.minValue}
+          maxValue={controller.maxValue}
+          language={controller.language}
+          setLanguage={controller.setLanguage}
+          setDarkMode={controller.setDarkMode}
+          gridSize={controller.gridSize}
+          setGridSize={controller.setGridSize}
+          combinedMode={controller.combinedMode}
+          setCombinedMode={controller.setCombinedMode}
+          selectedFilters={controller.selectedFilters}
+          minMaxPerFilter={controller.minMaxPerFilter}
+          highContrast={controller.highContrast}
+          setHighContrast={controller.setHighContrast}
+          setVisuallyImpaired={controller.setVisuallyImpaired}
+          colorblind={controller.colorblind}
+          setColorblind={controller.setColorblind}
+          formattedMinValue={controller.formattedMinValue}
+          formattedMaxValue={controller.formattedMaxValue}
+          toggleCombinedFilter={controller.toggleCombinedFilter}
+          updateCombinedFilterRange={controller.updateCombinedFilterRange}
+          isLoading={controller.isLoading}
+          error={controller.error}
+        />
+
+        <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
+          <MapContainer
+            center={controller.mapCenter}
+            zoom={controller.gridSize}
+            scrollWheelZoom
+            style={{ height: "100%", width: "100%" }}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {controller.mapBounds && (
+              <Polygon
+                positions={[
+                  [
+                    controller.mapBounds.latitudeLeftBorder,
+                    controller.mapBounds.longitudeTopBorder,
+                  ],
+                  [
+                    controller.mapBounds.latitudeRightBorder,
+                    controller.mapBounds.longitudeTopBorder,
+                  ],
+                  [
+                    controller.mapBounds.latitudeRightBorder,
+                    controller.mapBounds.longitudeBottomBorder,
+                  ],
+                  [
+                    controller.mapBounds.latitudeLeftBorder,
+                    controller.mapBounds.longitudeBottomBorder,
+                  ],
+                ]}
+                pathOptions={{ color: "#d81b60", weight: 3, fillOpacity: 0.08 }}
+              />
+            )}
+            <MapGridLayer
+              gridCells={controller.gridCells}
+              combinedMode={controller.combinedMode}
+              selectedFilters={controller.selectedFilters}
+              selectedFilter={controller.selectedFilter}
+              language={controller.language}
+              getFilterLabel={(key) => getFilterLabel(key, controller.language)}
+              getCellStyle={controller.getCellStyle}
+              getCellPopupValue={controller.getCellPopupValue}
+            />
+            <MapResizeObserver />
+          </MapContainer>
+          {(controller.isLoading ||
+            controller.error ||
+            controller.gridCells.length === 0) && (
             <div
-                style={{
-                    display: "flex",
-                    height: "100vh",
-                    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                }}
+              style={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                zIndex: 1000,
+                padding: "12px 16px",
+                borderRadius: "12px",
+                background: controller.error
+                  ? "rgba(220, 53, 69, 0.9)"
+                  : "rgba(17, 24, 39, 0.82)",
+                color: "#fff",
+                maxWidth: "320px",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
+                backdropFilter: "blur(10px)",
+              }}
             >
-                <MapSidebar
-                    filters={controller.filters}
-                    selectedFilter={controller.selectedFilter}
-                    setSelectedFilter={controller.setSelectedFilter}
-                    setMinValue={controller.setMinValue}
-                    setMaxValue={controller.setMaxValue}
-                    minValue={controller.minValue}
-                    maxValue={controller.maxValue}
-                    language={controller.language}
-                    setLanguage={controller.setLanguage}
-                    setDarkMode={controller.setDarkMode}
-                    gridSize={controller.gridSize}
-                    setGridSize={controller.setGridSize}
-                    combinedMode={controller.combinedMode}
-                    setCombinedMode={controller.setCombinedMode}
-                    selectedFilters={controller.selectedFilters}
-                    minMaxPerFilter={controller.minMaxPerFilter}
-                    highContrast={controller.highContrast}
-                    setHighContrast={controller.setHighContrast}
-                    setVisuallyImpaired={controller.setVisuallyImpaired}
-                    colorblind={controller.colorblind}
-                    setColorblind={controller.setColorblind}
-                    formattedMinValue={controller.formattedMinValue}
-                    formattedMaxValue={controller.formattedMaxValue}
-                    toggleCombinedFilter={controller.toggleCombinedFilter}
-                    updateCombinedFilterRange={controller.updateCombinedFilterRange}
-                    isLoading={controller.isLoading}
-                    error={controller.error}
-                />
-
-                <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
-                    <MapContainer
-                        center={controller.mapCenter}
-                        zoom={controller.gridSize}
-                        scrollWheelZoom
-                        style={{ height: "100%", width: "100%" }}
-                    >
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        {controller.mapBounds && (
-                            <Polygon
-                                positions={[
-                                    [controller.mapBounds.latitudeLeftBorder, controller.mapBounds.longitudeTopBorder],
-                                    [controller.mapBounds.latitudeRightBorder, controller.mapBounds.longitudeTopBorder],
-                                    [controller.mapBounds.latitudeRightBorder, controller.mapBounds.longitudeBottomBorder],
-                                    [controller.mapBounds.latitudeLeftBorder, controller.mapBounds.longitudeBottomBorder],
-                                ]}
-                                pathOptions={{ color: "#d81b60", weight: 3, fillOpacity: 0.08 }}
-                            />
-                        )}
-                        <MapGridLayer
-                            gridCells={controller.gridCells}
-                            combinedMode={controller.combinedMode}
-                            selectedFilters={controller.selectedFilters}
-                            selectedFilter={controller.selectedFilter}
-                            language={controller.language}
-                            getFilterLabel={(key) => getFilterLabel(key, controller.language)}
-                            getCellStyle={controller.getCellStyle}
-                            getCellPopupValue={controller.getCellPopupValue}
-                        />
-                        <MapResizeObserver />
-
-                    </MapContainer>
-                    {(controller.isLoading || controller.error || controller.gridCells.length === 0) && (
-                        <div
-                            style={{
-                                position: "absolute",
-                                top: 16,
-                                right: 16,
-                                zIndex: 1000,
-                                padding: "12px 16px",
-                                borderRadius: "12px",
-                                background: controller.error
-                                    ? "rgba(220, 53, 69, 0.9)"
-                                    : "rgba(17, 24, 39, 0.82)",
-                                color: "#fff",
-                                maxWidth: "320px",
-                                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
-                                backdropFilter: "blur(10px)",
-                            }}
-                        >
-                            {controller.error ?? (controller.isLoading ? t(controller.language, "loadingMap") : t(controller.language, "noMapData"))}
-                        </div>
-                    )}
-                </div>
+              {controller.error ??
+                (controller.isLoading
+                  ? t(controller.language, "loadingMap")
+                  : t(controller.language, "noMapData"))}
             </div>
-        </ThemeProvider>
-    );
+          )}
+        </div>
+      </div>
+    </ThemeProvider>
+  );
 }

@@ -4,60 +4,64 @@ import type { FilterKey } from "./mapFilters";
 import { t, type Language } from "./i18n";
 
 interface MapGridLayerProps {
-    gridCells: GridCell[];
-    combinedMode: boolean;
-    selectedFilters: FilterKey[];
-    selectedFilter: FilterKey;
-    language: Language;
-    getFilterLabel: (key: FilterKey) => string;
-    getCellStyle: (cell: GridCell) => { color: string; fillOpacity: number } | null;
-    getCellPopupValue: (cell: GridCell, filterKey: FilterKey) => string;
+  gridCells: GridCell[];
+  combinedMode: boolean;
+  selectedFilters: FilterKey[];
+  selectedFilter: FilterKey;
+  language: Language;
+  getFilterLabel: (key: FilterKey) => string;
+  getCellStyle: (
+    cell: GridCell,
+  ) => { color: string; fillOpacity: number } | null;
+  getCellPopupValue: (cell: GridCell, filterKey: FilterKey) => string;
 }
 
 export function MapGridLayer({
-    gridCells,
-    combinedMode,
-    selectedFilters,
-    selectedFilter,
-    language,
-    getFilterLabel,
-    getCellStyle,
-    getCellPopupValue,
+  gridCells,
+  combinedMode,
+  selectedFilters,
+  selectedFilter,
+  language,
+  getFilterLabel,
+  getCellStyle,
+  getCellPopupValue,
 }: Readonly<MapGridLayerProps>) {
-    return (
-        <>
-            {gridCells.map((cell) => {
-                const style = getCellStyle(cell);
-                if (!style) return null;
+  return (
+    <>
+      {gridCells.map((cell) => {
+        const style = getCellStyle(cell);
+        if (!style) return null;
 
-                return (
-                    <Polygon
-                        key={cell.id}
-                        positions={cell.positions}
-                        pathOptions={{
-                            color: style.color,
-                            weight: 1,
-                            fillOpacity: style.fillOpacity,
-                        }}
-                    >
-                        <Popup>
-                            {t(language, "cell")} {cell.id}
-                            <br />
-                            {combinedMode ? (
-                                selectedFilters.map((filterKey) => (
-                                    <div key={filterKey}>
-                                        {getFilterLabel(filterKey)}: {getCellPopupValue(cell, filterKey)}
-                                    </div>
-                                ))
-                            ) : (
-                                <>
-                                    {getFilterLabel(selectedFilter)}: {getCellPopupValue(cell, selectedFilter)}
-                                </>
-                            )}
-                        </Popup>
-                    </Polygon>
-                );
-            })}
-        </>
-    );
+        return (
+          <Polygon
+            key={cell.id}
+            positions={cell.positions}
+            pathOptions={{
+              color: style.color,
+              weight: 1,
+              fillOpacity: style.fillOpacity,
+            }}
+          >
+            <Popup>
+              {t(language, "cell")} {cell.id}
+              <br />
+              {combinedMode ? (
+                selectedFilters.map((filterKey) => (
+                  <div key={filterKey}>
+                    {getFilterLabel(filterKey)}:{" "}
+                    {getCellPopupValue(cell, filterKey)}
+                  </div>
+                ))
+              ) : (
+                <>
+                  {getFilterLabel(selectedFilter)}:{" "}
+                  {getCellPopupValue(cell, selectedFilter)}
+                </>
+              )}
+            </Popup>
+          </Polygon>
+        );
+      })}
+    </>
+  );
 }

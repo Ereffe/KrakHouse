@@ -5,263 +5,276 @@ import { SingleFilterSection } from "./SingleFilterSection";
 import { SettingsSection } from "./SettingsSection";
 import { useTheme } from "./ThemeContext";
 import { t, type Language } from "./i18n";
-import { getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
+import {
+  getFrontendFilterRange,
+  type FilterDefinition,
+  type FilterKey,
+} from "./mapFilters";
 
 interface MapSidebarProps {
-    filters: FilterDefinition[];
-    selectedFilter: FilterKey;
-    setSelectedFilter: (value: FilterKey) => void;
-    setMinValue: (value: number) => void;
-    setMaxValue: (value: number) => void;
-    language: Language;
-    setLanguage: (value: Language) => void;
-    setDarkMode: (value: boolean) => void;
-    gridSize: number;
-    setGridSize: (value: number) => void;
-    combinedMode: boolean;
-    setCombinedMode: (value: boolean) => void;
-    selectedFilters: FilterKey[];
-    minMaxPerFilter: Record<FilterKey, { min: number; max: number }>;
-    highContrast: boolean;
-    setHighContrast: (value: boolean) => void;
-    setVisuallyImpaired: (value: boolean) => void;
-    colorblind: boolean;
-    setColorblind: (value: boolean) => void;
-    formattedMinValue: string;
-    formattedMaxValue: string;
-    minValue: number;
-    maxValue: number;
-    toggleCombinedFilter: (filterKey: FilterKey, checked: boolean) => void;
-    updateCombinedFilterRange: (
-        filterKey: FilterKey,
-        rangeType: "min" | "max",
-        value: number,
-    ) => void;
-    isLoading: boolean;
-    error: string | null;
+  filters: FilterDefinition[];
+  selectedFilter: FilterKey;
+  setSelectedFilter: (value: FilterKey) => void;
+  setMinValue: (value: number) => void;
+  setMaxValue: (value: number) => void;
+  language: Language;
+  setLanguage: (value: Language) => void;
+  setDarkMode: (value: boolean) => void;
+  gridSize: number;
+  setGridSize: (value: number) => void;
+  combinedMode: boolean;
+  setCombinedMode: (value: boolean) => void;
+  selectedFilters: FilterKey[];
+  minMaxPerFilter: Record<FilterKey, { min: number; max: number }>;
+  highContrast: boolean;
+  setHighContrast: (value: boolean) => void;
+  setVisuallyImpaired: (value: boolean) => void;
+  colorblind: boolean;
+  setColorblind: (value: boolean) => void;
+  formattedMinValue: string;
+  formattedMaxValue: string;
+  minValue: number;
+  maxValue: number;
+  toggleCombinedFilter: (filterKey: FilterKey, checked: boolean) => void;
+  updateCombinedFilterRange: (
+    filterKey: FilterKey,
+    rangeType: "min" | "max",
+    value: number,
+  ) => void;
+  isLoading: boolean;
+  error: string | null;
 }
 
 export function MapSidebar({
-    filters,
-    selectedFilter,
-    setSelectedFilter,
-    setMinValue,
-    setMaxValue,
-    language,
-    setLanguage,
-    setDarkMode,
-    gridSize,
-    setGridSize,
-    combinedMode,
-    setCombinedMode,
-    selectedFilters,
-    minMaxPerFilter,
-    highContrast,
-    setHighContrast,
-    setVisuallyImpaired,
-    colorblind,
-    setColorblind,
-    formattedMinValue,
-    formattedMaxValue,
-    minValue,
-    maxValue,
-    toggleCombinedFilter,
-    updateCombinedFilterRange,
-    isLoading,
-    error,
+  filters,
+  selectedFilter,
+  setSelectedFilter,
+  setMinValue,
+  setMaxValue,
+  language,
+  setLanguage,
+  setDarkMode,
+  gridSize,
+  setGridSize,
+  combinedMode,
+  setCombinedMode,
+  selectedFilters,
+  minMaxPerFilter,
+  highContrast,
+  setHighContrast,
+  setVisuallyImpaired,
+  colorblind,
+  setColorblind,
+  formattedMinValue,
+  formattedMaxValue,
+  minValue,
+  maxValue,
+  toggleCombinedFilter,
+  updateCombinedFilterRange,
+  isLoading,
+  error,
 }: Readonly<MapSidebarProps>) {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const {
-        darkMode,
-        panelTitleColor,
-        panelTextColor,
-        panelBorderColor,
-        rightSidebarColor,
-        sidebarBackground,
-        titleFontSize,
-        baseFontSize,
-    } = useTheme();
-    const selectedBackendFilter =
-        filters.find((filter) => filter.key === selectedFilter) ?? filters[0];
-    const selectedFilterConfig = selectedBackendFilter
-        ? getFrontendFilterRange(selectedBackendFilter)
-        : undefined;
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const {
+    darkMode,
+    panelTitleColor,
+    panelTextColor,
+    panelBorderColor,
+    rightSidebarColor,
+    sidebarBackground,
+    titleFontSize,
+    baseFontSize,
+  } = useTheme();
+  const selectedBackendFilter =
+    filters.find((filter) => filter.key === selectedFilter) ?? filters[0];
+  const selectedFilterConfig = selectedBackendFilter
+    ? getFrontendFilterRange(selectedBackendFilter)
+    : undefined;
 
-    return (
-        <div
+  return (
+    <div
+      style={{
+        width: isCollapsed ? "52px" : "280px",
+        padding: isCollapsed ? "12px 4px" : "25px",
+        background: sidebarBackground,
+        overflowY: "auto",
+        boxShadow: "2px 0 10px rgba(0, 0, 0, 0.1)",
+        color: darkMode ? "#f8f9fa" : "#343a40",
+        transition: "width 0.3s ease, padding 0.3s ease",
+        display: "flex",
+        flexDirection: "column",
+        borderRight: isCollapsed ? `3px solid ${rightSidebarColor}` : "none",
+      }}
+    >
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        style={{
+          width: "42px",
+          height: "44px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "rgba(13, 148, 136, 0.15)",
+          border: "1.5px solid #0d9488",
+          borderRadius: "8px",
+          color: "#0d9488",
+          cursor: "pointer",
+          fontSize: "20px",
+          fontWeight: "600",
+          transition: "all 0.2s ease",
+          marginBottom: "15px",
+          marginLeft: isCollapsed ? "0.35rem" : "0",
+          flexShrink: 0,
+        }}
+        title={
+          isCollapsed
+            ? t(language, "expandSidebar")
+            : t(language, "collapseSidebar")
+        }
+      >
+        {isCollapsed ? ">" : "<"}
+      </button>
+
+      {!isCollapsed && (
+        <>
+          <h3
             style={{
-                width: isCollapsed ? "52px" : "280px",
-                padding: isCollapsed ? "12px 4px" : "25px",
-                background: sidebarBackground,
-                overflowY: "auto",
-                boxShadow: "2px 0 10px rgba(0, 0, 0, 0.1)",
-                color: darkMode ? "#f8f9fa" : "#343a40",
-                transition: "width 0.3s ease, padding 0.3s ease",
-                display: "flex",
-                flexDirection: "column",
-                borderRight: isCollapsed ? `3px solid ${rightSidebarColor}` : "none",
+              marginTop: 0,
+              marginBottom: "25px",
+              fontSize: titleFontSize,
+              color: panelTitleColor,
+              fontWeight: "600",
+              textAlign: "center",
+              borderBottom: "2px solid #6c757d",
+              paddingBottom: "10px",
             }}
-        >
-            <button
-                onClick={() => setIsCollapsed(!isCollapsed)}
-                style={{
-                    width: "42px",
-                    height: "44px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "rgba(13, 148, 136, 0.15)",
-                    border: "1.5px solid #0d9488",
-                    borderRadius: "8px",
-                    color: "#0d9488",
-                    cursor: "pointer",
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    transition: "all 0.2s ease",
-                    marginBottom: "15px",
-                    marginLeft: isCollapsed ? "0.35rem" : "0",
-                    flexShrink: 0,
-                }}
-                    title={isCollapsed ? t(language, "expandSidebar") : t(language, "collapseSidebar")}
+          >
+            {t(language, "filters")}
+          </h3>
+          {(isLoading || error) && (
+            <div
+              style={{
+                marginBottom: "16px",
+                padding: "10px 12px",
+                borderRadius: "10px",
+                backgroundColor: error
+                  ? "rgba(220, 53, 69, 0.12)"
+                  : "rgba(13, 148, 136, 0.12)",
+                color: error ? "#dc3545" : panelTextColor,
+                fontSize: "13px",
+                lineHeight: 1.5,
+              }}
             >
-                {isCollapsed ? ">" : "<"}
-            </button>
+              {error ?? t(language, "loadingFilters")}
+            </div>
+          )}
+          <div style={{ marginBottom: "20px" }}>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                fontSize: baseFontSize,
+                color: panelTextColor,
+                fontWeight: "500",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={combinedMode}
+                onChange={(e) => setCombinedMode(e.target.checked)}
+                style={{
+                  marginRight: "10px",
+                  width: "18px",
+                  height: "18px",
+                  accentColor: "#0d9488",
+                  cursor: "pointer",
+                }}
+              />{" "}
+              {t(language, "combinedFiltersMode")}
+            </label>
+          </div>
 
-            {!isCollapsed && (
-                <>
-                    <h3
-                        style={{
-                            marginTop: 0,
-                            marginBottom: "25px",
-                            fontSize: titleFontSize,
-                            color: panelTitleColor,
-                            fontWeight: "600",
-                            textAlign: "center",
-                            borderBottom: "2px solid #6c757d",
-                            paddingBottom: "10px",
-                        }}
-                    >
-                        {t(language, "filters")}
-                    </h3>
-                    {(isLoading || error) && (
-                        <div
-                            style={{
-                                marginBottom: "16px",
-                                padding: "10px 12px",
-                                borderRadius: "10px",
-                                backgroundColor: error ? "rgba(220, 53, 69, 0.12)" : "rgba(13, 148, 136, 0.12)",
-                                color: error ? "#dc3545" : panelTextColor,
-                                fontSize: "13px",
-                                lineHeight: 1.5,
-                            }}
-                        >
-                            {error ?? t(language, "loadingFilters")}
-                        </div>
-                    )}
-                    <div style={{ marginBottom: "20px" }}>
-                        <label
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                cursor: "pointer",
-                                fontSize: baseFontSize,
-                                color: panelTextColor,
-                                fontWeight: "500",
-                            }}
-                        >
-                            <input
-                                type="checkbox"
-                                checked={combinedMode}
-                                onChange={(e) => setCombinedMode(e.target.checked)}
-                                style={{
-                                    marginRight: "10px",
-                                    width: "18px",
-                                    height: "18px",
-                                    accentColor: "#0d9488",
-                                    cursor: "pointer",
-                                }}
-                            />{" "}
-                            {t(language, "combinedFiltersMode")}
-                        </label>
-                    </div>
-
-                    {combinedMode ? (
-                        <>
-                            <CombinedFilterSection
-                                language={language}
-                                filters={filters}
-                                selectedFilters={selectedFilters}
-                                minMaxPerFilter={minMaxPerFilter}
-                                toggleCombinedFilter={toggleCombinedFilter}
-                                updateCombinedFilterRange={updateCombinedFilterRange}
-                            />
-                            {selectedFilters.length > 0 && (
-                                <div style={{ marginBottom: "25px" }}>
-                                    <h4
-                                        style={{
-                                            color: panelTitleColor,
-                                            fontSize: "16px",
-                                            marginBottom: "10px",
-                                        }}
-                                    >
-                                        {t(language, "selectedFilters")}
-                                    </h4>
-                                    {selectedFilters.map((filterKey) => (
-                                        <div
-                                            key={filterKey}
-                                            style={{
-                                                color: "#0d9488",
-                                                fontWeight: "bold",
-                                                fontSize: "14px",
-                                            }}
-                                        >
-                                            {filters.find((filter) => filter.key === filterKey)?.label}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </>
-                    ) : (
-                        <SingleFilterSection
-                            language={language}
-                            filters={filters}
-                            selectedFilter={selectedFilter}
-                            selectedFilterConfig={selectedFilterConfig}
-                            minValue={minValue}
-                            maxValue={maxValue}
-                            formattedMinValue={formattedMinValue}
-                            formattedMaxValue={formattedMaxValue}
-                            setSelectedFilter={setSelectedFilter}
-                            setMinValue={setMinValue}
-                            setMaxValue={setMaxValue}
-                        />
-                    )}
-
+          {combinedMode ? (
+            <>
+              <CombinedFilterSection
+                language={language}
+                filters={filters}
+                selectedFilters={selectedFilters}
+                minMaxPerFilter={minMaxPerFilter}
+                toggleCombinedFilter={toggleCombinedFilter}
+                updateCombinedFilterRange={updateCombinedFilterRange}
+              />
+              {selectedFilters.length > 0 && (
+                <div style={{ marginBottom: "25px" }}>
+                  <h4
+                    style={{
+                      color: panelTitleColor,
+                      fontSize: "16px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {t(language, "selectedFilters")}
+                  </h4>
+                  {selectedFilters.map((filterKey) => (
                     <div
-                        style={{
-                            marginTop: "30px",
-                            paddingTop: "20px",
-                            borderTop: `1px solid ${panelBorderColor}`,
-                        }}
+                      key={filterKey}
+                      style={{
+                        color: "#0d9488",
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                      }}
                     >
-                        <SettingsSection
-                            language={language}
-                            gridSize={gridSize}
-                            setLanguage={setLanguage}
-                            setDarkMode={setDarkMode}
-                            setGridSize={setGridSize}
-                        />
-                        <AccessibilitySection
-                            language={language}
-                            highContrast={highContrast}
-                            colorblind={colorblind}
-                            setHighContrast={setHighContrast}
-                            setVisuallyImpaired={setVisuallyImpaired}
-                            setColorblind={setColorblind}
-                        />
+                      {
+                        filters.find((filter) => filter.key === filterKey)
+                          ?.label
+                      }
                     </div>
-                </>
-            )}
-        </div>
-    );
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <SingleFilterSection
+              language={language}
+              filters={filters}
+              selectedFilter={selectedFilter}
+              selectedFilterConfig={selectedFilterConfig}
+              minValue={minValue}
+              maxValue={maxValue}
+              formattedMinValue={formattedMinValue}
+              formattedMaxValue={formattedMaxValue}
+              setSelectedFilter={setSelectedFilter}
+              setMinValue={setMinValue}
+              setMaxValue={setMaxValue}
+            />
+          )}
+
+          <div
+            style={{
+              marginTop: "30px",
+              paddingTop: "20px",
+              borderTop: `1px solid ${panelBorderColor}`,
+            }}
+          >
+            <SettingsSection
+              language={language}
+              gridSize={gridSize}
+              setLanguage={setLanguage}
+              setDarkMode={setDarkMode}
+              setGridSize={setGridSize}
+            />
+            <AccessibilitySection
+              language={language}
+              highContrast={highContrast}
+              colorblind={colorblind}
+              setHighContrast={setHighContrast}
+              setVisuallyImpaired={setVisuallyImpaired}
+              setColorblind={setColorblind}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
