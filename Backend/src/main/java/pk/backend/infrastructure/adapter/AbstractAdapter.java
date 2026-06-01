@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class AbstractAdapter<T extends Number & Comparable<T>>{
 
     private static final double LAT_STEP = 0.0005;
-    private static final double LON_STEP = 0.001;
+    private static final double LON_STEP = 0.0005;
 
     public abstract List<DiscreteData<T>> fetchData();
     public abstract BoxValue createBox(T value);
