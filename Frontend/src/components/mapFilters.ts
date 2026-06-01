@@ -8,6 +8,19 @@ export interface FilterDefinition {
     dataProvider?: string;
 }
 
+export const PRICE_FILTER_RANGE = { min: 1000, max: 10000 };
+
+export function getFrontendFilterRange(filter: Pick<FilterDefinition, "key" | "min" | "max">) {
+    if (filter.key === "PRICE") {
+        return PRICE_FILTER_RANGE;
+    }
+
+    return {
+        min: filter.min,
+        max: filter.max,
+    };
+}
+
 export const filterLabels: Record<FilterKey, string> = {
     AIR_QUALITY: "Jakość powietrza",
     CRIME: "Poziom przestępczości",

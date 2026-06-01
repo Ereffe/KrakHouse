@@ -9,7 +9,9 @@ import {
 } from "../services/mapApi";
 import {
     formatFilterValue,
+    getFrontendFilterRange,
     getFilterLabel,
+    PRICE_FILTER_RANGE,
     type FilterDefinition,
     type FilterKey,
 } from "./mapFilters";
@@ -36,10 +38,11 @@ const DEFAULT_MIN_MAX: MinMaxPerFilter = {
     AIR_QUALITY: { min: 0, max: 500 },
     CRIME: { min: 0, max: 100 },
     NOISE: { min: 30, max: 90 },
-    PRICE: { min: 1000, max: 10000 },
+    PRICE: PRICE_FILTER_RANGE,
 };
 
 function getColor(
+    filterKey: FilterKey,
     value: number,
     min: number,
     max: number,
@@ -61,6 +64,16 @@ function getColor(
         const g = Math.floor(119 * (1 - normalized) + 127 * normalized);
         const b = Math.floor(180 * (1 - normalized) + 14 * normalized);
         return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    if (filterKey === "PRICE") {
+        if (value <= min) return "#28a745";
+        if (value >= max) return "#dc3545";
+
+        const normalized = (value - min) / (max - min || 1);
+        const r = Math.floor(255 * normalized);
+        const g = Math.floor(255 * (1 - normalized));
+        return `rgb(${r}, ${g}, 0)`;
     }
 
     if (value <= min) return "#dc3545";
@@ -409,26 +422,29 @@ export function useMapController() {
     ) {
         setMinMaxPerFilter((prev) => {
             const currentRange = prev[filterKey] ?? DEFAULT_MIN_MAX[filterKey];
-            const bounds =
-                filters.find((filter) => filter.key === filterKey) ??
-                ({ min: currentRange.min, max: currentRange.max } as const);
+            const backendRange = filters.find((filter) => filter.key === filterKey);
+            const bounds = getFrontendFilterRange(
+                backendRange ?? { key: filterKey, min: currentRange.min, max: currentRange.max },
+            );
+            const currentMin = clamp(currentRange.min, bounds.min, bounds.max);
+            const currentMax = clamp(currentRange.max, currentMin, bounds.max);
 
             if (rangeType === "min") {
-                const nextMin = clamp(value, bounds.min, currentRange.max);
+                const nextMin = clamp(value, bounds.min, currentMax);
                 return {
                     ...prev,
                     [filterKey]: {
                         min: nextMin,
-                        max: currentRange.max,
+                        max: currentMax,
                     },
                 };
             }
 
-            const nextMax = clamp(value, currentRange.min, bounds.max);
+            const nextMax = clamp(value, currentMin, bounds.max);
             return {
                 ...prev,
                 [filterKey]: {
-                    min: currentRange.min,
+                    min: currentMin,
                     max: nextMax,
                 },
             };
@@ -461,7 +477,7 @@ export function useMapController() {
         const { min, max } = minMaxPerFilter[selectedFilter];
 
         return {
-            color: getColor(selectedValue, min, max, highContrast, colorblind),
+            color: getColor(selectedFilter, selectedValue, min, max, highContrast, colorblind),
             fillOpacity: 0.7,
         };
     }

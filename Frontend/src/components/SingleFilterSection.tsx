@@ -15,6 +15,12 @@ interface SingleFilterSectionProps {
     readonly setMaxValue: (value: number) => void;
 }
 
+function getSliderGradient(filterKey: FilterKey) {
+    return filterKey === "PRICE"
+        ? "linear-gradient(to right, #0d9488, #f97316, #ef4444)"
+        : "linear-gradient(to right, #ef4444, #f97316, #0d9488)";
+}
+
 export function SingleFilterSection({
     filters,
     selectedFilter,
@@ -93,7 +99,7 @@ export function SingleFilterSection({
                 onChange={setMinValue}
                 labelColor={panelTextColor}
                 valueColor="#ef4444"
-                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+                trackGradient={getSliderGradient(selectedFilter)}
             />
             <RangeSlider
                 label="Maximum"
@@ -105,7 +111,7 @@ export function SingleFilterSection({
                 onChange={setMaxValue}
                 labelColor={panelTextColor}
                 valueColor="#0d9488"
-                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+                trackGradient={getSliderGradient(selectedFilter)}
                 containerStyle={{ marginTop: "18px" }}
             />
         </>

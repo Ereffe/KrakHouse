@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { FilterDefinition, FilterKey } from "./mapFilters";
+import { getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
 import { CombinedFilterSection } from "./CombinedFilterSection";
 import { SingleFilterSection } from "./SingleFilterSection";
 import { SettingsSection } from "./SettingsSection";
@@ -80,8 +80,11 @@ export function MapSidebar({
         titleFontSize,
         baseFontSize,
     } = useTheme();
-    const selectedFilterConfig =
+    const selectedBackendFilter =
         filters.find((filter) => filter.key === selectedFilter) ?? filters[0];
+    const selectedFilterConfig = selectedBackendFilter
+        ? getFrontendFilterRange(selectedBackendFilter)
+        : undefined;
 
     return (
         <div

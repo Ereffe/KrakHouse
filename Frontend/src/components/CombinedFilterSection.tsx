@@ -1,5 +1,5 @@
 import { RangeSlider } from "./RangeSlider";
-import type { FilterDefinition, FilterKey } from "./mapFilters";
+import { formatFilterValue, getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
 import { useTheme } from "./ThemeContext";
 
 interface CombinedFilterSectionProps {
@@ -16,6 +16,12 @@ interface CombinedFilterSectionProps {
 
 function getSliderStep(filterKey: FilterKey) {
     return filterKey === "PRICE" ? 10 : 1;
+}
+
+function getSliderGradient(filterKey: FilterKey) {
+    return filterKey === "PRICE"
+        ? "linear-gradient(to right, #0d9488, #f97316, #ef4444)"
+        : "linear-gradient(to right, #ef4444, #0d9488)";
 }
 
 export function CombinedFilterSection({
@@ -45,9 +51,18 @@ export function CombinedFilterSection({
             </div>
 
             {filters.map((filter) => {
-                const selectedRange = minMaxPerFilter[filter.key] ?? {
-                    min: filter.min,
-                    max: filter.max,
+                const filterRange = getFrontendFilterRange(filter);
+                const rawSelectedRange = minMaxPerFilter[filter.key] ?? filterRange;
+                const selectedMax = Math.min(
+                    Math.max(rawSelectedRange.max, filterRange.min),
+                    filterRange.max,
+                );
+                const selectedRange = {
+                    min: Math.min(
+                        Math.max(rawSelectedRange.min, filterRange.min),
+                        selectedMax,
+                    ),
+                    max: selectedMax,
                 };
 
                 return (
@@ -93,28 +108,28 @@ export function CombinedFilterSection({
                                 <RangeSlider
                                     label="Min"
                                     value={selectedRange.min}
-                                    displayValue={String(selectedRange.min)}
-                                    min={filter.min}
+                                    displayValue={formatFilterValue(filter.key, selectedRange.min)}
+                                    min={filterRange.min}
                                     max={selectedRange.max}
                                     step={getSliderStep(filter.key)}
                                     onChange={(value) => updateCombinedFilterRange(filter.key, "min", value)}
                                     labelColor={panelTextColor}
                                     valueColor="#0d9488"
-                                    trackGradient="linear-gradient(to right, #ef4444, #0d9488)"
+                                    trackGradient={getSliderGradient(filter.key)}
                                     containerStyle={{ marginBottom: "14px" }}
                                     labelRowStyle={{ fontSize: "12px" }}
                                 />
                                 <RangeSlider
                                     label="Max"
                                     value={selectedRange.max}
-                                    displayValue={String(selectedRange.max)}
+                                    displayValue={formatFilterValue(filter.key, selectedRange.max)}
                                     min={selectedRange.min}
-                                    max={filter.max}
+                                    max={filterRange.max}
                                     step={getSliderStep(filter.key)}
                                     onChange={(value) => updateCombinedFilterRange(filter.key, "max", value)}
                                     labelColor={panelTextColor}
                                     valueColor="#0d9488"
-                                    trackGradient="linear-gradient(to right, #ef4444, #0d9488)"
+                                    trackGradient={getSliderGradient(filter.key)}
                                     containerStyle={{ marginBottom: "0" }}
                                     labelRowStyle={{ fontSize: "12px", marginTop: "12px" }}
                                 />
