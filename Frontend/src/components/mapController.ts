@@ -1,41 +1,43 @@
 import { useEffect, useMemo, useState } from "react";
-import { filters, type FilterKey } from "./mapFilters";
+import {
+    fetchFilteredMaps,
+    fetchFilters,
+    fetchMergedMaps,
+    type FilteredMapListResponseDto,
+    type FilteredMapRequestDto,
+    type MergedMapResponseDto,
+} from "../services/mapApi";
+import {
+    formatFilterValue,
+    getFilterLabel,
+    type FilterDefinition,
+    type FilterKey,
+} from "./mapFilters";
 
 export interface GridCell {
     id: string;
     positions: [number, number][];
-    lifeScore: number;
-    price: number;
-    pollution: number;
-    noise: number;
-    crimeLevel: number;
+    values: Partial<Record<FilterKey, number>>;
+    visible: boolean;
 }
 
 type MinMax = { min: number; max: number };
 type MinMaxPerFilter = Record<FilterKey, MinMax>;
 
 export const KRAKOW: [number, number] = [50.0647, 19.945];
-export const KRAKOW_BORDER: [number, number][] = [
-    [50.124, 19.79],
-    [50.153, 19.86],
-    [50.165, 19.96],
-    [50.141, 20.03],
-    [50.104, 20.08],
-    [50.053, 20.107],
-    [49.999, 20.083],
-    [49.965, 20.023],
-    [49.948, 19.953],
-    [49.961, 19.892],
-    [49.994, 19.832],
-    [50.051, 19.79],
-    [50.102, 19.776],
-];
+const DEFAULT_MAP_BOUNDS = {
+    latitudeLeftBorder: 50.02,
+    latitudeRightBorder: 50.12,
+    longitudeTopBorder: 19.86,
+    longitudeBottomBorder: 20.02,
+};
 
-const minLat = 49.948;
-const maxLat = 50.165;
-const minLon = 19.776;
-const maxLon = 20.107;
-const initialGridSize = 10;
+const DEFAULT_MIN_MAX: MinMaxPerFilter = {
+    AIR_QUALITY: { min: 0, max: 500 },
+    CRIME: { min: 0, max: 100 },
+    NOISE: { min: 30, max: 90 },
+    PRICE: { min: 1000, max: 10000 },
+};
 
 function getColor(
     value: number,
@@ -47,14 +49,14 @@ function getColor(
     if (highContrast) {
         if (value <= min) return "#000000";
         if (value >= max) return "#FFFFFF";
-        const normalized = (value - min) / (max - min);
+        const normalized = (value - min) / (max - min || 1);
         return normalized < 0.5 ? "#000000" : "#FFFFFF";
     }
 
     if (colorblind) {
         if (value <= min) return "#1f77b4";
         if (value >= max) return "#ff7f0e";
-        const normalized = (value - min) / (max - min);
+        const normalized = (value - min) / (max - min || 1);
         const r = Math.floor(255 * normalized * 0.8 + 31);
         const g = Math.floor(119 * (1 - normalized) + 127 * normalized);
         const b = Math.floor(180 * (1 - normalized) + 14 * normalized);
@@ -64,72 +66,174 @@ function getColor(
     if (value <= min) return "#dc3545";
     if (value >= max) return "#28a745";
 
-    const normalized = (value - min) / (max - min);
+    const normalized = (value - min) / (max - min || 1);
     const r = Math.floor(255 * (1 - normalized));
     const g = Math.floor(255 * normalized);
     return `rgb(${r}, ${g}, 0)`;
 }
 
-function createInitialMinMaxPerFilter(): MinMaxPerFilter {
-    return filters.reduce((acc, filter) => {
-        acc[filter.key] = { min: filter.min, max: filter.max };
-        return acc;
-    }, {} as MinMaxPerFilter);
+function buildRequestFilters(
+    combinedMode: boolean,
+    selectedFilter: FilterKey,
+    minValue: number,
+    maxValue: number,
+    selectedFilters: FilterKey[],
+    minMaxPerFilter: MinMaxPerFilter,
+): FilteredMapRequestDto[] {
+    if (combinedMode) {
+        return selectedFilters.map((filterKey) => ({
+            mapFilter: filterKey,
+            minValue: minMaxPerFilter[filterKey].min,
+            maxValue: minMaxPerFilter[filterKey].max,
+        }));
+    }
+
+    return [
+        {
+            mapFilter: selectedFilter,
+            minValue,
+            maxValue,
+        },
+    ];
 }
 
-function buildGridCells(gridSize: number): GridCell[] {
-    const cells: GridCell[] = [];
-    const latStep = (maxLat - minLat) / gridSize;
-    const lonStep = (maxLon - minLon) / gridSize;
+function buildPolygonPositions(
+    bounds: NonNullable<FilteredMapListResponseDto["bounds"]>,
+    rowIndex: number,
+    columnIndex: number,
+    rowCount: number,
+    columnCount: number,
+): [number, number][] {
+    const latStep = (bounds.latitudeRightBorder - bounds.latitudeLeftBorder) / rowCount;
+    const lonStep = (bounds.longitudeBottomBorder - bounds.longitudeTopBorder) / columnCount;
 
-    for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-            const lat1 = minLat + i * latStep;
-            const lat2 = minLat + (i + 1) * latStep;
-            const lon1 = minLon + j * lonStep;
-            const lon2 = minLon + (j + 1) * lonStep;
+    const lat1 = bounds.latitudeLeftBorder + rowIndex * latStep;
+    const lat2 = bounds.latitudeLeftBorder + (rowIndex + 1) * latStep;
+    const lon1 = bounds.longitudeTopBorder + columnIndex * lonStep;
+    const lon2 = bounds.longitudeTopBorder + (columnIndex + 1) * lonStep;
 
-            cells.push({
-                id: `${i}-${j}`,
-                positions: [
-                    [lat1, lon1],
-                    [lat2, lon1],
-                    [lat2, lon2],
-                    [lat1, lon2],
-                ],
-                lifeScore: Math.floor(Math.random() * 101),
-                price: Math.floor(Math.random() * 501) + 10,
-                pollution: Math.floor(Math.random() * 10) + 1,
-                noise: Math.floor(Math.random() * 11),
-                crimeLevel: Math.floor(Math.random() * 11),
-            });
+    return [
+        [lat1, lon1],
+        [lat2, lon1],
+        [lat2, lon2],
+        [lat1, lon2],
+    ];
+}
+
+function isInRange(value: number | null | undefined, min: number, max: number) {
+    return typeof value === "number" && value >= min && value <= max;
+}
+
+function buildGridCells({
+    listResponse,
+    mergedResponse,
+    combinedMode,
+    selectedFilter,
+    selectedFilters,
+    minMaxPerFilter,
+}: {
+    listResponse: FilteredMapListResponseDto | null;
+    mergedResponse: MergedMapResponseDto | null;
+    combinedMode: boolean;
+    selectedFilter: FilterKey;
+    selectedFilters: FilterKey[];
+    minMaxPerFilter: MinMaxPerFilter;
+}): GridCell[] {
+    if (!listResponse || listResponse.maps.length === 0) {
+        return [];
+    }
+
+    const baseMap =
+        listResponse.maps.find((map) => map.type === selectedFilter) ?? listResponse.maps[0];
+    const rowCount = baseMap.data.length;
+    const columnCount = baseMap.data[0]?.length ?? 0;
+    const bounds = listResponse.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+
+    if (!rowCount || !columnCount) {
+        return [];
+    }
+
+    const mapByType = new Map(
+        listResponse.maps.map((map) => [map.type, map.data] as const),
+    );
+
+    return baseMap.data.flatMap((row, rowIndex) =>
+        row.map((_, columnIndex) => {
+            const values: Partial<Record<FilterKey, number>> = {};
+
+            const sourceFilters = combinedMode ? selectedFilters : [selectedFilter];
+            for (const filterKey of sourceFilters) {
+                const matrix = mapByType.get(filterKey);
+                const sourceValue = matrix?.[rowIndex]?.[columnIndex];
+                if (typeof sourceValue === "number") {
+                    values[filterKey] = sourceValue;
+                }
+            }
+
+            const combinedVisible =
+                !combinedMode ||
+                (mergedResponse?.data[rowIndex]?.[columnIndex] ?? false);
+
+            const singleVisible = isInRange(
+                values[selectedFilter],
+                minMaxPerFilter[selectedFilter].min,
+                minMaxPerFilter[selectedFilter].max,
+            );
+
+            const visible = combinedMode ? combinedVisible : singleVisible;
+
+            return {
+                id: `${rowIndex}-${columnIndex}`,
+                positions: buildPolygonPositions(
+                    bounds,
+                    rowIndex,
+                    columnIndex,
+                    rowCount,
+                    columnCount,
+                ),
+                values,
+                visible,
+            } satisfies GridCell;
+        }),
+    );
+}
+
+function getSelectedFilterConfig(filters: FilterDefinition[], selectedFilter: FilterKey) {
+    return filters.find((filter) => filter.key === selectedFilter) ?? filters[0];
+}
+
+function hasFilterKey(filters: FilterDefinition[], filterKey: FilterKey) {
+    for (const filter of filters) {
+        if (filter.key === filterKey) {
+            return true;
         }
     }
 
-    return cells;
+    return false;
 }
 
-function formatFilterValue(filter: FilterKey, value: number) {
-    if (filter === "price") return `${value} PLN`;
-    if (filter === "lifeScore") return `${value}%`;
-    return String(value);
+function clamp(value: number, min: number, max: number) {
+    return Math.min(Math.max(value, min), max);
 }
 
 export function useMapController() {
-    const [selectedFilter, setSelectedFilter] = useState<FilterKey>("lifeScore");
+    const [filters, setFilters] = useState<FilterDefinition[]>([]);
+    const [selectedFilter, setSelectedFilter] = useState<FilterKey>("AIR_QUALITY");
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(10);
     const [language, setLanguage] = useState<"pl" | "en">("pl");
     const [darkMode, setDarkMode] = useState(false);
-    const [gridSize, setGridSize] = useState(initialGridSize);
+    const [gridSize, setGridSize] = useState(13);
     const [combinedMode, setCombinedMode] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState<FilterKey[]>([]);
-    const [minMaxPerFilter, setMinMaxPerFilter] = useState<MinMaxPerFilter>(() =>
-        createInitialMinMaxPerFilter(),
-    );
+    const [minMaxPerFilter, setMinMaxPerFilter] = useState<MinMaxPerFilter>(DEFAULT_MIN_MAX);
     const [highContrast, setHighContrast] = useState(false);
     const [visuallyImpaired, setVisuallyImpaired] = useState(false);
     const [colorblind, setColorblind] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [listResponse, setListResponse] = useState<FilteredMapListResponseDto | null>(null);
+    const [mergedResponse, setMergedResponse] = useState<MergedMapResponseDto | null>(null);
 
     const panelTitleColor = darkMode ? "#f8f9fa" : "#495057";
     const panelTextColor = darkMode ? "#f8f9fa" : "#343a40";
@@ -138,22 +242,160 @@ export function useMapController() {
     const titleFontSize = visuallyImpaired ? "32px" : "22px";
     const subTitleFontSize = visuallyImpaired ? "24px" : "18px";
 
-    const gridCells = useMemo(() => buildGridCells(gridSize), [gridSize]);
+    useEffect(() => {
+        let cancelled = false;
+
+        setIsLoading(true);
+        fetchFilters()
+            .then((backendFilters) => {
+                if (cancelled) return;
+
+                const nextFilters = backendFilters.map((filter) => ({
+                    key: filter.type,
+                    label: getFilterLabel(filter.type),
+                    min: filter.min,
+                    max: filter.max,
+                }));
+
+                setFilters(nextFilters);
+                // keep frontend default ranges for all filters
+                setMinMaxPerFilter(DEFAULT_MIN_MAX);
+
+                const firstFilter = nextFilters[0];
+                if (firstFilter) {
+                    const selectedKey = hasFilterKey(nextFilters, selectedFilter)
+                        ? selectedFilter
+                        : firstFilter.key;
+                    setSelectedFilter(() => selectedKey);
+
+                    // initialize slider values from our frontend-default ranges
+                    const def = DEFAULT_MIN_MAX[selectedKey];
+                    if (def) {
+                        setMinValue(def.min);
+                        setMaxValue(def.max);
+                    } else {
+                        setMinValue(firstFilter.min);
+                        setMaxValue(firstFilter.max);
+                    }
+                }
+
+                setError(null);
+                setIsLoading(false);
+            })
+            .catch((fetchError: unknown) => {
+                if (cancelled) return;
+                setError(fetchError instanceof Error ? fetchError.message : "Failed to load filters");
+                setIsLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     useEffect(() => {
-        const currentFilter = filters.find((filter) => filter.key === selectedFilter);
+        const currentFilter = getSelectedFilterConfig(filters, selectedFilter);
+        const mm = minMaxPerFilter[selectedFilter];
+        if (mm) {
+            setMinValue(mm.min);
+            setMaxValue(mm.max);
+            return;
+        }
+
         if (!currentFilter) return;
 
         setMinValue(currentFilter.min);
         setMaxValue(currentFilter.max);
-    }, [selectedFilter]);
+    }, [filters, selectedFilter, minMaxPerFilter]);
+
+    useEffect(() => {
+        if (!combinedMode && selectedFilters.length > 0) {
+            return;
+        }
+
+        if (combinedMode && selectedFilters.length === 0 && filters.length > 0) {
+            setSelectedFilters([selectedFilter]);
+        }
+    }, [combinedMode, filters.length, selectedFilter, selectedFilters.length]);
+
+    useEffect(() => {
+        if (filters.length === 0) {
+            return;
+        }
+
+        const requestFilters = buildRequestFilters(
+            combinedMode,
+            selectedFilter,
+            minValue,
+            maxValue,
+            selectedFilters,
+            minMaxPerFilter,
+        );
+
+        if (combinedMode && requestFilters.length === 0) {
+            setListResponse(null);
+            setMergedResponse(null);
+            setIsLoading(false);
+            setError(null);
+            return;
+        }
+
+        let cancelled = false;
+
+        setIsLoading(true);
+        setError(null);
+
+        Promise.all([
+            fetchFilteredMaps(requestFilters),
+            combinedMode ? fetchMergedMaps(requestFilters) : Promise.resolve(null),
+        ])
+            .then(([nextListResponse, nextMergedResponse]) => {
+                if (cancelled) return;
+                setListResponse(nextListResponse);
+                setMergedResponse(nextMergedResponse);
+
+                // no server-derived range adjustments; frontend uses initial `minMaxPerFilter`
+                setIsLoading(false);
+            })
+            .catch((fetchError: unknown) => {
+                if (cancelled) return;
+                setListResponse(null);
+                setMergedResponse(null);
+                setError(fetchError instanceof Error ? fetchError.message : "Failed to load map data");
+                setIsLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [combinedMode, filters.length, maxValue, minMaxPerFilter, minValue, selectedFilter, selectedFilters]);
 
     const formattedMinValue = formatFilterValue(selectedFilter, minValue);
     const formattedMaxValue = formatFilterValue(selectedFilter, maxValue);
+    const resolvedBounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+    const mapCenter: [number, number] = listResponse?.bounds ?? mergedResponse?.bounds
+        ? [
+            (resolvedBounds.latitudeLeftBorder + resolvedBounds.latitudeRightBorder) / 2,
+            (resolvedBounds.longitudeTopBorder + resolvedBounds.longitudeBottomBorder) / 2,
+        ]
+        : KRAKOW;
+
+    const gridCells = useMemo(
+        () =>
+            buildGridCells({
+                listResponse,
+                mergedResponse,
+                combinedMode,
+                selectedFilter,
+                selectedFilters,
+                minMaxPerFilter,
+            }),
+        [combinedMode, listResponse, mergedResponse, minMaxPerFilter, selectedFilter, selectedFilters],
+    );
 
     function toggleCombinedFilter(filterKey: FilterKey, checked: boolean) {
         if (checked) {
-            setSelectedFilters((prev) => [...prev, filterKey]);
+            setSelectedFilters((prev) => (prev.includes(filterKey) ? prev : [...prev, filterKey]));
             return;
         }
 
@@ -165,13 +407,32 @@ export function useMapController() {
         rangeType: "min" | "max",
         value: number,
     ) {
-        setMinMaxPerFilter((prev) => ({
-            ...prev,
-            [filterKey]: {
-                ...prev[filterKey],
-                [rangeType]: value,
-            },
-        }));
+        setMinMaxPerFilter((prev) => {
+            const currentRange = prev[filterKey] ?? DEFAULT_MIN_MAX[filterKey];
+            const bounds =
+                filters.find((filter) => filter.key === filterKey) ??
+                ({ min: currentRange.min, max: currentRange.max } as const);
+
+            if (rangeType === "min") {
+                const nextMin = clamp(value, bounds.min, currentRange.max);
+                return {
+                    ...prev,
+                    [filterKey]: {
+                        min: nextMin,
+                        max: currentRange.max,
+                    },
+                };
+            }
+
+            const nextMax = clamp(value, currentRange.min, bounds.max);
+            return {
+                ...prev,
+                [filterKey]: {
+                    min: currentRange.min,
+                    max: nextMax,
+                },
+            };
+        });
     }
 
     function getCombinedModeColor() {
@@ -181,42 +442,41 @@ export function useMapController() {
     }
 
     function getCellStyle(cell: GridCell): { color: string; fillOpacity: number } | null {
+        if (!cell.visible) {
+            return null;
+        }
+
         if (combinedMode) {
-            const meetsAllSelected =
-                selectedFilters.length > 0 &&
-                selectedFilters.every((filterKey) => {
-                    const value = cell[filterKey];
-                    const { min, max } = minMaxPerFilter[filterKey];
-                    return value >= min && value <= max;
-                });
-
-            if (!meetsAllSelected) return null;
-
             return {
                 color: getCombinedModeColor(),
                 fillOpacity: 0.7,
             };
         }
 
-        const selectedValue = cell[selectedFilter];
-        if (selectedValue < minValue || selectedValue > maxValue) {
-            return {
-                color: "transparent",
-                fillOpacity: 0,
-            };
+        const selectedValue = cell.values[selectedFilter];
+        if (selectedValue == null) {
+            return null;
         }
 
+        const { min, max } = minMaxPerFilter[selectedFilter];
+
         return {
-            color: getColor(selectedValue, minValue, maxValue, highContrast, colorblind),
+            color: getColor(selectedValue, min, max, highContrast, colorblind),
             fillOpacity: 0.7,
         };
     }
 
     function getCellPopupValue(cell: GridCell, filterKey: FilterKey) {
-        return formatFilterValue(filterKey, cell[filterKey]);
+        const value = cell.values[filterKey];
+        if (value == null) {
+            return "Brak danych";
+        }
+
+        return formatFilterValue(filterKey, value);
     }
 
     return {
+        filters,
         selectedFilter,
         setSelectedFilter,
         minValue,
@@ -248,9 +508,16 @@ export function useMapController() {
         gridCells,
         formattedMinValue,
         formattedMaxValue,
+        mapCenter,
         toggleCombinedFilter,
         updateCombinedFilterRange,
         getCellStyle,
         getCellPopupValue,
+        isLoading,
+        error,
+        selectedFilterConfig: minMaxPerFilter[selectedFilter] ?? getSelectedFilterConfig(filters, selectedFilter),
+        mapBounds: resolvedBounds,
+        requestCount: listResponse?.maps.length ?? 0,
+        getFilterLabel,
     };
 }

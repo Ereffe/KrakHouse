@@ -1,10 +1,13 @@
 import { RangeSlider } from "./RangeSlider";
-import { filters, type FilterKey } from "./mapFilters";
+import type { FilterDefinition, FilterKey } from "./mapFilters";
 import { useTheme } from "./ThemeContext";
 
 interface SingleFilterSectionProps {
+    readonly filters: FilterDefinition[];
     readonly selectedFilter: FilterKey;
-    readonly selectedFilterConfig: { min: number; max: number };
+    readonly selectedFilterConfig?: { min: number; max: number };
+    readonly minValue: number;
+    readonly maxValue: number;
     readonly formattedMinValue: string;
     readonly formattedMaxValue: string;
     readonly setSelectedFilter: (value: FilterKey) => void;
@@ -13,8 +16,11 @@ interface SingleFilterSectionProps {
 }
 
 export function SingleFilterSection({
+    filters,
     selectedFilter,
     selectedFilterConfig,
+    minValue,
+    maxValue,
     formattedMinValue,
     formattedMaxValue,
     setSelectedFilter,
@@ -22,6 +28,10 @@ export function SingleFilterSection({
     setMaxValue,
 }: SingleFilterSectionProps) {
     const { panelTextColor } = useTheme();
+
+    if (!selectedFilterConfig) {
+        return null;
+    }
 
     return (
         <>
@@ -75,11 +85,11 @@ export function SingleFilterSection({
             </div>
             <RangeSlider
                 label="Minimum"
-                value={selectedFilter === "lifeScore" ? Number(formattedMinValue.replace("%", "")) : Number(formattedMinValue.replace(" PLN", ""))}
+                value={minValue}
                 displayValue={formattedMinValue}
                 min={selectedFilterConfig.min}
                 max={selectedFilterConfig.max}
-                step={selectedFilter === "lifeScore" ? 1 : 0.1}
+                step={selectedFilter === "PRICE" ? 10 : 1}
                 onChange={setMinValue}
                 labelColor={panelTextColor}
                 valueColor="#ef4444"
@@ -87,11 +97,11 @@ export function SingleFilterSection({
             />
             <RangeSlider
                 label="Maximum"
-                value={selectedFilter === "lifeScore" ? Number(formattedMaxValue.replace("%", "")) : Number(formattedMaxValue.replace(" PLN", ""))}
+                value={maxValue}
                 displayValue={formattedMaxValue}
                 min={selectedFilterConfig.min}
                 max={selectedFilterConfig.max}
-                step={selectedFilter === "lifeScore" ? 1 : 0.1}
+                step={selectedFilter === "PRICE" ? 10 : 1}
                 onChange={setMaxValue}
                 labelColor={panelTextColor}
                 valueColor="#0d9488"

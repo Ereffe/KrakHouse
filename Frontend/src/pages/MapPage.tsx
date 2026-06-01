@@ -3,8 +3,8 @@ import { MapContainer, Polygon, TileLayer, useMap } from "react-leaflet";
 import { MapGridLayer } from "../components/MapGridLayer";
 import { MapSidebar } from "../components/MapSidebar";
 import { ThemeProvider } from "../components/ThemeContext";
-import { KRAKOW, KRAKOW_BORDER, useMapController } from "../components/mapController";
-import { filters, type FilterKey } from "../components/mapFilters";
+import { useMapController } from "../components/mapController";
+import { getFilterLabel } from "../components/mapFilters";
 
 function MapResizeObserver() {
     const map = useMap();
@@ -26,10 +26,6 @@ function MapResizeObserver() {
 export default function MapPage() {
     const controller = useMapController();
 
-    const getFilterLabel = (key: FilterKey) => {
-        return filters.find((filter) => filter.key === key)?.label ?? key;
-    };
-
     return (
         <ThemeProvider darkMode={controller.darkMode} visuallyImpaired={controller.visuallyImpaired}>
             <div
@@ -40,10 +36,13 @@ export default function MapPage() {
                 }}
             >
                 <MapSidebar
+                    filters={controller.filters}
                     selectedFilter={controller.selectedFilter}
                     setSelectedFilter={controller.setSelectedFilter}
                     setMinValue={controller.setMinValue}
                     setMaxValue={controller.setMaxValue}
+                    minValue={controller.minValue}
+                    maxValue={controller.maxValue}
                     language={controller.language}
                     setLanguage={controller.setLanguage}
                     setDarkMode={controller.setDarkMode}
@@ -62,12 +61,14 @@ export default function MapPage() {
                     formattedMaxValue={controller.formattedMaxValue}
                     toggleCombinedFilter={controller.toggleCombinedFilter}
                     updateCombinedFilterRange={controller.updateCombinedFilterRange}
+                    isLoading={controller.isLoading}
+                    error={controller.error}
                 />
 
-                <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
                     <MapContainer
-                        center={KRAKOW}
-                        zoom={13}
+                        center={controller.mapCenter}
+                        zoom={controller.gridSize}
                         scrollWheelZoom
                         style={{ height: "100%", width: "100%" }}
                     >
@@ -75,10 +76,17 @@ export default function MapPage() {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Polygon
-                            positions={KRAKOW_BORDER}
-                            pathOptions={{ color: "#d81b60", weight: 3, fillOpacity: 0.08 }}
-                        />
+                        {controller.mapBounds && (
+                            <Polygon
+                                positions={[
+                                    [controller.mapBounds.latitudeLeftBorder, controller.mapBounds.longitudeTopBorder],
+                                    [controller.mapBounds.latitudeRightBorder, controller.mapBounds.longitudeTopBorder],
+                                    [controller.mapBounds.latitudeRightBorder, controller.mapBounds.longitudeBottomBorder],
+                                    [controller.mapBounds.latitudeLeftBorder, controller.mapBounds.longitudeBottomBorder],
+                                ]}
+                                pathOptions={{ color: "#d81b60", weight: 3, fillOpacity: 0.08 }}
+                            />
+                        )}
                         <MapGridLayer
                             gridCells={controller.gridCells}
                             combinedMode={controller.combinedMode}
@@ -91,6 +99,27 @@ export default function MapPage() {
                         <MapResizeObserver />
 
                     </MapContainer>
+                    {(controller.isLoading || controller.error || controller.gridCells.length === 0) && (
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: 16,
+                                right: 16,
+                                zIndex: 1000,
+                                padding: "12px 16px",
+                                borderRadius: "12px",
+                                background: controller.error
+                                    ? "rgba(220, 53, 69, 0.9)"
+                                    : "rgba(17, 24, 39, 0.82)",
+                                color: "#fff",
+                                maxWidth: "320px",
+                                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
+                                backdropFilter: "blur(10px)",
+                            }}
+                        >
+                            {controller.error ?? (controller.isLoading ? "Pobieranie danych z backendu..." : "Brak danych do wyświetlenia.")}
+                        </div>
+                    )}
                 </div>
             </div>
         </ThemeProvider>

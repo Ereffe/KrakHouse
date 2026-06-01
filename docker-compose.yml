@@ -7,14 +7,12 @@ services:
     ports:
       - "8080:8080"
 
-#  frontend:
-#    container_name: krakhouse-frontend
-#    build:
-#      context: ./Frontend
-#      dockerfile: Dockerfile
-#    ports:
-#      - "5173:5173"
-#    depends_on:
-#      - backend
-#    networks:
-#      - krakhouse-network
+  frontend:
+    container_name: krakhouse-frontend
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"

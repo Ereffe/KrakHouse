@@ -2,7 +2,7 @@ package pk.backend.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pk.backend.aplication.port.inbound.ControllerPort;
@@ -20,19 +20,19 @@ public class MapController {
 
     private final ControllerPort controllerPort;
 
-    @GetMapping("/filters")
+    @PostMapping("/filters")
     public ResponseEntity<List<FilterResponseDto>> getFilters() {
         return ResponseEntity.ok(controllerPort.getFilters());
     }
 
-    @GetMapping("/maps")
+    @PostMapping("/maps")
     public ResponseEntity<MergedMapResponseDto> getMergedMaps(@RequestBody List<FilteredMapDto> filteredMaps){
         var sourceMaps = controllerPort.getFilteredMap(filteredMaps);
         var mergedMap = controllerPort.getMergedMaps(filteredMaps);
         return ResponseEntity.ok(ResponseMapper.mapToMergedDto(mergedMap, sourceMaps, filteredMaps));
     }
 
-    @GetMapping("/maps-list")
+    @PostMapping("/maps-list")
     public ResponseEntity<FilteredMapListResponseDto> getFilteredMap(@RequestBody List<FilteredMapDto> filteredMaps){
         var maps = controllerPort.getFilteredMap(filteredMaps);
         return ResponseEntity.ok(ResponseMapper.mapToFilteredListDto(maps, filteredMaps));

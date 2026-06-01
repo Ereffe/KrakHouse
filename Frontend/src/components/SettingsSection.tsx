@@ -34,9 +34,9 @@ export function SettingsSection({
                 ⚙ Ustawienia
             </h4>
             <RangeSlider
-                label="Rozmiar siatki"
+                label="Poziom przybliżenia"
                 value={gridSize}
-                displayValue={`${gridSize}×${gridSize}`}
+                displayValue={`${gridSize}`}
                 min={5}
                 max={20}
                 step={1}
