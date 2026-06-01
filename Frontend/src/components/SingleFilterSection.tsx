@@ -1,8 +1,10 @@
 import { RangeSlider } from "./RangeSlider";
+import { t, type Language } from "./i18n";
 import type { FilterDefinition, FilterKey } from "./mapFilters";
 import { useTheme } from "./ThemeContext";
 
 interface SingleFilterSectionProps {
+    readonly language: Language;
     readonly filters: FilterDefinition[];
     readonly selectedFilter: FilterKey;
     readonly selectedFilterConfig?: { min: number; max: number };
@@ -22,6 +24,7 @@ function getSliderGradient(filterKey: FilterKey) {
 }
 
 export function SingleFilterSection({
+    language,
     filters,
     selectedFilter,
     selectedFilterConfig,
@@ -54,7 +57,7 @@ export function SingleFilterSection({
                         opacity: 0.8,
                     }}
                 >
-                    Wybierz filtr
+                    {t(language, "selectFilter")}
                 </div>
                 {filters.map((filter) => (
                     <div key={filter.key} style={{ marginBottom: "12px" }}>
@@ -90,7 +93,7 @@ export function SingleFilterSection({
                 ))}
             </div>
             <RangeSlider
-                label="Minimum"
+                label={t(language, "minimum")}
                 value={minValue}
                 displayValue={formattedMinValue}
                 min={selectedFilterConfig.min}
@@ -102,7 +105,7 @@ export function SingleFilterSection({
                 trackGradient={getSliderGradient(selectedFilter)}
             />
             <RangeSlider
-                label="Maximum"
+                label={t(language, "maximum")}
                 value={maxValue}
                 displayValue={formattedMaxValue}
                 min={selectedFilterConfig.min}

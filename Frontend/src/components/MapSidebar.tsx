@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
+import { AccessibilitySection } from "./AccessibilitySection";
 import { CombinedFilterSection } from "./CombinedFilterSection";
 import { SingleFilterSection } from "./SingleFilterSection";
 import { SettingsSection } from "./SettingsSection";
-import { AccessibilitySection } from "./AccessibilitySection";
 import { useTheme } from "./ThemeContext";
+import { t, type Language } from "./i18n";
+import { getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
 
 interface MapSidebarProps {
     filters: FilterDefinition[];
@@ -12,8 +13,8 @@ interface MapSidebarProps {
     setSelectedFilter: (value: FilterKey) => void;
     setMinValue: (value: number) => void;
     setMaxValue: (value: number) => void;
-    language: "pl" | "en";
-    setLanguage: (value: "pl" | "en") => void;
+    language: Language;
+    setLanguage: (value: Language) => void;
     setDarkMode: (value: boolean) => void;
     gridSize: number;
     setGridSize: (value: number) => void;
@@ -123,7 +124,7 @@ export function MapSidebar({
                 }}
                 title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
-                {isCollapsed ? "→" : "←"}
+                {isCollapsed ? ">" : "<"}
             </button>
 
             {!isCollapsed && (
@@ -140,7 +141,7 @@ export function MapSidebar({
                             paddingBottom: "10px",
                         }}
                     >
-                        Filtry
+                        {t(language, "filters")}
                     </h3>
                     {(isLoading || error) && (
                         <div
@@ -154,7 +155,7 @@ export function MapSidebar({
                                 lineHeight: 1.5,
                             }}
                         >
-                            {error ?? "Ładowanie danych mapy..."}
+                            {error ?? t(language, "loadingFilters")}
                         </div>
                     )}
                     <div style={{ marginBottom: "20px" }}>
@@ -180,13 +181,14 @@ export function MapSidebar({
                                     cursor: "pointer",
                                 }}
                             />{" "}
-                            Tryb połączonych filtrów
+                            {t(language, "combinedFiltersMode")}
                         </label>
                     </div>
 
                     {combinedMode ? (
                         <>
                             <CombinedFilterSection
+                                language={language}
                                 filters={filters}
                                 selectedFilters={selectedFilters}
                                 minMaxPerFilter={minMaxPerFilter}
@@ -202,7 +204,7 @@ export function MapSidebar({
                                             marginBottom: "10px",
                                         }}
                                     >
-                                        Wybrane filtry:
+                                        {t(language, "selectedFilters")}
                                     </h4>
                                     {selectedFilters.map((filterKey) => (
                                         <div
@@ -221,6 +223,7 @@ export function MapSidebar({
                         </>
                     ) : (
                         <SingleFilterSection
+                            language={language}
                             filters={filters}
                             selectedFilter={selectedFilter}
                             selectedFilterConfig={selectedFilterConfig}
@@ -249,6 +252,7 @@ export function MapSidebar({
                             setGridSize={setGridSize}
                         />
                         <AccessibilitySection
+                            language={language}
                             highContrast={highContrast}
                             colorblind={colorblind}
                             setHighContrast={setHighContrast}

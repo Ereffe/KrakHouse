@@ -1,3 +1,5 @@
+import type { Language } from "./i18n";
+
 export type FilterKey = "AIR_QUALITY" | "CRIME" | "NOISE" | "PRICE";
 
 export interface FilterDefinition {
@@ -21,15 +23,23 @@ export function getFrontendFilterRange(filter: Pick<FilterDefinition, "key" | "m
     };
 }
 
-export const filterLabels: Record<FilterKey, string> = {
-    AIR_QUALITY: "Jakość powietrza",
-    CRIME: "Poziom przestępczości",
-    NOISE: "Poziom hałasu",
-    PRICE: "Cena za m²",
+export const filterLabels: Record<Language, Record<FilterKey, string>> = {
+    pl: {
+        AIR_QUALITY: "Jakosc powietrza",
+        CRIME: "Poziom przestepczosci",
+        NOISE: "Poziom halasu",
+        PRICE: "Cena za m2",
+    },
+    en: {
+        AIR_QUALITY: "Air quality",
+        CRIME: "Crime level",
+        NOISE: "Noise level",
+        PRICE: "Price per m2",
+    },
 };
 
-export function getFilterLabel(key: FilterKey) {
-    return filterLabels[key] ?? key;
+export function getFilterLabel(key: FilterKey, language: Language = "pl") {
+    return filterLabels[language][key] ?? key;
 }
 
 export function getFilterUnit(key: FilterKey) {
@@ -39,15 +49,15 @@ export function getFilterUnit(key: FilterKey) {
     return "AQI";
 }
 
-export function formatFilterValue(key: FilterKey, value: number) {
+export function formatFilterValue(key: FilterKey, value: number, language: Language = "pl") {
     const unit = getFilterUnit(key);
     if (key === "AIR_QUALITY") return `${Math.round(value)} ${unit}`;
-    if (key === "PRICE") return `${Math.round(value).toLocaleString("pl-PL")} ${unit}`;
+    if (key === "PRICE") return `${Math.round(value).toLocaleString(language === "pl" ? "pl-PL" : "en-US")} ${unit}`;
     if (key === "CRIME") return `${Math.round(value)}${unit}`;
     if (key === "NOISE") return `${Math.round(value)} ${unit}`;
     return String(Math.round(value));
 }
 
 export function isFilterKey(value: string): value is FilterKey {
-    return value in filterLabels;
+    return value in filterLabels.pl;
 }

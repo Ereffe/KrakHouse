@@ -1,8 +1,10 @@
 import { RangeSlider } from "./RangeSlider";
+import { t, type Language } from "./i18n";
 import { formatFilterValue, getFrontendFilterRange, type FilterDefinition, type FilterKey } from "./mapFilters";
 import { useTheme } from "./ThemeContext";
 
 interface CombinedFilterSectionProps {
+    readonly language: Language;
     readonly filters: FilterDefinition[];
     readonly selectedFilters: FilterKey[];
     readonly minMaxPerFilter: Record<FilterKey, { min: number; max: number }>;
@@ -25,6 +27,7 @@ function getSliderGradient(filterKey: FilterKey) {
 }
 
 export function CombinedFilterSection({
+    language,
     filters,
     selectedFilters,
     minMaxPerFilter,
@@ -47,7 +50,7 @@ export function CombinedFilterSection({
                     opacity: 0.8,
                 }}
             >
-                Wybierz filtry
+                {t(language, "selectFilters")}
             </div>
 
             {filters.map((filter) => {
@@ -106,9 +109,9 @@ export function CombinedFilterSection({
                                 }}
                             >
                                 <RangeSlider
-                                    label="Min"
+                                    label={t(language, "min")}
                                     value={selectedRange.min}
-                                    displayValue={formatFilterValue(filter.key, selectedRange.min)}
+                                    displayValue={formatFilterValue(filter.key, selectedRange.min, language)}
                                     min={filterRange.min}
                                     max={selectedRange.max}
                                     step={getSliderStep(filter.key)}
@@ -120,9 +123,9 @@ export function CombinedFilterSection({
                                     labelRowStyle={{ fontSize: "12px" }}
                                 />
                                 <RangeSlider
-                                    label="Max"
+                                    label={t(language, "max")}
                                     value={selectedRange.max}
-                                    displayValue={formatFilterValue(filter.key, selectedRange.max)}
+                                    displayValue={formatFilterValue(filter.key, selectedRange.max, language)}
                                     min={selectedRange.min}
                                     max={filterRange.max}
                                     step={getSliderStep(filter.key)}

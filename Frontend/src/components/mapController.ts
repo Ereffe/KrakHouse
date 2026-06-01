@@ -15,6 +15,7 @@ import {
     type FilterDefinition,
     type FilterKey,
 } from "./mapFilters";
+import { t, type Language } from "./i18n";
 
 export interface GridCell {
     id: string;
@@ -234,7 +235,7 @@ export function useMapController() {
     const [selectedFilter, setSelectedFilter] = useState<FilterKey>("AIR_QUALITY");
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(10);
-    const [language, setLanguage] = useState<"pl" | "en">("pl");
+    const [language, setLanguage] = useState<Language>("pl");
     const [darkMode, setDarkMode] = useState(false);
     const [gridSize, setGridSize] = useState(13);
     const [combinedMode, setCombinedMode] = useState(false);
@@ -254,6 +255,14 @@ export function useMapController() {
     const baseFontSize = visuallyImpaired ? "20px" : "14px";
     const titleFontSize = visuallyImpaired ? "32px" : "22px";
     const subTitleFontSize = visuallyImpaired ? "24px" : "18px";
+    const localizedFilters = useMemo(
+        () =>
+            filters.map((filter) => ({
+                ...filter,
+                label: getFilterLabel(filter.key, language),
+            })),
+        [filters, language],
+    );
 
     useEffect(() => {
         let cancelled = false;
@@ -383,8 +392,8 @@ export function useMapController() {
         };
     }, [combinedMode, filters.length, maxValue, minMaxPerFilter, minValue, selectedFilter, selectedFilters]);
 
-    const formattedMinValue = formatFilterValue(selectedFilter, minValue);
-    const formattedMaxValue = formatFilterValue(selectedFilter, maxValue);
+    const formattedMinValue = formatFilterValue(selectedFilter, minValue, language);
+    const formattedMaxValue = formatFilterValue(selectedFilter, maxValue, language);
     const resolvedBounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
     const mapCenter: [number, number] = listResponse?.bounds ?? mergedResponse?.bounds
         ? [
@@ -485,14 +494,14 @@ export function useMapController() {
     function getCellPopupValue(cell: GridCell, filterKey: FilterKey) {
         const value = cell.values[filterKey];
         if (value == null) {
-            return "Brak danych";
+            return t(language, "noData");
         }
 
-        return formatFilterValue(filterKey, value);
+        return formatFilterValue(filterKey, value, language);
     }
 
     return {
-        filters,
+        filters: localizedFilters,
         selectedFilter,
         setSelectedFilter,
         minValue,
@@ -534,6 +543,7 @@ export function useMapController() {
         selectedFilterConfig: minMaxPerFilter[selectedFilter] ?? getSelectedFilterConfig(filters, selectedFilter),
         mapBounds: resolvedBounds,
         requestCount: listResponse?.maps.length ?? 0,
-        getFilterLabel,
+        getFilterLabel: (filterKey: FilterKey) => getFilterLabel(filterKey, language),
+        t: (key: Parameters<typeof t>[1]) => t(language, key),
     };
 }
