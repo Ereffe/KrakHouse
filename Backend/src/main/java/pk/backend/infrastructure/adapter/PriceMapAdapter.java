@@ -10,7 +10,10 @@ import pk.backend.infrastructure.model.DiscreteData;
 import pk.backend.infrastructure.service.RcnFinalPriceService;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
@@ -21,7 +24,42 @@ public class PriceMapAdapter extends AbstractAdapter<BigDecimal> implements Pric
 
     @Override
     public List<DiscreteData<BigDecimal>> fetchData() {
-        return rcnFinalPriceService.getPriceData();
+        List<DiscreteData<BigDecimal>> mockData = new ArrayList<>();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        for (int i = 0; i < 100; i++) {
+            double lat;
+            double lon;
+            double priceValue;
+
+            if (random.nextDouble() < 0.20) {
+                lat = 50.121 + (50.123 - 50.121) * random.nextDouble();
+                lon = 19.830 + (19.840 - 19.830) * random.nextDouble();
+
+                priceValue = 40000 + (60000 - 40000) * random.nextDouble();
+            }
+            else {
+                lat = 50.118 + (50.124 - 50.118) * random.nextDouble();
+                lon = 19.813 + (19.856 - 19.813) * random.nextDouble();
+
+                priceValue = 15000 + (random.nextGaussian() * 4000);
+
+                if (priceValue < 5000) {
+                    priceValue = 5000 + random.nextDouble() * 2000;
+                } else if (priceValue > 40000) {
+                    priceValue = 40000 - random.nextDouble() * 2000;
+                }
+            }
+
+            BigDecimal price = BigDecimal.valueOf(priceValue).setScale(2, RoundingMode.HALF_UP);
+
+            mockData.add(DiscreteData.<BigDecimal>builder()
+                    .latitude(lat)
+                    .longitude(lon)
+                    .value(price)
+                    .build());
+        }
+        return mockData;
     }
 
     @Override
