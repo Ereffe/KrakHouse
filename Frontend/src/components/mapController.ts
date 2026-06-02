@@ -143,7 +143,7 @@ function buildPolygonPositions(
     const lat2 = bounds.latitudeLeftBorder + (rowIndex + 1) * latStep;
     const lon1 = bounds.longitudeTopBorder + columnIndex * lonStep;
     const lon2 = bounds.longitudeTopBorder + (columnIndex + 1) * lonStep;
-
+    
     return [
         [lat1, lon1],
         [lat2, lon1],
@@ -171,22 +171,24 @@ function buildGridCells({
     selectedFilters: FilterKey[];
     minMaxPerFilter: MinMaxPerFilter;
 }): GridCell[] {
-    if (!listResponse || listResponse.maps.length === 0) {
+    const maps = Array.isArray(listResponse?.maps) ? listResponse.maps : [];
+
+    if (maps.length === 0) {
         return [];
     }
 
     const baseMap =
-        listResponse.maps.find((map) => map.type === selectedFilter) ?? listResponse.maps[0];
+        maps.find((map) => map.type === selectedFilter) ?? maps[0];
     const rowCount = baseMap.data.length;
     const columnCount = baseMap.data[0]?.length ?? 0;
-    const bounds = listResponse.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+    const bounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
 
     if (!rowCount || !columnCount) {
         return [];
     }
 
     const mapByType = new Map(
-        listResponse.maps.map((map) => [map.type, map.data] as const),
+        maps.map((map) => [map.type, map.data] as const),
     );
 
     return baseMap.data.flatMap((row, rowIndex) =>
@@ -429,6 +431,7 @@ export function useMapController() {
     const formattedMinValue = formatFilterValue(selectedFilter, minValue, language);
     const formattedMaxValue = formatFilterValue(selectedFilter, maxValue, language);
     const resolvedBounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+    const listMaps = Array.isArray(listResponse?.maps) ? listResponse.maps : [];
     const mapCenter: [number, number] = listResponse?.bounds ?? mergedResponse?.bounds
         ? [
             (resolvedBounds.latitudeLeftBorder + resolvedBounds.latitudeRightBorder) / 2,
@@ -451,7 +454,7 @@ export function useMapController() {
 
     const mapSources = useMemo(
         () =>
-            listResponse?.maps
+            listMaps
                 .map((map) => ({
                     type: map.type,
                     label: getFilterLabel(map.type, language),
@@ -467,7 +470,7 @@ export function useMapController() {
 
                     return firstIndex === index;
                 }) ?? [],
-        [language, listResponse],
+        [language, listMaps],
     );
 
     function toggleCombinedFilter(filterKey: FilterKey, checked: boolean) {
@@ -598,7 +601,7 @@ export function useMapController() {
         error,
         selectedFilterConfig: minMaxPerFilter[selectedFilter] ?? getSelectedFilterConfig(filters, selectedFilter),
         mapBounds: resolvedBounds,
-        requestCount: listResponse?.maps.length ?? 0,
+        requestCount: listMaps.length,
         getFilterLabel: (filterKey: FilterKey) => getFilterLabel(filterKey, language),
         t: (key: Parameters<typeof t>[1]) => t(language, key),
     };

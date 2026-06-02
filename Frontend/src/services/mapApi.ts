@@ -105,7 +105,7 @@ export async function fetchFilteredMaps(filters: FilteredMapRequestDto[]): Promi
 
     return {
         bounds: STATIC_MAP_BOUNDS,
-        maps: response.maps,
+        maps: Array.isArray(response.maps) ? response.maps : [],
     };
 }
 

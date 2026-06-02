@@ -34,19 +34,6 @@ export function SettingsSection({
       >
         ⚙ {t(language, "settings")}
       </h4>
-      <RangeSlider
-        label={t(language, "zoomLevel")}
-        value={gridSize}
-        displayValue={`${gridSize}`}
-        min={5}
-        max={20}
-        step={1}
-        onChange={setGridSize}
-        labelColor={panelTextColor}
-        valueColor="#8b5cf6"
-        trackGradient="linear-gradient(to right, #8b5cf6, #d946ef)"
-        containerStyle={{ marginBottom: "18px" }}
-      />
       <div style={{ marginBottom: "18px" }}>
         <div
           style={{
