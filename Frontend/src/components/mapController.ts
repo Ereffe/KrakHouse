@@ -67,6 +67,16 @@ function getColor(
         return `rgb(${r}, ${g}, ${b})`;
     }
 
+    if (filterKey === "AIR_QUALITY") {
+        if (value <= min) return "#28a745";
+        if (value >= max) return "#dc3545";
+
+        const normalized = (value - min) / (max - min || 1);
+        const r = Math.floor(255 * normalized);
+        const g = Math.floor(255 * (1 - normalized));
+        return `rgb(${r}, ${g}, 0)`;
+    }
+
     if (filterKey === "PRICE") {
         if (value <= min) return "#28a745";
         if (value >= max) return "#dc3545";
@@ -84,6 +94,14 @@ function getColor(
     const r = Math.floor(255 * (1 - normalized));
     const g = Math.floor(255 * normalized);
     return `rgb(${r}, ${g}, 0)`;
+}
+
+function normalizeDisplayValue(filterKey: FilterKey, value: number) {
+    if (filterKey === "CRIME") {
+        return value * 100;
+    }
+
+    return value;
 }
 
 function buildRequestFilters(
@@ -180,13 +198,13 @@ function buildGridCells({
                 const matrix = mapByType.get(filterKey);
                 const sourceValue = matrix?.[rowIndex]?.[columnIndex];
                 if (typeof sourceValue === "number") {
-                    values[filterKey] = sourceValue;
+                    values[filterKey] = normalizeDisplayValue(filterKey, sourceValue);
                 }
             }
 
             const combinedVisible =
                 !combinedMode ||
-                (mergedResponse?.data[rowIndex]?.[columnIndex] ?? false);
+                (mergedResponse?.data?.[rowIndex]?.[columnIndex] ?? false);
 
             const singleVisible = isInRange(
                 values[selectedFilter],
@@ -431,6 +449,27 @@ export function useMapController() {
         [combinedMode, listResponse, mergedResponse, minMaxPerFilter, selectedFilter, selectedFilters],
     );
 
+    const mapSources = useMemo(
+        () =>
+            listResponse?.maps
+                .map((map) => ({
+                    type: map.type,
+                    label: getFilterLabel(map.type, language),
+                    valueType: map.valueType,
+                    dataProvider: map.dataProvider,
+                }))
+                .filter((source, index, sources) => {
+                    const firstIndex = sources.findIndex(
+                        (candidate) =>
+                            candidate.type === source.type &&
+                            candidate.dataProvider === source.dataProvider,
+                    );
+
+                    return firstIndex === index;
+                }) ?? [],
+        [language, listResponse],
+    );
+
     function toggleCombinedFilter(filterKey: FilterKey, checked: boolean) {
         if (checked) {
             setSelectedFilters((prev) => (prev.includes(filterKey) ? prev : [...prev, filterKey]));
@@ -547,6 +586,7 @@ export function useMapController() {
         titleFontSize,
         subTitleFontSize,
         gridCells,
+        mapSources,
         formattedMinValue,
         formattedMaxValue,
         mapCenter,
