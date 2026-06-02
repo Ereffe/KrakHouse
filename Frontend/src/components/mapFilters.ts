@@ -10,7 +10,7 @@ export interface FilterDefinition {
     dataProvider?: string;
 }
 
-export const PRICE_FILTER_RANGE = { min: 1000, max: 10000 };
+export const PRICE_FILTER_RANGE = { min: 5000, max: 60000 };
 
 export function getFrontendFilterRange(filter: Pick<FilterDefinition, "key" | "min" | "max">) {
     if (filter.key === "PRICE") {
