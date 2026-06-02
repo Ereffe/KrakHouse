@@ -1,8 +1,10 @@
 import { RangeSlider } from "./RangeSlider";
+import { t, type Language } from "./i18n";
 import type { FilterDefinition, FilterKey } from "./mapFilters";
 import { useTheme } from "./ThemeContext";
 
 interface SingleFilterSectionProps {
+    readonly language: Language;
     readonly filters: FilterDefinition[];
     readonly selectedFilter: FilterKey;
     readonly selectedFilterConfig?: { min: number; max: number };
@@ -15,7 +17,14 @@ interface SingleFilterSectionProps {
     readonly setMaxValue: (value: number) => void;
 }
 
+function getSliderGradient(filterKey: FilterKey) {
+    return filterKey === "PRICE"
+        ? "linear-gradient(to right, #0d9488, #f97316, #ef4444)"
+        : "linear-gradient(to right, #ef4444, #f97316, #0d9488)";
+}
+
 export function SingleFilterSection({
+    language,
     filters,
     selectedFilter,
     selectedFilterConfig,
@@ -48,7 +57,7 @@ export function SingleFilterSection({
                         opacity: 0.8,
                     }}
                 >
-                    Wybierz filtr
+                    {t(language, "selectFilter")}
                 </div>
                 {filters.map((filter) => (
                     <div key={filter.key} style={{ marginBottom: "12px" }}>
@@ -84,7 +93,7 @@ export function SingleFilterSection({
                 ))}
             </div>
             <RangeSlider
-                label="Minimum"
+                label={t(language, "minimum")}
                 value={minValue}
                 displayValue={formattedMinValue}
                 min={selectedFilterConfig.min}
@@ -93,10 +102,10 @@ export function SingleFilterSection({
                 onChange={setMinValue}
                 labelColor={panelTextColor}
                 valueColor="#ef4444"
-                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+                trackGradient={getSliderGradient(selectedFilter)}
             />
             <RangeSlider
-                label="Maximum"
+                label={t(language, "maximum")}
                 value={maxValue}
                 displayValue={formattedMaxValue}
                 min={selectedFilterConfig.min}
@@ -105,7 +114,7 @@ export function SingleFilterSection({
                 onChange={setMaxValue}
                 labelColor={panelTextColor}
                 valueColor="#0d9488"
-                trackGradient="linear-gradient(to right, #ef4444, #f97316, #0d9488)"
+                trackGradient={getSliderGradient(selectedFilter)}
                 containerStyle={{ marginTop: "18px" }}
             />
         </>

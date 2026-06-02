@@ -9,10 +9,13 @@ import {
 } from "../services/mapApi";
 import {
     formatFilterValue,
+    getFrontendFilterRange,
     getFilterLabel,
+    PRICE_FILTER_RANGE,
     type FilterDefinition,
     type FilterKey,
 } from "./mapFilters";
+import { t, type Language } from "./i18n";
 
 export interface GridCell {
     id: string;
@@ -36,10 +39,11 @@ const DEFAULT_MIN_MAX: MinMaxPerFilter = {
     AIR_QUALITY: { min: 0, max: 500 },
     CRIME: { min: 0, max: 100 },
     NOISE: { min: 30, max: 90 },
-    PRICE: { min: 1000, max: 10000 },
+    PRICE: PRICE_FILTER_RANGE,
 };
 
 function getColor(
+    filterKey: FilterKey,
     value: number,
     min: number,
     max: number,
@@ -63,6 +67,26 @@ function getColor(
         return `rgb(${r}, ${g}, ${b})`;
     }
 
+    if (filterKey === "AIR_QUALITY") {
+        if (value <= min) return "#28a745";
+        if (value >= max) return "#dc3545";
+
+        const normalized = (value - min) / (max - min || 1);
+        const r = Math.floor(255 * normalized);
+        const g = Math.floor(255 * (1 - normalized));
+        return `rgb(${r}, ${g}, 0)`;
+    }
+
+    if (filterKey === "PRICE") {
+        if (value <= min) return "#28a745";
+        if (value >= max) return "#dc3545";
+
+        const normalized = (value - min) / (max - min || 1);
+        const r = Math.floor(255 * normalized);
+        const g = Math.floor(255 * (1 - normalized));
+        return `rgb(${r}, ${g}, 0)`;
+    }
+
     if (value <= min) return "#dc3545";
     if (value >= max) return "#28a745";
 
@@ -70,6 +94,14 @@ function getColor(
     const r = Math.floor(255 * (1 - normalized));
     const g = Math.floor(255 * normalized);
     return `rgb(${r}, ${g}, 0)`;
+}
+
+function normalizeDisplayValue(filterKey: FilterKey, value: number) {
+    if (filterKey === "CRIME") {
+        return value * 100;
+    }
+
+    return value;
 }
 
 function buildRequestFilters(
@@ -111,7 +143,7 @@ function buildPolygonPositions(
     const lat2 = bounds.latitudeLeftBorder + (rowIndex + 1) * latStep;
     const lon1 = bounds.longitudeTopBorder + columnIndex * lonStep;
     const lon2 = bounds.longitudeTopBorder + (columnIndex + 1) * lonStep;
-
+    
     return [
         [lat1, lon1],
         [lat2, lon1],
@@ -139,22 +171,24 @@ function buildGridCells({
     selectedFilters: FilterKey[];
     minMaxPerFilter: MinMaxPerFilter;
 }): GridCell[] {
-    if (!listResponse || listResponse.maps.length === 0) {
+    const maps = Array.isArray(listResponse?.maps) ? listResponse.maps : [];
+
+    if (maps.length === 0) {
         return [];
     }
 
     const baseMap =
-        listResponse.maps.find((map) => map.type === selectedFilter) ?? listResponse.maps[0];
+        maps.find((map) => map.type === selectedFilter) ?? maps[0];
     const rowCount = baseMap.data.length;
     const columnCount = baseMap.data[0]?.length ?? 0;
-    const bounds = listResponse.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+    const bounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
 
     if (!rowCount || !columnCount) {
         return [];
     }
 
     const mapByType = new Map(
-        listResponse.maps.map((map) => [map.type, map.data] as const),
+        maps.map((map) => [map.type, map.data] as const),
     );
 
     return baseMap.data.flatMap((row, rowIndex) =>
@@ -166,13 +200,13 @@ function buildGridCells({
                 const matrix = mapByType.get(filterKey);
                 const sourceValue = matrix?.[rowIndex]?.[columnIndex];
                 if (typeof sourceValue === "number") {
-                    values[filterKey] = sourceValue;
+                    values[filterKey] = normalizeDisplayValue(filterKey, sourceValue);
                 }
             }
 
             const combinedVisible =
                 !combinedMode ||
-                (mergedResponse?.data[rowIndex]?.[columnIndex] ?? false);
+                (mergedResponse?.data?.[rowIndex]?.[columnIndex] ?? false);
 
             const singleVisible = isInRange(
                 values[selectedFilter],
@@ -216,12 +250,28 @@ function clamp(value: number, min: number, max: number) {
     return Math.min(Math.max(value, min), max);
 }
 
+function resolveErrorMessage(
+    fetchError: unknown,
+    language: Language,
+    fallbackKey: "failedToLoadFilters" | "failedToLoadMapData",
+) {
+    if (fetchError instanceof Error) {
+        if (fetchError.message.startsWith("Request failed with status")) {
+            return t(language, fallbackKey);
+        }
+
+        return fetchError.message;
+    }
+
+    return t(language, fallbackKey);
+}
+
 export function useMapController() {
     const [filters, setFilters] = useState<FilterDefinition[]>([]);
     const [selectedFilter, setSelectedFilter] = useState<FilterKey>("AIR_QUALITY");
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(10);
-    const [language, setLanguage] = useState<"pl" | "en">("pl");
+    const [language, setLanguage] = useState<Language>("pl");
     const [darkMode, setDarkMode] = useState(false);
     const [gridSize, setGridSize] = useState(13);
     const [combinedMode, setCombinedMode] = useState(false);
@@ -241,6 +291,14 @@ export function useMapController() {
     const baseFontSize = visuallyImpaired ? "20px" : "14px";
     const titleFontSize = visuallyImpaired ? "32px" : "22px";
     const subTitleFontSize = visuallyImpaired ? "24px" : "18px";
+    const localizedFilters = useMemo(
+        () =>
+            filters.map((filter) => ({
+                ...filter,
+                label: getFilterLabel(filter.key, language),
+            })),
+        [filters, language],
+    );
 
     useEffect(() => {
         let cancelled = false;
@@ -284,7 +342,7 @@ export function useMapController() {
             })
             .catch((fetchError: unknown) => {
                 if (cancelled) return;
-                setError(fetchError instanceof Error ? fetchError.message : "Failed to load filters");
+                setError(resolveErrorMessage(fetchError, language, "failedToLoadFilters"));
                 setIsLoading(false);
             });
 
@@ -361,7 +419,7 @@ export function useMapController() {
                 if (cancelled) return;
                 setListResponse(null);
                 setMergedResponse(null);
-                setError(fetchError instanceof Error ? fetchError.message : "Failed to load map data");
+                setError(resolveErrorMessage(fetchError, language, "failedToLoadMapData"));
                 setIsLoading(false);
             });
 
@@ -370,9 +428,10 @@ export function useMapController() {
         };
     }, [combinedMode, filters.length, maxValue, minMaxPerFilter, minValue, selectedFilter, selectedFilters]);
 
-    const formattedMinValue = formatFilterValue(selectedFilter, minValue);
-    const formattedMaxValue = formatFilterValue(selectedFilter, maxValue);
+    const formattedMinValue = formatFilterValue(selectedFilter, minValue, language);
+    const formattedMaxValue = formatFilterValue(selectedFilter, maxValue, language);
     const resolvedBounds = listResponse?.bounds ?? mergedResponse?.bounds ?? DEFAULT_MAP_BOUNDS;
+    const listMaps = Array.isArray(listResponse?.maps) ? listResponse.maps : [];
     const mapCenter: [number, number] = listResponse?.bounds ?? mergedResponse?.bounds
         ? [
             (resolvedBounds.latitudeLeftBorder + resolvedBounds.latitudeRightBorder) / 2,
@@ -393,6 +452,27 @@ export function useMapController() {
         [combinedMode, listResponse, mergedResponse, minMaxPerFilter, selectedFilter, selectedFilters],
     );
 
+    const mapSources = useMemo(
+        () =>
+            listMaps
+                .map((map) => ({
+                    type: map.type,
+                    label: getFilterLabel(map.type, language),
+                    valueType: map.valueType,
+                    dataProvider: map.dataProvider,
+                }))
+                .filter((source, index, sources) => {
+                    const firstIndex = sources.findIndex(
+                        (candidate) =>
+                            candidate.type === source.type &&
+                            candidate.dataProvider === source.dataProvider,
+                    );
+
+                    return firstIndex === index;
+                }) ?? [],
+        [language, listMaps],
+    );
+
     function toggleCombinedFilter(filterKey: FilterKey, checked: boolean) {
         if (checked) {
             setSelectedFilters((prev) => (prev.includes(filterKey) ? prev : [...prev, filterKey]));
@@ -409,26 +489,29 @@ export function useMapController() {
     ) {
         setMinMaxPerFilter((prev) => {
             const currentRange = prev[filterKey] ?? DEFAULT_MIN_MAX[filterKey];
-            const bounds =
-                filters.find((filter) => filter.key === filterKey) ??
-                ({ min: currentRange.min, max: currentRange.max } as const);
+            const backendRange = filters.find((filter) => filter.key === filterKey);
+            const bounds = getFrontendFilterRange(
+                backendRange ?? { key: filterKey, min: currentRange.min, max: currentRange.max },
+            );
+            const currentMin = clamp(currentRange.min, bounds.min, bounds.max);
+            const currentMax = clamp(currentRange.max, currentMin, bounds.max);
 
             if (rangeType === "min") {
-                const nextMin = clamp(value, bounds.min, currentRange.max);
+                const nextMin = clamp(value, bounds.min, currentMax);
                 return {
                     ...prev,
                     [filterKey]: {
                         min: nextMin,
-                        max: currentRange.max,
+                        max: currentMax,
                     },
                 };
             }
 
-            const nextMax = clamp(value, currentRange.min, bounds.max);
+            const nextMax = clamp(value, currentMin, bounds.max);
             return {
                 ...prev,
                 [filterKey]: {
-                    min: currentRange.min,
+                    min: currentMin,
                     max: nextMax,
                 },
             };
@@ -461,7 +544,7 @@ export function useMapController() {
         const { min, max } = minMaxPerFilter[selectedFilter];
 
         return {
-            color: getColor(selectedValue, min, max, highContrast, colorblind),
+            color: getColor(selectedFilter, selectedValue, min, max, highContrast, colorblind),
             fillOpacity: 0.7,
         };
     }
@@ -469,14 +552,14 @@ export function useMapController() {
     function getCellPopupValue(cell: GridCell, filterKey: FilterKey) {
         const value = cell.values[filterKey];
         if (value == null) {
-            return "Brak danych";
+            return t(language, "noData");
         }
 
-        return formatFilterValue(filterKey, value);
+        return formatFilterValue(filterKey, value, language);
     }
 
     return {
-        filters,
+        filters: localizedFilters,
         selectedFilter,
         setSelectedFilter,
         minValue,
@@ -506,6 +589,7 @@ export function useMapController() {
         titleFontSize,
         subTitleFontSize,
         gridCells,
+        mapSources,
         formattedMinValue,
         formattedMaxValue,
         mapCenter,
@@ -517,7 +601,8 @@ export function useMapController() {
         error,
         selectedFilterConfig: minMaxPerFilter[selectedFilter] ?? getSelectedFilterConfig(filters, selectedFilter),
         mapBounds: resolvedBounds,
-        requestCount: listResponse?.maps.length ?? 0,
-        getFilterLabel,
+        requestCount: listMaps.length,
+        getFilterLabel: (filterKey: FilterKey) => getFilterLabel(filterKey, language),
+        t: (key: Parameters<typeof t>[1]) => t(language, key),
     };
 }

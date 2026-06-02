@@ -10,6 +10,13 @@ export interface MapBoundsDto {
     longitudeBottomBorder: number;
 }
 
+const STATIC_MAP_BOUNDS: MapBoundsDto = {
+     latitudeLeftBorder: 50.02,
+    latitudeRightBorder: 50.12,
+    longitudeTopBorder: 19.86,
+    longitudeBottomBorder: 20.02,
+};
+
 export interface BackendFilterDto {
     type: FilterKey;
     min: number;
@@ -34,8 +41,29 @@ export interface FilteredMapListResponseDto {
     maps: FilteredMapResponseDto[];
 }
 
+interface RawFilteredMapResponseDto {
+    type: FilterKey;
+    valueType: string;
+    dataProvider: string;
+    data: (number | null)[][];
+}
+
+interface RawFilteredMapListResponseDto {
+    maps: RawFilteredMapResponseDto[];
+}
+
 export interface MergedMapResponseDto {
     bounds?: MapBoundsDto;
+    type: Array<{
+        type: FilterKey;
+        dataProvider: string | null;
+        lowerBound: number;
+        upperBound: number;
+    }>;
+    data: boolean[][];
+}
+
+interface RawMergedMapResponseDto {
     type: Array<{
         type: FilterKey;
         dataProvider: string | null;
@@ -66,21 +94,32 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export async function fetchFilters(): Promise<BackendFilterDto[]> {
-    return requestJson<BackendFilterDto[]>("/filters", { method: "POST" });
+    return requestJson<BackendFilterDto[]>("/filters", { method: "GET" });
 }
 
 export async function fetchFilteredMaps(filters: FilteredMapRequestDto[]): Promise<FilteredMapListResponseDto> {
-    return requestJson<FilteredMapListResponseDto>("/maps-list", {
+    const response = await requestJson<RawFilteredMapListResponseDto>("/maps-list", {
         method: "POST",
         body: JSON.stringify(filters),
     });
+
+    return {
+        bounds: STATIC_MAP_BOUNDS,
+        maps: Array.isArray(response.maps) ? response.maps : [],
+    };
 }
 
 export async function fetchMergedMaps(filters: FilteredMapRequestDto[]): Promise<MergedMapResponseDto> {
-    return requestJson<MergedMapResponseDto>("/maps", {
+    const response = await requestJson<RawMergedMapResponseDto>("/maps", {
         method: "POST",
         body: JSON.stringify(filters),
     });
+
+    return {
+        bounds: STATIC_MAP_BOUNDS,
+        type: response.type,
+        data: response.data,
+    };
 }
 
 export function toFilterDefinitions(filters: BackendFilterDto[]): FilterDefinition[] {
