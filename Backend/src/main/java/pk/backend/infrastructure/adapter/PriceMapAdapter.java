@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -25,7 +26,8 @@ public class PriceMapAdapter extends AbstractAdapter<BigDecimal> implements Pric
     @Override
     public List<DiscreteData<BigDecimal>> fetchData() {
         List<DiscreteData<BigDecimal>> mockData = new ArrayList<>();
-        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        Random random = new Random(12345L);
 
         for (int i = 0; i < 100; i++) {
             double lat;
@@ -35,9 +37,9 @@ public class PriceMapAdapter extends AbstractAdapter<BigDecimal> implements Pric
             if (random.nextDouble() < 0.20) {
                 lat = 50.121 + (50.123 - 50.121) * random.nextDouble();
                 lon = 19.830 + (19.840 - 19.830) * random.nextDouble();
-
                 priceValue = 40000 + (60000 - 40000) * random.nextDouble();
             }
+
             else {
                 lat = 50.118 + (50.124 - 50.118) * random.nextDouble();
                 lon = 19.813 + (19.856 - 19.813) * random.nextDouble();
