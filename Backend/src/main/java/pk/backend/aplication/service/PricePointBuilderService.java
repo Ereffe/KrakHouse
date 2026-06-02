@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pk.backend.infrastructure.service.RcnImportSchemaService;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -15,6 +16,8 @@ import java.time.Instant;
 public class PricePointBuilderService {
 
     private static final int PRICE_POINT_CHUNK_SIZE = 50_000;
+    private static final BigDecimal MIN_FINAL_PRICE_PER_SQUARE_METER = BigDecimal.valueOf(5_000);
+    private static final BigDecimal MAX_FINAL_PRICE_PER_SQUARE_METER = BigDecimal.valueOf(60_000);
 
     private static final String INSERT_PROPERTY_AREA_TOTALS = """
             INSERT INTO rcn_property_area_totals (
@@ -183,6 +186,8 @@ public class PricePointBuilderService {
             WHERE center_x IS NOT NULL
               AND center_y IS NOT NULL
               AND price_per_m2 IS NOT NULL
+              AND price_per_m2 >= ?
+              AND price_per_m2 <= ?
             """;
 
     private final JdbcTemplate jdbcTemplate;
@@ -238,9 +243,15 @@ public class PricePointBuilderService {
         Instant startedAt = Instant.now();
         log.info("RCN price-point phase started: final frontend table");
 
-        int inserted = jdbcTemplate.update(INSERT_FINAL_PRICE_POINTS);
+        int inserted = jdbcTemplate.update(
+                INSERT_FINAL_PRICE_POINTS,
+                MIN_FINAL_PRICE_PER_SQUARE_METER,
+                MAX_FINAL_PRICE_PER_SQUARE_METER
+        );
 
-        log.info("RCN price-point phase finished: final frontend table, inserted={}, elapsedSeconds={}",
+        log.info("RCN price-point phase finished: final frontend table, minPricePerSquareMeter={}, maxPricePerSquareMeter={}, inserted={}, elapsedSeconds={}",
+                MIN_FINAL_PRICE_PER_SQUARE_METER,
+                MAX_FINAL_PRICE_PER_SQUARE_METER,
                 inserted,
                 formatElapsed(startedAt));
         return inserted;
