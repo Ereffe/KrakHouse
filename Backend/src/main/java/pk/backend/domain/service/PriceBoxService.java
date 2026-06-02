@@ -16,8 +16,8 @@ public class PriceBoxService implements MapService {
     private final PriceMapFactory priceMapFactory;
 
     public static final String TYPE = "PRICE";
-    private static final int MIN_VALUE = 1_000;
-    private static final int MAX_VALUE = 100_000;
+    private static final int MIN_VALUE = 5_000;
+    private static final int MAX_VALUE = 60_000;
 
     @Override
     public BoxValue createBoxValue(Number value) {
